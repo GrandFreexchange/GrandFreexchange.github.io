@@ -9,6 +9,8 @@
     <!-- Chart.js for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- Chart.js Zoom Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
     <style>
         :root {
             /* Dark Theme (Default) */
@@ -206,6 +208,7 @@
                         <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium active" data-timeframe="5d">5-Day</button>
                         <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium" data-timeframe="30d">30-Day</button>
                     </div>
+                    <button id="reset-zoom-btn" class="ml-4 suggest-btn px-4 py-1 rounded-md text-sm font-medium hidden">Reset Zoom</button>
                 </div>
                 <!-- New Price & Volume Graph -->
                 <div class="h-80 md:h-96">
@@ -272,6 +275,7 @@
         const lightIcon = document.getElementById('theme-icon-light');
         const darkIcon = document.getElementById('theme-icon-dark');
         const suggestItemBtn = document.getElementById('suggest-item-btn');
+        const resetZoomBtn = document.getElementById('reset-zoom-btn');
         // Profit Calculator References
         const calcQuantityInput = document.getElementById('calc-quantity');
         const calcBuyPriceInput = document.getElementById('calc-buy-price');
@@ -556,6 +560,9 @@
             const lowPrices = dataPoints.map(p => p.avgLowPrice);
             const volumes = dataPoints.map(p => (p.highPriceVolume || 0) + (p.lowPriceVolume || 0));
 
+            const minDate = labels.length > 0 ? labels[0].getTime() : null;
+            const maxDate = labels.length > 0 ? labels[labels.length - 1].getTime() : null;
+
             priceChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -594,7 +601,7 @@
                             borderWidth: 1,
                             yAxisID: 'y1',
                             order: 2,
-                            hidden: true // **FIX**: Volume is now hidden by default
+                            hidden: true 
                         }
                     ]
                 },
@@ -618,11 +625,28 @@
                                     return label;
                                 }
                             }
+                        },
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'x',
+                            },
+                            zoom: {
+                                wheel: { enabled: true },
+                                pinch: { enabled: true },
+                                mode: 'x',
+                                onZoomComplete: () => resetZoomBtn.classList.remove('hidden'),
+                            },
+                            limits: {
+                                x: { min: minDate, max: maxDate, minRange: 3600000 } // minRange of 1 hour
+                            }
                         }
                     },
                     scales: {
                         x: {
                             type: 'time',
+                            min: minDate,
+                            max: maxDate,
                             time: {
                                 unit: labels.length > 30 ? 'day' : 'hour',
                                 tooltipFormat: 'MMM d, h:mm a'
@@ -720,6 +744,13 @@
         });
 
         suggestItemBtn.addEventListener('click', suggestItem);
+
+        resetZoomBtn.addEventListener('click', () => {
+            if (priceChart) {
+                priceChart.resetZoom();
+                resetZoomBtn.classList.add('hidden');
+            }
+        });
 
         [calcQuantityInput, calcBuyPriceInput, calcSellPriceInput].forEach(input => {
             input.addEventListener('input', calculateNetProfit);
