@@ -113,19 +113,20 @@
         html[data-theme="light"] .main-title {
              color: #3a3532; /* Keep it dark for readability on light theme */
         }
-
-        #profit-calculator-container {
-            transition: opacity 0.3s ease-in-out;
-        }
-        #profit-calculator-box {
-            transition: all 0.3s ease-in-out;
-            max-height: 0;
+        
+        /* Styles for collapsible calculator */
+        #calculator-body {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, border 0.5s ease-in-out;
             overflow: hidden;
+            border-top-width: 1px;
         }
-        #profit-calculator-box.expanded {
-            max-height: 500px; /* Adjust as needed */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+
+        #calculator-body.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top-width: 0px;
         }
 
     </style>
@@ -215,38 +216,49 @@
                 <div class="h-80 md:h-96">
                     <canvas id="priceChart"></canvas>
                 </div>
+
+                <!-- Profit Calculator -->
+                <div id="profit-calculator" class="bg-dark-contrast rounded-lg shadow-inner w-full mt-6 hidden">
+                    <!-- Header is now a clickable toggle -->
+                    <div id="calculator-header" class="flex items-center justify-between p-3 cursor-pointer">
+                        <h3 class="text-lg font-bold text-primary flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 lucide lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><line x1="8" x2="8" y1="14" y2="18"/><line x1="12" x2="12" y1="14" y2="18"/></svg>
+                            Profit Calculator
+                        </h3>
+                        <svg id="calculator-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform transform rotate-180"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <!-- Body is now collapsible and collapsed by default -->
+                    <div id="calculator-body" class="p-4 flex flex-col md:flex-row items-center gap-4 collapsed border-custom">
+                        <!-- Input Fields Section -->
+                        <div class="w-full md:flex-grow grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label for="calc-quantity" class="block text-sm font-medium text-secondary mb-1">Quantity</label>
+                                <input type="number" id="calc-quantity" value="1" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            </div>
+                            <div>
+                                <label for="calc-buy-price" class="block text-sm font-medium text-secondary mb-1">Buy Price</label>
+                                <input type="number" id="calc-buy-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            </div>
+                            <div>
+                                <label for="calc-sell-price" class="block text-sm font-medium text-secondary mb-1">Sell Price</label>
+                                <input type="number" id="calc-sell-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            </div>
+                        </div>
+                
+                        <!-- Separator -->
+                        <div class="hidden md:block h-16 border-l border-custom"></div>
+                
+                        <!-- Profit Result Section -->
+                        <div class="w-full md:w-auto md:flex-shrink-0 md:pl-4 text-center">
+                            <p class="text-sm text-secondary">NET PROFIT</p>
+                            <p id="net-profit-result" class="text-2xl font-bold">0 GP</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- Profit Calculator Container -->
-    <div id="profit-calculator-container" class="fixed bottom-4 right-4 hidden">
-        <div id="profit-calculator-box" class="bg-main p-6 rounded-lg border border-custom mb-2 w-72">
-            <h3 class="text-xl font-bold text-primary mb-4">Profit Calculator</h3>
-            <div class="space-y-4">
-                <div>
-                    <label for="calc-quantity" class="block text-sm font-medium text-secondary mb-1">Quantity</label>
-                    <input type="number" id="calc-quantity" value="1" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
-                </div>
-                <div>
-                    <label for="calc-buy-price" class="block text-sm font-medium text-secondary mb-1">Buy Price</label>
-                    <input type="number" id="calc-buy-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
-                </div>
-                <div>
-                    <label for="calc-sell-price" class="block text-sm font-medium text-secondary mb-1">Sell Price</label>
-                    <input type="number" id="calc-sell-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
-                </div>
-                <hr class="my-3 border-custom">
-                <div>
-                    <p class="text-lg"><strong>Net Profit:</strong> <span id="net-profit-result" class="font-bold">0 GP</span></p>
-                </div>
-            </div>
-        </div>
-        <button id="calculator-toggle-btn" class="bg-accent text-white p-4 rounded-full shadow-lg float-right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><line x1="16" x2="12" y1="10" y2="10"/><line x1="12" x2="12" y1="10" y2="14"/><line x1="8" x2="8" y1="10" y2="10"/><line x1="8" x2="8" y1="14" y2="18"/><line x1="12" x2="12" y1="18" y2="18"/></svg>
-        </button>
-    </div>
-
 
     <script>
         // DOM Element References
@@ -255,9 +267,7 @@
         const errorDiv = document.getElementById('error');
         const loader = document.getElementById('loader');
         const resultsContainer = document.getElementById('results-container');
-        const profitCalculatorContainer = document.getElementById('profit-calculator-container');
-        const profitCalculatorBox = document.getElementById('profit-calculator-box');
-        const calculatorToggleButton = document.getElementById('calculator-toggle-btn');
+        const profitCalculator = document.getElementById('profit-calculator');
         const priceInfoDiv = document.getElementById('price-info');
         const additionalInfoDiv = document.getElementById('additional-info');
         const analysisInfoDiv = document.getElementById('analysis-info');
@@ -273,6 +283,10 @@
         const calcBuyPriceInput = document.getElementById('calc-buy-price');
         const calcSellPriceInput = document.getElementById('calc-sell-price');
         const netProfitResult = document.getElementById('net-profit-result');
+        // New references for collapsible calculator
+        const calculatorHeader = document.getElementById('calculator-header');
+        const calculatorBody = document.getElementById('calculator-body');
+        const calculatorArrow = document.getElementById('calculator-arrow');
 
 
         let itemMapping = [];
@@ -280,6 +294,18 @@
         let fetchController; 
         let currentItem = null;
         let timeSeriesData = {}; // Store all timeframe data here
+
+        // Set of item IDs exempt from the 2% tax, using the 1% tax instead.
+        const taxExemptIds = new Set([
+            // Standard Runes
+            554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 9075,
+            // Standard Arrows
+            882, 884, 886, 888, 890, 892,
+            // Standard Bolts (unfinished)
+            9375, 9377, 9378, 9379, 9380, 9381,
+            // Old School Bond
+            13190
+        ]);
 
         // --- Theme Functions ---
         function applyTheme(theme) {
@@ -340,7 +366,7 @@
 
             hideError();
             resultsContainer.classList.add('hidden');
-            profitCalculatorContainer.classList.add('hidden');
+            profitCalculator.classList.add('hidden');
             loader.classList.remove('hidden');
 
             const item = itemMapping.find(i => i.name.toLowerCase() === itemName.toLowerCase());
@@ -371,8 +397,10 @@
                 timeSeriesData['1d'] = oneHourData.data.slice(-24);
                 timeSeriesData['5d'] = sixHourData.data.slice(-20);
                 timeSeriesData['30d'] = sixHourData.data;
+                
+                const dailyVolume = timeSeriesData['1d'].reduce((acc, p) => acc + (p.avgHighPriceVolume || 0) + (p.avgLowPriceVolume || 0), 0);
 
-                displayItemInfo(item, latestData.data[item.id]);
+                displayItemInfo(item, latestData.data[item.id], dailyVolume);
                 updateDynamicContent('5d'); // Display 5-day view by default
 
             } catch (error) {
@@ -404,19 +432,24 @@
             const buyPrice = parseInt(calcBuyPriceInput.value) || 0;
             const sellPrice = parseInt(calcSellPriceInput.value) || 0;
 
-            if (quantity <= 0 || buyPrice <= 0 || sellPrice <= 0) {
+            if (quantity <= 0 || buyPrice <= 0 || sellPrice <= 0 || !currentItem) {
                 netProfitResult.textContent = '0 GP';
-                netProfitResult.className = 'font-bold';
+                netProfitResult.className = 'text-2xl font-bold';
                 return;
             }
 
             const totalBuyCost = quantity * buyPrice;
             const totalSellRevenue = quantity * sellPrice;
-            const geTax = Math.floor(totalSellRevenue * 0.02);
+            
+            let taxRate = 0.02; // Default to 2%
+            if (taxExemptIds.has(currentItem.id) || totalSellRevenue > 250000000) {
+                taxRate = 0.01;
+            }
+            const geTax = Math.floor(totalSellRevenue * taxRate);
             const netProfit = totalSellRevenue - totalBuyCost - geTax;
 
             netProfitResult.textContent = `${netProfit.toLocaleString()} GP`;
-            netProfitResult.className = `font-bold ${netProfit > 0 ? 'text-profit' : 'text-loss'}`;
+            netProfitResult.className = `text-2xl font-bold ${netProfit > 0 ? 'text-profit' : 'text-loss'}`;
         }
 
         // --- Analysis Functions ---
@@ -467,7 +500,7 @@
 
 
         // --- UI Update Functions ---
-        function displayItemInfo(item, prices) {
+        function displayItemInfo(item, prices, dailyVolume) {
             itemNameTitle.textContent = item.name;
             itemIcon.src = `https://static.runelite.net/cache/item/icon/${item.id}.png`;
             itemIcon.onerror = () => itemIcon.src = 'https://placehold.co/48x48/2a2725/a8a29e?text=?';
@@ -477,7 +510,12 @@
                 const highPrice = prices.high;
                 const lowPrice = prices.low;
                 const margin = highPrice - lowPrice;
-                const tax = Math.floor(highPrice * 0.02);
+                
+                let taxRate = 0.02; // Default to 2%
+                if (taxExemptIds.has(item.id) || highPrice > 250000000) {
+                    taxRate = 0.01;
+                }
+                const tax = Math.floor(highPrice * taxRate);
                 const profit = margin - tax;
 
                 priceInfoDiv.innerHTML = `
@@ -492,6 +530,7 @@
                         const targetInput = e.target.dataset.target === 'buy' ? calcBuyPriceInput : calcSellPriceInput;
                         targetInput.value = e.target.dataset.price;
                         calculateNetProfit();
+                        targetInput.focus();
                     });
                 });
             } else {
@@ -499,6 +538,13 @@
             }
             
             additionalInfoDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1zm4-2a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                        24h Volume
+                    </span>
+                    <span class="font-bold text-primary">${dailyVolume ? dailyVolume.toLocaleString() : 'N/A'}</span>
+                </div>
                 <div class="flex items-center justify-between">
                     <span class="flex items-center text-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
@@ -516,7 +562,7 @@
             `;
 
             resultsContainer.classList.remove('hidden');
-            profitCalculatorContainer.classList.remove('hidden');
+            profitCalculator.classList.remove('hidden');
         }
 
         function updateDynamicContent(timeframe) {
@@ -675,10 +721,6 @@
             }
         });
 
-        calculatorToggleButton.addEventListener('click', () => {
-            profitCalculatorBox.classList.toggle('expanded');
-        });
-
         document.addEventListener('click', (e) => {
             if (!itemNameInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
                 suggestionsDiv.classList.add('hidden');
@@ -695,6 +737,12 @@
 
         [calcQuantityInput, calcBuyPriceInput, calcSellPriceInput].forEach(input => {
             input.addEventListener('input', calculateNetProfit);
+        });
+
+        // Event listener for the collapsible calculator
+        calculatorHeader.addEventListener('click', () => {
+            calculatorBody.classList.toggle('collapsed');
+            calculatorArrow.classList.toggle('rotate-180');
         });
 
         // --- Initial Load ---
