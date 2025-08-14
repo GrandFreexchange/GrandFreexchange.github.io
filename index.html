@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JK70X6NNKM');
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced OSRS Price & Flipping Tool</title>
@@ -123,6 +113,21 @@
         html[data-theme="light"] .main-title {
              color: #3a3532; /* Keep it dark for readability on light theme */
         }
+
+        #profit-calculator-container {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #profit-calculator-box {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #profit-calculator-box.expanded {
+            max-height: 500px; /* Adjust as needed */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +142,9 @@
             <div class="flex justify-center items-center space-x-4">
                 <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12">
                 <div>
-                    <h1 class="text-4xl font-bold main-title mb-2">Quick and FREE OSRS Flipping Tool</h1>
+                    <a href="https://www.osrs.lol" target="_blank" rel="noopener noreferrer" class="main-title no-underline">
+                        <h1 class="text-4xl font-bold mb-2">Quick and FREE OSRS Flipping Tool</h1>
+                    </a>
                     <p class="text-lg text-secondary">Live prices, volume analysis, and trend confidence.</p>
                 </div>
                 <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12 transform -scale-x-100">
@@ -157,7 +164,7 @@
         <!-- Search Section -->
         <div>
             <div class="relative mb-4">
-                <input type="text" id="itemName" placeholder="e.g., Abyssal whip" class="w-full p-4 bg-main border-2 border-custom rounded-lg text-primary placeholder-custom focus:outline-none focus-accent transition-colors">
+                <input type="text" id="itemName" placeholder="e.g. Steel platebody, Abyssal whip, Elysian spirit shield" class="w-full p-4 bg-main border-2 border-custom rounded-lg text-primary placeholder-custom focus:outline-none focus-accent transition-colors">
                 <div id="suggestions" class="absolute z-20 w-full bg-main border border-custom rounded-lg mt-1 max-h-60 overflow-y-auto hidden"></div>
             </div>
             <div class="text-center">
@@ -188,6 +195,7 @@
                         <h2 id="item-name-title" class="text-2xl font-bold text-primary"></h2>
                     </div>
                     <div id="price-info" class="space-y-3 text-lg"></div>
+                    <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom"></div>
                 </div>
                 <!-- Trend Analysis Box -->
                 <div class="bg-main p-6 rounded-lg border border-custom">
@@ -209,29 +217,36 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Profit Calculator Box -->
-        <div id="profit-calculator-box" class="bg-main p-6 rounded-lg border border-custom mt-6 hidden">
+    </div>
+    
+    <!-- Profit Calculator Container -->
+    <div id="profit-calculator-container" class="fixed bottom-4 right-4 hidden">
+        <div id="profit-calculator-box" class="bg-main p-6 rounded-lg border border-custom mb-2 w-72">
             <h3 class="text-xl font-bold text-primary mb-4">Profit Calculator</h3>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                <div class="md:col-span-1">
+            <div class="space-y-4">
+                <div>
                     <label for="calc-quantity" class="block text-sm font-medium text-secondary mb-1">Quantity</label>
                     <input type="number" id="calc-quantity" value="1" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
                 </div>
-                <div class="md:col-span-1">
+                <div>
                     <label for="calc-buy-price" class="block text-sm font-medium text-secondary mb-1">Buy Price</label>
                     <input type="number" id="calc-buy-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
                 </div>
-                <div class="md:col-span-1">
+                <div>
                     <label for="calc-sell-price" class="block text-sm font-medium text-secondary mb-1">Sell Price</label>
                     <input type="number" id="calc-sell-price" class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
                 </div>
-                <div class="md:col-span-1 text-center md:text-left">
-                     <p class="text-lg"><strong>Net Profit:</strong> <span id="net-profit-result" class="font-bold">0 GP</span></p>
+                <hr class="my-3 border-custom">
+                <div>
+                    <p class="text-lg"><strong>Net Profit:</strong> <span id="net-profit-result" class="font-bold">0 GP</span></p>
                 </div>
             </div>
         </div>
+        <button id="calculator-toggle-btn" class="bg-accent text-white p-4 rounded-full shadow-lg float-right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><line x1="16" x2="12" y1="10" y2="10"/><line x1="12" x2="12" y1="10" y2="14"/><line x1="8" x2="8" y1="10" y2="10"/><line x1="8" x2="8" y1="14" y2="18"/><line x1="12" x2="12" y1="18" y2="18"/></svg>
+        </button>
     </div>
+
 
     <script>
         // DOM Element References
@@ -240,8 +255,11 @@
         const errorDiv = document.getElementById('error');
         const loader = document.getElementById('loader');
         const resultsContainer = document.getElementById('results-container');
+        const profitCalculatorContainer = document.getElementById('profit-calculator-container');
         const profitCalculatorBox = document.getElementById('profit-calculator-box');
+        const calculatorToggleButton = document.getElementById('calculator-toggle-btn');
         const priceInfoDiv = document.getElementById('price-info');
+        const additionalInfoDiv = document.getElementById('additional-info');
         const analysisInfoDiv = document.getElementById('analysis-info');
         const itemNameTitle = document.getElementById('item-name-title');
         const itemIcon = document.getElementById('item-icon');
@@ -261,6 +279,7 @@
         let priceChart = null;
         let fetchController; 
         let currentItem = null;
+        let timeSeriesData = {}; // Store all timeframe data here
 
         // --- Theme Functions ---
         function applyTheme(theme) {
@@ -286,20 +305,16 @@
             const gridColor = style.getPropertyValue('--chart-grid-color');
             const accentGreen = style.getPropertyValue('--accent-green');
             const accentRed = style.getPropertyValue('--accent-red');
-            const accentBlue = style.getPropertyValue('--accent-blue');
 
             priceChart.options.plugins.legend.labels.color = textColor;
             priceChart.options.plugins.title.color = textColor;
             priceChart.options.scales.x.ticks.color = secondaryTextColor;
             priceChart.options.scales.y.ticks.color = secondaryTextColor;
-            priceChart.options.scales.y1.ticks.color = accentBlue;
             priceChart.options.scales.x.grid.color = gridColor;
             priceChart.options.scales.y.grid.color = gridColor;
 
             priceChart.data.datasets[0].borderColor = accentGreen;
             priceChart.data.datasets[1].borderColor = accentRed;
-            priceChart.data.datasets[2].borderColor = accentBlue;
-            priceChart.data.datasets[2].backgroundColor = accentBlue + '4D'; 
 
             priceChart.update();
         }
@@ -316,7 +331,7 @@
             }
         }
 
-        async function fetchPriceData(itemName, timeframe = '5d') {
+        async function fetchAllData(itemName) {
             if (fetchController) {
                 fetchController.abort();
             }
@@ -325,7 +340,7 @@
 
             hideError();
             resultsContainer.classList.add('hidden');
-            profitCalculatorBox.classList.add('hidden');
+            profitCalculatorContainer.classList.add('hidden');
             loader.classList.remove('hidden');
 
             const item = itemMapping.find(i => i.name.toLowerCase() === itemName.toLowerCase());
@@ -336,25 +351,29 @@
             }
             currentItem = item;
 
-            const timestep = timeframe === '1d' ? '1h' : '6h';
-            const timeseriesUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=${timestep}&id=${item.id}`;
+            const latestUrl = 'https://prices.runescape.wiki/api/v1/osrs/latest';
+            const oneHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=1h&id=${item.id}`;
+            const sixHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=6h&id=${item.id}`;
 
             try {
-                const [latestRes, timeseriesRes] = await Promise.all([
-                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest', { signal }),
-                    fetch(timeseriesUrl, { signal })
+                const [latestRes, oneHourRes, sixHourRes] = await Promise.all([
+                    fetch(latestUrl, { signal }),
+                    fetch(oneHourUrl, { signal }),
+                    fetch(sixHourUrl, { signal })
                 ]);
 
-                if (!latestRes.ok || !timeseriesRes.ok) throw new Error('Failed to fetch price data.');
+                if (!latestRes.ok || !oneHourRes.ok || !sixHourRes.ok) throw new Error('Failed to fetch price data.');
 
                 const latestData = await latestRes.json();
-                const timeseriesData = await timeseriesRes.json();
+                const oneHourData = await oneHourRes.json();
+                const sixHourData = await sixHourRes.json();
                 
-                let processedData = timeseriesData.data;
-                if (timeframe === '1d') processedData = processedData.slice(-24);
-                else if (timeframe === '5d') processedData = processedData.slice(-20);
+                timeSeriesData['1d'] = oneHourData.data.slice(-24);
+                timeSeriesData['5d'] = sixHourData.data.slice(-20);
+                timeSeriesData['30d'] = sixHourData.data;
 
-                displayResults(item, latestData.data[item.id], processedData);
+                displayItemInfo(item, latestData.data[item.id]);
+                updateDynamicContent('5d'); // Display 5-day view by default
 
             } catch (error) {
                 if (error.name !== 'AbortError') showError('Error fetching price data. The API might be down.');
@@ -375,7 +394,7 @@
 
             if (item) {
                 itemNameInput.value = item.name;
-                fetchPriceData(item.name);
+                fetchAllData(item.name);
             }
         }
 
@@ -448,8 +467,7 @@
 
 
         // --- UI Update Functions ---
-
-        function displayResults(item, prices, timeseries) {
+        function displayItemInfo(item, prices) {
             itemNameTitle.textContent = item.name;
             itemIcon.src = `https://static.runelite.net/cache/item/icon/${item.id}.png`;
             itemIcon.onerror = () => itemIcon.src = 'https://placehold.co/48x48/2a2725/a8a29e?text=?';
@@ -467,10 +485,8 @@
                     <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="${lowPrice}" data-target="buy">${lowPrice.toLocaleString()} GP</span></p>
                     <hr class="my-3 border-custom">
                     <p><strong>Margin:</strong> <span class="text-accent">${margin.toLocaleString()} GP</span></p>
-                    <p><strong>GE Tax (2%):</strong> <span class="text-secondary">${tax.toLocaleString()} GP</span></p>
                     <p><strong>Profit/Flip:</strong> <span class="${profit > 0 ? 'text-profit' : 'text-loss'} font-bold">${profit.toLocaleString()} GP</span></p>
                 `;
-                 // Add listeners to new clickable prices
                 priceInfoDiv.querySelectorAll('.clickable-price').forEach(el => {
                     el.addEventListener('click', (e) => {
                         const targetInput = e.target.dataset.target === 'buy' ? calcBuyPriceInput : calcSellPriceInput;
@@ -478,15 +494,46 @@
                         calculateNetProfit();
                     });
                 });
-
             } else {
                 priceInfoDiv.innerHTML = `<p class="text-secondary">No live price data available.</p>`;
             }
+            
+            additionalInfoDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        Buy Limit
+                    </span>
+                    <span class="font-bold text-primary">${item.limit ? item.limit.toLocaleString() : 'N/A'}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M8.433 7.418c.158-.103.346-.195.574-.277a6.213 6.213 0 014.228 0c.228.082.416.174.574.277a1 1 0 01.348 1.311l-.348.347a1 1 0 01-1.414 0L11 8.414V14a1 1 0 11-2 0V8.414l-.879.879a1 1 0 01-1.414 0l-.348-.347a1 1 0 01.073-1.403z" /><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.998 3.998 0 00-5.656 0L6.92 12.754A7.963 7.963 0 016 10c0-4.418 3.582-8 8-8s8 3.582 8 8z" clip-rule="evenodd" /></svg>
+                        High Alch
+                    </span>
+                    <span class="font-bold text-primary">${item.highalch ? item.highalch.toLocaleString() + ' GP' : 'N/A'}</span>
+                </div>
+            `;
 
-            const avgPrices = timeseries.map(p => (p.avgHighPrice + p.avgLowPrice) / 2).filter(p => p);
-            const volumes = timeseries.map(p => p.avgHighPriceVolume + p.avgLowPriceVolume).filter(v => v);
+            resultsContainer.classList.remove('hidden');
+            profitCalculatorContainer.classList.remove('hidden');
+        }
+
+        function updateDynamicContent(timeframe) {
+            const timeseries = timeSeriesData[timeframe];
+            if (!timeseries) return;
+
+            const processedPoints = timeseries.map(p => ({
+                timestamp: p.timestamp,
+                avgPrice: (p.avgHighPrice + p.avgLowPrice) / 2,
+                volume: (p.avgHighPriceVolume || 0) + (p.avgLowPriceVolume || 0)
+            }));
+
+            const avgPrices = processedPoints.map(p => p.avgPrice).filter(p => p);
+            const volumes = processedPoints.map(p => p.volume);
+            
             const priceAnalysis = getTrendAnalysis(avgPrices);
-            const volumeAnalysis = getTrendAnalysis(volumes);
+            const volumeAnalysis = getTrendAnalysis(volumes.filter(v => v > 0)); 
             const suggestion = getSuggestion(priceAnalysis, volumeAnalysis);
 
             analysisInfoDiv.innerHTML = `
@@ -497,10 +544,20 @@
                 <hr class="my-3 border-custom">
                 <p><strong>Suggestion:</strong> <span class="font-bold text-xl ${suggestion.color}">${suggestion.text}</span></p>
             `;
-
-            resultsContainer.classList.remove('hidden');
-            profitCalculatorBox.classList.remove('hidden');
-            updateChart(item.name, timeseries);
+            updateChart(currentItem.name, timeseries);
+        }
+        
+        function formatAxisLabel(value) {
+            if (value >= 1000000000) {
+                return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'b';
+            }
+            if (value >= 1000000) {
+                return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+            }
+            if (value >= 1000) {
+                return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+            }
+            return value.toLocaleString();
         }
 
         function updateChart(itemName, dataPoints) {
@@ -512,57 +569,52 @@
             const gridColor = style.getPropertyValue('--chart-grid-color');
             const accentGreen = style.getPropertyValue('--accent-green');
             const accentRed = style.getPropertyValue('--accent-red');
-            const accentBlue = style.getPropertyValue('--accent-blue');
 
             const labels = dataPoints.map(p => new Date(p.timestamp * 1000));
             const highPrices = dataPoints.map(p => p.avgHighPrice);
             const lowPrices = dataPoints.map(p => p.avgLowPrice);
-            const volumes = dataPoints.map(p => p.avgHighPriceVolume + p.avgLowPriceVolume);
+
+            const datasets = [{
+                label: 'Avg High Price', data: highPrices, borderColor: accentGreen,
+                backgroundColor: 'rgba(34, 197, 94, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
+            }, {
+                label: 'Avg Low Price', data: lowPrices, borderColor: accentRed,
+                backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
+            }];
+
+            const scales = {
+                x: {
+                    type: 'time',
+                    time: { unit: labels.length > 30 ? 'day' : 'hour', tooltipFormat: 'MMM d, h:mm a' },
+                    grid: { color: gridColor }, ticks: { color: secondaryTextColor }
+                },
+                y: {
+                    beginAtZero: false,
+                    position: 'left', grid: { color: gridColor },
+                    ticks: { color: secondaryTextColor, callback: formatAxisLabel }
+                }
+            };
 
             const ctx = document.getElementById('priceChart').getContext('2d');
             priceChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'Avg High Price', data: highPrices, borderColor: accentGreen,
-                        backgroundColor: 'rgba(34, 197, 94, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
-                    }, {
-                        label: 'Avg Low Price', data: lowPrices, borderColor: accentRed,
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
-                    }, {
-                        type: 'bar', label: 'Volume', data: volumes,
-                        backgroundColor: accentBlue + '4D', borderColor: accentBlue, yAxisID: 'y1',
-                    }]
+                    datasets: datasets
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: { unit: labels.length > 30 ? 'day' : 'hour', tooltipFormat: 'MMM d, h:mm a' },
-                            grid: { color: gridColor }, ticks: { color: secondaryTextColor }
-                        },
-                        y: {
-                            position: 'left', grid: { color: gridColor },
-                            ticks: { color: secondaryTextColor, callback: value => `${(value/1000).toFixed(0)}k` }
-                        },
-                        y1: {
-                            type: 'linear', display: true, position: 'right',
-                            grid: { drawOnChartArea: false },
-                            ticks: { color: accentBlue, callback: value => `${(value/1000).toFixed(0)}k` }
-                        }
-                    },
+                    scales: scales,
                     plugins: {
                         legend: { labels: { color: textColor } },
-                        title: { display: true, text: `${itemName} - Price & Volume History`, color: textColor, font: { size: 18 } },
+                        title: { display: true, text: `${itemName} - Price History`, color: textColor, font: { size: 18 } },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     let label = context.dataset.label || '';
                                     if (label) label += ': ';
-                                    if (context.parsed.y !== null) label += context.parsed.y.toLocaleString() + (context.dataset.yAxisID === 'y' ? ' GP' : '');
+                                    if (context.parsed.y !== null) label += context.parsed.y.toLocaleString() + ' GP';
                                     return label;
                                 }
                             }
@@ -603,7 +655,7 @@
                     div.addEventListener('click', () => {
                         itemNameInput.value = item.name;
                         suggestionsDiv.classList.add('hidden');
-                        fetchPriceData(item.name);
+                        fetchAllData(item.name);
                     });
                     suggestionsDiv.appendChild(div);
                 });
@@ -619,8 +671,12 @@
                 if (!currentItem || e.target.classList.contains('active')) return;
                 timeframeControls.querySelector('.active').classList.remove('active');
                 e.target.classList.add('active');
-                fetchPriceData(currentItem.name, selectedTimeframe);
+                updateDynamicContent(selectedTimeframe);
             }
+        });
+
+        calculatorToggleButton.addEventListener('click', () => {
+            profitCalculatorBox.classList.toggle('expanded');
         });
 
         document.addEventListener('click', (e) => {
@@ -650,3 +706,4 @@
     </script>
 </body>
 </html>
+
