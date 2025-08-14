@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 'Time' adapter for Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <style>
         :root {
@@ -114,7 +113,6 @@
              color: #3a3532; /* Keep it dark for readability on light theme */
         }
         
-        /* Styles for collapsible calculator */
         #calculator-body {
             max-height: 500px;
             transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, border 0.5s ease-in-out;
@@ -187,7 +185,7 @@
 
         <!-- Results Section -->
         <div id="results-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 hidden mt-8">
-            <!-- Left Column: Item Info, Prices & Analysis -->
+            <!-- Left Column: Item Info & Prices -->
             <div class="lg:col-span-1 flex flex-col gap-6">
                 <!-- Item Info & Price Box -->
                 <div class="bg-main p-6 rounded-lg border border-custom space-y-6">
@@ -198,13 +196,9 @@
                     <div id="price-info" class="space-y-3 text-lg"></div>
                     <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom"></div>
                 </div>
-                <!-- Trend Analysis Box -->
-                <div class="bg-main p-6 rounded-lg border border-custom">
-                    <div id="analysis-info" class="space-y-3 text-lg"></div>
-                </div>
             </div>
 
-            <!-- Right Column: Price Chart & Timeframe -->
+            <!-- Right Column: Historical Data Graph & Calculator -->
             <div class="lg:col-span-2 bg-main p-6 rounded-lg border border-custom">
                 <div class="flex justify-center mb-4">
                     <div id="timeframe-controls" class="flex space-x-2 p-1 bg-dark-contrast rounded-lg">
@@ -213,6 +207,7 @@
                         <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium" data-timeframe="30d">30-Day</button>
                     </div>
                 </div>
+                <!-- New Price & Volume Graph -->
                 <div class="h-80 md:h-96">
                     <canvas id="priceChart"></canvas>
                 </div>
@@ -270,7 +265,6 @@
         const profitCalculator = document.getElementById('profit-calculator');
         const priceInfoDiv = document.getElementById('price-info');
         const additionalInfoDiv = document.getElementById('additional-info');
-        const analysisInfoDiv = document.getElementById('analysis-info');
         const itemNameTitle = document.getElementById('item-name-title');
         const itemIcon = document.getElementById('item-icon');
         const timeframeControls = document.getElementById('timeframe-controls');
@@ -336,7 +330,7 @@
             priceChart.options.plugins.title.color = textColor;
             priceChart.options.scales.x.ticks.color = secondaryTextColor;
             priceChart.options.scales.y.ticks.color = secondaryTextColor;
-            priceChart.options.scales.x.grid.color = gridColor;
+            priceChart.options.scales.y1.ticks.color = secondaryTextColor;
             priceChart.options.scales.y.grid.color = gridColor;
 
             priceChart.data.datasets[0].borderColor = accentGreen;
@@ -398,7 +392,7 @@
                 timeSeriesData['5d'] = sixHourData.data.slice(-20);
                 timeSeriesData['30d'] = sixHourData.data;
                 
-                const dailyVolume = timeSeriesData['1d'].reduce((acc, p) => acc + (p.avgHighPriceVolume || 0) + (p.avgLowPriceVolume || 0), 0);
+                const dailyVolume = timeSeriesData['1d'].reduce((acc, p) => acc + (p.highPriceVolume || 0) + (p.lowPriceVolume || 0), 0);
 
                 displayItemInfo(item, latestData.data[item.id], dailyVolume);
                 updateDynamicContent('5d'); // Display 5-day view by default
@@ -451,53 +445,6 @@
             netProfitResult.textContent = `${netProfit.toLocaleString()} GP`;
             netProfitResult.className = `text-2xl font-bold ${netProfit > 0 ? 'text-profit' : 'text-loss'}`;
         }
-
-        // --- Analysis Functions ---
-
-        function linearRegression(data) {
-            const n = data.length;
-            if (n < 2) return { slope: 0, rSquared: 0 };
-            let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
-            data.forEach((y, i) => {
-                const x = i + 1;
-                sumX += x; sumY += y; sumXY += x * y; sumXX += x * x;
-            });
-            const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-            const intercept = (sumY - slope * sumX) / n;
-            let ssTotal = 0, ssResidual = 0;
-            const meanY = sumY / n;
-            data.forEach((y, i) => {
-                const x = i + 1;
-                const predictedY = slope * x + intercept;
-                ssTotal += (y - meanY) ** 2;
-                ssResidual += (y - predictedY) ** 2;
-            });
-            const rSquared = ssTotal === 0 ? 1 : 1 - (ssResidual / ssTotal);
-            return { slope, rSquared };
-        }
-
-        function getTrendAnalysis(data) {
-            const { slope, rSquared } = linearRegression(data);
-            let trend;
-            if (data.length < 2 || Math.abs(slope) < 0.01 * (data.reduce((a, b) => a + b, 0) / data.length)) trend = 'Stable';
-            else if (slope > 0) trend = 'Increasing';
-            else trend = 'Decreasing';
-            let confidence;
-            if (rSquared > 0.7) confidence = 'High';
-            else if (rSquared > 0.4) confidence = 'Medium';
-            else confidence = 'Low';
-            return { trend, confidence, rSquared };
-        }
-
-        function getSuggestion(priceAnalysis, volumeAnalysis) {
-            if (priceAnalysis.confidence === 'Low') return { text: 'Uncertain - Hold', color: 'text-secondary' };
-            const isPriceUp = priceAnalysis.trend === 'Increasing';
-            const isVolumeUp = volumeAnalysis.trend === 'Increasing';
-            if (isPriceUp) return { text: isVolumeUp ? 'Strong Buy Signal' : 'Buy Signal', color: 'text-profit' };
-            if (priceAnalysis.trend === 'Decreasing') return { text: isVolumeUp ? 'Strong Sell Signal' : 'Sell Signal', color: 'text-loss' };
-            return { text: 'Stable - Hold', color: 'text-secondary' };
-        }
-
 
         // --- UI Update Functions ---
         function displayItemInfo(item, prices, dailyVolume) {
@@ -568,31 +515,9 @@
         function updateDynamicContent(timeframe) {
             const timeseries = timeSeriesData[timeframe];
             if (!timeseries) return;
-
-            const processedPoints = timeseries.map(p => ({
-                timestamp: p.timestamp,
-                avgPrice: (p.avgHighPrice + p.avgLowPrice) / 2,
-                volume: (p.avgHighPriceVolume || 0) + (p.avgLowPriceVolume || 0)
-            }));
-
-            const avgPrices = processedPoints.map(p => p.avgPrice).filter(p => p);
-            const volumes = processedPoints.map(p => p.volume);
-            
-            const priceAnalysis = getTrendAnalysis(avgPrices);
-            const volumeAnalysis = getTrendAnalysis(volumes.filter(v => v > 0)); 
-            const suggestion = getSuggestion(priceAnalysis, volumeAnalysis);
-
-            analysisInfoDiv.innerHTML = `
-                <h3 class="text-xl font-bold text-primary mb-2">Trend Analysis</h3>
-                <p><strong>Price Trend:</strong> <span class="font-bold ${priceAnalysis.trend === 'Increasing' ? 'text-profit' : priceAnalysis.trend === 'Decreasing' ? 'text-loss' : 'text-secondary'}">${priceAnalysis.trend}</span></p>
-                <p><strong>Volume Trend:</strong> <span class="font-bold text-volume">${volumeAnalysis.trend}</span></p>
-                <p><strong>Confidence (R²):</strong> <span class="font-bold ${priceAnalysis.confidence === 'High' ? 'text-profit' : priceAnalysis.confidence === 'Medium' ? 'text-accent' : 'text-loss'}">${priceAnalysis.confidence} (${priceAnalysis.rSquared.toFixed(2)})</span></p>
-                <hr class="my-3 border-custom">
-                <p><strong>Suggestion:</strong> <span class="font-bold text-xl ${suggestion.color}">${suggestion.text}</span></p>
-            `;
             updateChart(currentItem.name, timeseries);
         }
-        
+
         function formatAxisLabel(value) {
             if (value >= 1000000000) {
                 return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'b';
@@ -616,60 +541,121 @@
             const accentGreen = style.getPropertyValue('--accent-green');
             const accentRed = style.getPropertyValue('--accent-red');
 
+            const ctx = document.getElementById('priceChart').getContext('2d');
+
+            const greenGradient = ctx.createLinearGradient(0, 0, 0, 400);
+            greenGradient.addColorStop(0, 'rgba(34, 197, 94, 0.5)');
+            greenGradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
+
+            const redGradient = ctx.createLinearGradient(0, 0, 0, 400);
+            redGradient.addColorStop(0, 'rgba(239, 68, 68, 0.5)');
+            redGradient.addColorStop(1, 'rgba(239, 68, 68, 0)');
+
             const labels = dataPoints.map(p => new Date(p.timestamp * 1000));
             const highPrices = dataPoints.map(p => p.avgHighPrice);
             const lowPrices = dataPoints.map(p => p.avgLowPrice);
+            const volumes = dataPoints.map(p => (p.highPriceVolume || 0) + (p.lowPriceVolume || 0));
 
-            const datasets = [{
-                label: 'Avg High Price', data: highPrices, borderColor: accentGreen,
-                backgroundColor: 'rgba(34, 197, 94, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
-            }, {
-                label: 'Avg Low Price', data: lowPrices, borderColor: accentRed,
-                backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.3, pointRadius: 1, yAxisID: 'y'
-            }];
-
-            const scales = {
-                x: {
-                    type: 'time',
-                    time: { unit: labels.length > 30 ? 'day' : 'hour', tooltipFormat: 'MMM d, h:mm a' },
-                    grid: { color: gridColor }, ticks: { color: secondaryTextColor }
-                },
-                y: {
-                    beginAtZero: false,
-                    position: 'left', grid: { color: gridColor },
-                    ticks: { color: secondaryTextColor, callback: formatAxisLabel }
-                }
-            };
-
-            const ctx = document.getElementById('priceChart').getContext('2d');
             priceChart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: datasets
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Avg High Price',
+                            data: highPrices,
+                            borderColor: accentGreen,
+                            backgroundColor: greenGradient,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 1,
+                            yAxisID: 'y',
+                            order: 1
+                        }, 
+                        {
+                            type: 'line',
+                            label: 'Avg Low Price',
+                            data: lowPrices,
+                            borderColor: accentRed,
+                            backgroundColor: redGradient,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 1,
+                            yAxisID: 'y',
+                            order: 1
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Volume',
+                            data: volumes,
+                            backgroundColor: 'rgba(59, 130, 246, 0.3)',
+                            borderColor: 'rgba(59, 130, 246, 0.5)',
+                            borderWidth: 1,
+                            yAxisID: 'y1',
+                            order: 2,
+                            hidden: true // **FIX**: Volume is now hidden by default
+                        }
+                    ]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
-                    scales: scales,
+                    stacked: false,
                     plugins: {
                         legend: { labels: { color: textColor } },
-                        title: { display: true, text: `${itemName} - Price History`, color: textColor, font: { size: 18 } },
+                        title: { display: true, text: `${itemName} - Price & Volume History`, color: textColor, font: { size: 18 } },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     let label = context.dataset.label || '';
                                     if (label) label += ': ';
-                                    if (context.parsed.y !== null) label += context.parsed.y.toLocaleString() + ' GP';
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString();
+                                        if (context.dataset.type === 'line') label += ' GP';
+                                    }
                                     return label;
                                 }
                             }
                         }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: labels.length > 30 ? 'day' : 'hour',
+                                tooltipFormat: 'MMM d, h:mm a'
+                            },
+                            grid: { color: gridColor },
+                            ticks: { color: secondaryTextColor }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            beginAtZero: false,
+                            grid: { color: gridColor },
+                            ticks: {
+                                color: secondaryTextColor,
+                                callback: function(value) { return formatAxisLabel(value) + ' GP'; }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: {
+                                color: secondaryTextColor,
+                                callback: function(value) { return formatAxisLabel(value); }
+                            }
+                        },
                     }
                 }
             });
         }
-
+        
         function showError(message) {
             errorDiv.textContent = message;
             errorDiv.classList.remove('hidden');
