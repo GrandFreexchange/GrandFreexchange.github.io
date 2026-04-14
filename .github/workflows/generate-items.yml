@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'index.html'
+      - 'src/**'
       - 'build.js'
       - 'package.json'
   schedule:
@@ -29,14 +29,18 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Generate item pages
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate and Minify files
         run: node build.js
         timeout-minutes: 30
 
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet items/ sitemap.xml 2>/dev/null; then
+          git add -A
+          if git diff --staged --quiet; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
             echo "changes=true" >> $GITHUB_OUTPUT
@@ -47,6 +51,5 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add items/ sitemap.xml
-          git commit -m "chore: regenerate OSRS item pages [skip ci]"
+          git commit -m "chore: regenerate and minify site [skip ci]"
           git push
