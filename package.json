@@ -1,0 +1,22 @@
+{
+  "name": "osrs-flipping-tool",
+  "version": "1.0.0",
+  "description": "OSRS Grand Exchange flipping tool with SSG",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [
+    "osrs",
+    "grand-exchange",
+    "flipping",
+    "runescape",
+    "seo"
+  ],
+  "author": "GrandFreexchange",
+  "license": "MIT",
+  "devDependencies": {
+    "html-minifier": "^4.0.0",
+    "javascript-obfuscator": "^5.4.1"
+  }
+}

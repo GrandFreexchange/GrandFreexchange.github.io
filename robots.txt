@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://osrs.lol/sitemap.xml
+
+Crawl-delay: 1
