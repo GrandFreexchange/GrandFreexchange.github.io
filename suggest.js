@@ -1,1 +1,146 @@
-let WIKI_API_HEADERS={"User-Agent":"GrandFreexchange.github.io - Suggestion Engine"},budgetSteps=[1e5,2e5,3e5,4e5,5e5,1e6,5e6,1e7,15e6,2e7,25e6,3e7,35e6,4e7,45e6,5e7,1e8,25e7,Number.MAX_SAFE_INTEGER],taxExemptIds=new Set([554,555,556,557,558,559,560,561,562,563,564,565,566,9075,882,884,886,888,890,892,9375,9377,9378,9379,9380,9381,13190]),itemMapping=null,masterFlippableItems=null;async function getCachedData(e,t){var i=sessionStorage.getItem(e);if(i)try{let{data:e,timestamp:t}=JSON.parse(i);if(Date.now()-t<3e5)return e}catch(e){}let a=await t();return sessionStorage.setItem(e,JSON.stringify({data:a,timestamp:Date.now()})),a}async function fetchMapping(){return fetch("https://prices.runescape.wiki/api/v1/osrs/mapping",{headers:WIKI_API_HEADERS}).then(e=>e.json())}async function fetchLatest(){return fetch("https://prices.runescape.wiki/api/v1/osrs/latest",{headers:WIKI_API_HEADERS}).then(e=>e.json())}async function fetchVolumes(){return fetch("https://prices.runescape.wiki/api/v1/osrs/volumes",{headers:WIKI_API_HEADERS}).then(e=>e.json())}function nameToSlug(e){return e.toLowerCase().trim().replace(/[^\w\s-]/g,"").replace(/\s+/g,"-").replace(/-+/g,"-")}async function initSuggestionEngine(){try{var[e,t,i]=await Promise.all([getCachedData("osrs_mapping",fetchMapping),getCachedData("osrs_latest",fetchLatest),getCachedData("osrs_volumes",fetchVolumes)]);let r=t.data,s=i.data;var a=e.map(e=>{var t=r[e.id],i=s[e.id];if(!(t&&t.high&&t.low&&i&&0!==t.low))return null;let a=.02;(taxExemptIds.has(e.id)||25e7<t.high)&&(a=.01);var n=Math.floor(t.high*a),n=t.high-t.low-n;return n<=0?null:{item:e,priceInfo:t,flipScore:n*i}}).filter(Boolean);return a.sort((e,t)=>t.flipScore-e.flipScore),masterFlippableItems=a,itemMapping=e,!0}catch(e){return console.error("Failed to init suggestion engine:",e),!1}}async function getSuggestion(e){if(!masterFlippableItems&&!await initSuggestionEngine())return null;let i=budgetSteps[e],t;return 0===(t=i===Number.MAX_SAFE_INTEGER?masterFlippableItems.filter(e=>25e7<e.priceInfo.low):masterFlippableItems.filter(e=>{var e=e.priceInfo.low,t=1e6<i?.01*i:1;return e<=i&&t<=e})).length?null:{id:(e=(e=t.slice(0,50))[Math.floor(Math.random()*e.length)]).item.id,name:e.item.name,slug:nameToSlug(e.item.name),lowPrice:e.priceInfo.low,highPrice:e.priceInfo.high,profit:+e.flipScore}}window.OSRS_Suggest={getSuggestion:getSuggestion,budgetSteps:budgetSteps}
+/**
+ * Suggestion engine for OSRS flipping opportunities.
+ * Ported from the main app for use in static item pages.
+ */
+
+const WIKI_API_HEADERS = {
+    'User-Agent': 'GrandFreexchange.github.io - Suggestion Engine'
+};
+
+const budgetSteps = [
+    100000, 200000, 300000, 400000, 500000,
+    1000000,
+    5000000, 10000000, 15000000, 20000000, 25000000,
+    30000000, 35000000, 40000000, 45000000, 50000000,
+    100000000, 250000000,
+    Number.MAX_SAFE_INTEGER
+];
+
+const taxExemptIds = new Set([
+    554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 9075,
+    882, 884, 886, 888, 890, 892,
+    9375, 9377, 9378, 9379, 9380, 9381,
+    13190
+]);
+
+let itemMapping = null;
+let masterFlippableItems = null;
+
+// Caching to minimize API calls across page navigations (using SessionStorage)
+async function getCachedData(key, fetchFn) {
+    const cached = sessionStorage.getItem(key);
+    if (cached) {
+        try {
+            const { data, timestamp } = JSON.parse(cached);
+            if (Date.now() - timestamp < 300000) { // 5 min cache
+                return data;
+            }
+        } catch (e) {}
+    }
+    const data = await fetchFn();
+    sessionStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
+    return data;
+}
+
+async function fetchMapping() {
+    return fetch('https://prices.runescape.wiki/api/v1/osrs/mapping', { headers: WIKI_API_HEADERS }).then(r => r.json());
+}
+
+async function fetchLatest() {
+    return fetch('https://prices.runescape.wiki/api/v1/osrs/latest', { headers: WIKI_API_HEADERS }).then(r => r.json());
+}
+
+async function fetchVolumes() {
+    return fetch('https://prices.runescape.wiki/api/v1/osrs/volumes', { headers: WIKI_API_HEADERS }).then(r => r.json());
+}
+
+function nameToSlug(name) {
+    return name
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+}
+
+async function initSuggestionEngine() {
+    try {
+        const [mapping, latest, volumes] = await Promise.all([
+            getCachedData('osrs_mapping', fetchMapping),
+            getCachedData('osrs_latest', fetchLatest),
+            getCachedData('osrs_volumes', fetchVolumes)
+        ]);
+
+        const latestData = latest.data;
+        const volumesData = volumes.data;
+
+        // Filter and score items
+        const scoredItems = mapping.map(item => {
+            const priceInfo = latestData[item.id];
+            const dailyVolume = volumesData[item.id];
+
+            if (!priceInfo || !priceInfo.high || !priceInfo.low || !dailyVolume || priceInfo.low === 0) {
+                return null;
+            }
+
+            let taxRate = 0.02;
+            if (taxExemptIds.has(item.id) || priceInfo.high > 250000000) taxRate = 0.01;
+            const geTax = Math.floor(priceInfo.high * taxRate);
+            const netProfit = (priceInfo.high - priceInfo.low) - geTax;
+
+            if (netProfit <= 0) return null;
+
+            const flipScore = netProfit * dailyVolume;
+            return { item, priceInfo, flipScore };
+        }).filter(Boolean);
+
+        scoredItems.sort((a, b) => b.flipScore - a.flipScore);
+        masterFlippableItems = scoredItems;
+        itemMapping = mapping;
+        
+        return true;
+    } catch (e) {
+        console.error("Failed to init suggestion engine:", e);
+        return false;
+    }
+}
+
+async function getSuggestion(budgetIndex) {
+    if (!masterFlippableItems) {
+        const ok = await initSuggestionEngine();
+        if (!ok) return null;
+    }
+
+    const budget = budgetSteps[budgetIndex];
+    let filtered;
+    
+    if (budget === Number.MAX_SAFE_INTEGER) {
+        filtered = masterFlippableItems.filter(item => item.priceInfo.low > 250000000);
+    } else {
+        filtered = masterFlippableItems.filter(item => {
+            const price = item.priceInfo.low;
+            const minPrice = budget > 1000000 ? budget * 0.01 : 1;
+            return price <= budget && price >= minPrice;
+        });
+    }
+
+    if (filtered.length === 0) return null;
+
+    // Pick from top 50 to ensure quality
+    const pool = filtered.slice(0, 50);
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+
+    return {
+        id: selected.item.id,
+        name: selected.item.name,
+        slug: nameToSlug(selected.item.name),
+        lowPrice: selected.priceInfo.low,
+        highPrice: selected.priceInfo.high,
+        profit: selected.flipScore / (/* approximate daily volume */ 1) // Just passing it back for UI
+    };
+}
+
+window.OSRS_Suggest = {
+    getSuggestion,
+    budgetSteps
+};

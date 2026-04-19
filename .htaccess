@@ -1,0 +1,38 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Remove trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    # HIDE .html extension (Redirect /items/name.html to /items/name)
+    RewriteCond %{THE_REQUEST} /items/(.+)\.html [NC]
+    RewriteRule ^items/(.+)\.html$ /items/$1 [R=301,L]
+
+    # INTERNAL REWRITE (Serve name.html when user visits /items/name)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^items/(.+)$ /items/$1.html [L]
+    
+    # Legacy query param redirect: ?item=123-item-name → /items/item-name
+    RewriteCond %{QUERY_STRING} ^item=([0-9]+-(.+))$
+    RewriteRule ^$ /items/%2? [R=301,L]
+</IfModule>
+
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>

@@ -3,9 +3,9 @@
 
 <head>
     <!-- Canonical URL — tells Google this is the definitive homepage URL -->
-    <link rel="canonical" href="https://osrs.lol/">
+    <link rel="canonical" href="https://osrs.lol/items/demonic-sceptre">
 
-
+    <!-- Redirect /?item= URLs to static /items/ pages for proper SEO indexing -->
     <script>
         (function () {
             var params = new URLSearchParams(window.location.search);
@@ -45,10 +45,21 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSRS Prices & Flipping Tool</title>
-    <meta name="description"
-        content="Live OSRS Grand Exchange price data, trends, and flipping analysis for Old School RuneScape items.">
+    <title>Demonic Sceptre OSRS Price & Trends | Grand Exchange</title>
+    <meta name="description" content="Live Demonic Sceptre price data, market trends, and flipping analysis for OSRS. Professional trading insights for Old School RuneScape.">
     
+    
+    <!-- Open Graph / Facebook -->
+    
+    
+    
+    <meta property="og:image" content="https://tiles.runescape.wiki/static/public/images/osrs/items/33296.png">
+
+    <!-- Twitter -->
+    
+    
+    
+    <meta property="twitter:image" content="https://tiles.runescape.wiki/static/public/images/osrs/items/33296.png">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://osrs.lol/">
@@ -399,9 +410,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;700&display=swap"
         rel="stylesheet">
-</head>
+
+    <script>
+        window.PRELOAD_ITEM_NAME = "Demonic sceptre";
+    </script>
+    
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Items","item":"https://osrs.lol/items/"},{"@type":"ListItem","position":3,"name":"Demonic Sceptre","item":"https://osrs.lol/items/demonic-sceptre"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebPage","name":"Demonic Sceptre OSRS Price & Trends","url":"https://osrs.lol/items/demonic-sceptre","description":"Real-time market data and flipping analysis for Demonic Sceptre in Old School RuneScape.","isPartOf":{"@type":"WebSite","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
+    </head>
 
 <body class="font-sans">
+        <div id="seo-content" style="display:none;" aria-hidden="true">
+            <h1>Demonic sceptre OSRS Price & Trends</h1>
+            <p>Real-time market data and historical trends for Demonic sceptre in Old School RuneScape. Daily Volume: 0.</p>
+            <div>
+                <h2>Flipping Analysis for Demonic sceptre</h2>
+                <p>Track Demonic sceptre price movements, profit margins, and trading volume. Use our professional flipping tool to find optimal buy and sell points for Demonic sceptre.</p>
+            </div>
+        </div>
+    
 
     <div class="container mx-auto max-w-6xl p-4 md:p-8">
 
@@ -411,8 +438,8 @@
                 <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12">
                 <div>
                     <a href="/" class="main-title no-underline">
-                        <div class="text-4xl font-bold mb-2" style="font-family: 'Cinzel', serif;">Quick and FREE OSRS GE
-                            Flipping Tool</div>
+                        <h1 class="text-4xl font-bold mb-2" style="font-family: 'Cinzel', serif;">Quick and FREE OSRS GE
+                            Flipping Tool</h1>
                     </a>
                     <p class="text-lg text-secondary flex items-center justify-center flex-wrap gap-1">
 
@@ -1190,9 +1217,6 @@
                 return;
             }
 
-            const originalText = suggestItemBtn.textContent;
-            suggestItemBtn.textContent = 'Verifying...';
-
             // Increase the pool significantly (top 50) rather than top 20
             // This prevents repeating the same 1 or 2 items if the rest of the pool goes stale
             const topTierSize = 50;
@@ -1208,36 +1232,9 @@
 
             // Shuffle the suggestions
             const shuffled = [...potentialSuggestions].sort(() => 0.5 - Math.random());
-            let selectedItem = null;
-
-            // Verify live price before suggesting
-            for (const item of shuffled) {
-                try {
-                    const res = await fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${item.itemInfo.id}`, { headers: WIKI_API_HEADERS });
-                    if (!res.ok) continue;
-                    const latestData = await res.json();
-                    const priceInfo = latestData.data[item.itemInfo.id];
-
-                    if (priceInfo && priceInfo.high > 0 && priceInfo.low > 0) {
-                        let taxRate = 0.02;
-                        if (taxExemptIds.has(item.itemInfo.id) || priceInfo.high > 250000000) taxRate = 0.01;
-                        const tax = Math.floor(priceInfo.high * taxRate);
-                        const netMargin = (priceInfo.high - priceInfo.low) - tax;
-
-                        // We strictly want it to be profitable based on live data
-                        if (netMargin > 0) {
-                            selectedItem = item;
-                            break;
-                        }
-                    }
-                } catch (e) {
-                    console.error("Error verifying live price:", e);
-                }
-            }
-
-            if (!selectedItem) {
-                selectedItem = shuffled[0]; // Fallback to first if all fail verification
-            }
+            
+            // Instantly select the first randomized item from the historically profitable pool
+            let selectedItem = shuffled[0];
 
             if (selectedItem) {
                 // Add to history and keep history strictly to the last 10 items
@@ -1248,8 +1245,6 @@
                 itemNameInput.value = selectedItem.itemInfo.name;
                 fetchAllData(selectedItem.itemInfo.name);
             }
-
-            suggestItemBtn.textContent = originalText;
         }
 
         function calculateNetProfit() {
