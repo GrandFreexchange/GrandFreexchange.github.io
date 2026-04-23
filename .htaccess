@@ -7,15 +7,15 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-    # HIDE .html extension (Redirect /items/name.html to /items/name)
-    RewriteCond %{THE_REQUEST} /items/(.+)\.html [NC]
-    RewriteRule ^items/(.+)\.html$ /items/$1 [R=301,L]
+    # HIDE .html extension (Redirect page.html to /page)
+    RewriteCond %{THE_REQUEST} /(.+)\.html [NC]
+    RewriteRule ^(.+)\.html$ /$1 [R=301,L]
 
-    # INTERNAL REWRITE (Serve name.html when user visits /items/name)
+    # INTERNAL REWRITE (Serve page.html when user visits /page)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^items/(.+)$ /items/$1.html [L]
+    RewriteRule ^(.+)$ /$1.html [L]
     
     # Legacy query param redirect: ?item=123-item-name → /items/item-name
     RewriteCond %{QUERY_STRING} ^item=([0-9]+-(.+))$
