@@ -70,7 +70,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/site.css">
     <script src="/assets/theme.js"></script>
     <style>
@@ -120,8 +120,6 @@
             padding: 8px 24px;
             background-color: var(--bg-main);
             color: var(--text-secondary);
-            /* The original page's font-sans class meant these used the system font, not Inter */
-            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 1rem;
             font-weight: 500;
             line-height: 1.5;
@@ -501,11 +499,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Ranger boots</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="35304380" data-target="sell">35,304,380 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="34905806" data-target="buy">34,905,806 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="36541517" data-target="sell">36,541,517 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="34600001" data-target="buy">34,600,001 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">-307,513 GP (-0.88%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-307,513 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">1,210,686 GP (3.50%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">1,210,686 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -749,7 +747,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Ranger boots</h2>
             <p class="text-secondary italic mb-4">“Lightweight boots ideal for rangers.”</p>
-            <p class="mb-4">On 2026-10-20 19:00 UTC, Ranger boots was trading on the Grand Exchange at 35,304,380 GP (high) and 34,905,806 GP (low), with 15 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 35,304,400 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:28 UTC, Ranger boots was trading on the Grand Exchange at 36,541,517 GP (high) and 34,600,001 GP (low), with 15 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 1,210,686 GP per item, or 9,685,488 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 36,541,536 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -1514,8 +1512,8 @@
                 }
             };
 
-            Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
-            // Axis labels are measured when the chart is built; re-measure once Inter has loaded
+            Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+            // Axis labels are measured when the chart is built; re-measure once the web fonts have loaded
             if (document.fonts && document.fonts.status !== 'loaded') {
                 document.fonts.ready.then(() => { if (priceChart) priceChart.update('none'); });
             }

@@ -70,7 +70,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/site.css">
     <script src="/assets/theme.js"></script>
     <style>
@@ -120,8 +120,6 @@
             padding: 8px 24px;
             background-color: var(--bg-main);
             color: var(--text-secondary);
-            /* The original page's font-sans class meant these used the system font, not Inter */
-            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 1rem;
             font-weight: 500;
             line-height: 1.5;
@@ -502,10 +500,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="63798" data-target="sell">63,798 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="56597" data-target="buy">56,597 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="60214" data-target="buy">60,214 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">5,926 GP (10.47%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">5,926 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">2,309 GP (3.83%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">2,309 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -749,7 +747,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Goading potion(4)</h2>
             <p class="text-secondary italic mb-4">“4 doses of Goading potion.”</p>
-            <p class="mb-4">On 2026-10-20 19:00 UTC, Goading potion(4) was trading on the Grand Exchange at 63,798 GP (high) and 56,597 GP (low), with 1,972 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 5,926 GP per item, or 11,852,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 63,758 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:28 UTC, Goading potion(4) was trading on the Grand Exchange at 63,798 GP (high) and 60,214 GP (low), with 1,972 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 2,309 GP per item, or 4,618,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 63,757 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -1514,8 +1512,8 @@
                 }
             };
 
-            Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
-            // Axis labels are measured when the chart is built; re-measure once Inter has loaded
+            Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+            // Axis labels are measured when the chart is built; re-measure once the web fonts have loaded
             if (document.fonts && document.fonts.status !== 'loaded') {
                 document.fonts.ready.then(() => { if (priceChart) priceChart.update('none'); });
             }

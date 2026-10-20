@@ -70,7 +70,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/site.css">
     <script src="/assets/theme.js"></script>
     <style>
@@ -120,8 +120,6 @@
             padding: 8px 24px;
             background-color: var(--bg-main);
             color: var(--text-secondary);
-            /* The original page's font-sans class meant these used the system font, not Inter */
-            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 1rem;
             font-weight: 500;
             line-height: 1.5;
@@ -1506,8 +1504,8 @@
                 }
             };
 
-            Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
-            // Axis labels are measured when the chart is built; re-measure once Inter has loaded
+            Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+            // Axis labels are measured when the chart is built; re-measure once the web fonts have loaded
             if (document.fonts && document.fonts.status !== 'loaded') {
                 document.fonts.ready.then(() => { if (priceChart) priceChart.update('none'); });
             }
