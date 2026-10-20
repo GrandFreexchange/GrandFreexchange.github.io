@@ -134,6 +134,31 @@
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
         }
 
+        /* Reset Zoom beside the timeframe picker uses the same original dark style, a size smaller */
+        html #reset-zoom-btn {
+            --glow: 245, 158, 11;
+            min-height: 0;
+            padding: 4px 16px;
+            border-color: var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.25rem;
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
+            transition: box-shadow 0.3s, border-color 0.3s, color 0.15s;
+        }
+
+        html[data-theme="light"] #reset-zoom-btn {
+            --glow: 138, 93, 0;
+        }
+
+        html #reset-zoom-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
+        }
+
         html #suggest-item-btn:disabled {
             background-color: var(--bg-contrast);
             border-color: var(--border-color);
@@ -558,14 +583,14 @@
                     <div class="flex flex-wrap items-center justify-center gap-3 mb-4">
                         <div id="timeframe-controls" class="segmented" role="group" aria-label="Chart timeframe">
                             <button type="button" class="timeframe-btn" aria-pressed="false"
-                                data-timeframe="1d">1 day</button>
+                                data-timeframe="1d">Daily</button>
                             <button type="button" class="timeframe-btn active" aria-pressed="true"
-                                data-timeframe="5d">5 days</button>
+                                data-timeframe="5d">5-Day</button>
                             <button type="button" class="timeframe-btn" aria-pressed="false"
-                                data-timeframe="30d">30 days</button>
+                                data-timeframe="30d">30-Day</button>
                         </div>
                         <button id="reset-zoom-btn" type="button"
-                            class="btn btn-sm hidden">Reset zoom</button>
+                            class="btn hidden">Reset Zoom</button>
                     </div>
                     <!-- New Price & Volume Graph -->
                     <div class="h-80 md:h-96">
@@ -754,7 +779,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Dragon metal lump</h2>
             <p class="text-secondary italic mb-4">“A badly damaged lump of dragon metal.”</p>
-            <p class="mb-4">On 2026-10-20 19:46 UTC, Dragon metal lump was trading on the Grand Exchange at 167,303 GP (high) and 124,534 GP (low), with 58 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 39,423 GP per item, or 1,971,150 GP for a full buy limit of 50. Buying one at the high price and casting High Level Alchemy on it lost 77,440 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 20:29 UTC, Dragon metal lump was trading on the Grand Exchange at 167,303 GP (high) and 124,534 GP (low), with 58 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 39,423 GP per item, or 1,971,150 GP for a full buy limit of 50. Buying one at the high price and casting High Level Alchemy on it lost 77,443 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>

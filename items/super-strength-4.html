@@ -134,6 +134,31 @@
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
         }
 
+        /* Reset Zoom beside the timeframe picker uses the same original dark style, a size smaller */
+        html #reset-zoom-btn {
+            --glow: 245, 158, 11;
+            min-height: 0;
+            padding: 4px 16px;
+            border-color: var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.25rem;
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
+            transition: box-shadow 0.3s, border-color 0.3s, color 0.15s;
+        }
+
+        html[data-theme="light"] #reset-zoom-btn {
+            --glow: 138, 93, 0;
+        }
+
+        html #reset-zoom-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
+        }
+
         html #suggest-item-btn:disabled {
             background-color: var(--bg-contrast);
             border-color: var(--border-color);
@@ -506,11 +531,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Super strength(4)</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="2898" data-target="sell">2,898 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="2611" data-target="buy">2,611 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="2900" data-target="sell">2,900 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="2777" data-target="buy">2,777 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">230 GP (8.81%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">230 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">65 GP (2.34%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">65 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -558,14 +583,14 @@
                     <div class="flex flex-wrap items-center justify-center gap-3 mb-4">
                         <div id="timeframe-controls" class="segmented" role="group" aria-label="Chart timeframe">
                             <button type="button" class="timeframe-btn" aria-pressed="false"
-                                data-timeframe="1d">1 day</button>
+                                data-timeframe="1d">Daily</button>
                             <button type="button" class="timeframe-btn active" aria-pressed="true"
-                                data-timeframe="5d">5 days</button>
+                                data-timeframe="5d">5-Day</button>
                             <button type="button" class="timeframe-btn" aria-pressed="false"
-                                data-timeframe="30d">30 days</button>
+                                data-timeframe="30d">30-Day</button>
                         </div>
                         <button id="reset-zoom-btn" type="button"
-                            class="btn btn-sm hidden">Reset zoom</button>
+                            class="btn hidden">Reset Zoom</button>
                     </div>
                     <!-- New Price & Volume Graph -->
                     <div class="h-80 md:h-96">
@@ -754,7 +779,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Super strength(4)</h2>
             <p class="text-secondary italic mb-4">“4 doses of super Strength potion.”</p>
-            <p class="mb-4">On 2026-10-20 19:46 UTC, Super strength(4) was trading on the Grand Exchange at 2,898 GP (high) and 2,611 GP (low), with 37,937 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 230 GP per item, or 460,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 2,870 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 20:29 UTC, Super strength(4) was trading on the Grand Exchange at 2,900 GP (high) and 2,777 GP (low), with 37,937 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 65 GP per item, or 130,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 2,875 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
