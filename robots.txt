@@ -1,7 +1,9 @@
 User-agent: *
-Allow: /
 Disallow: /admin/
 Disallow: /private/
+# The dashboard template build.js copies; visitors and crawlers should use the homepage
+Disallow: /dev.html
+Allow: /
 
 Sitemap: https://osrs.lol/sitemap.xml
 
