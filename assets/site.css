@@ -18,7 +18,8 @@
     --accent-green: #22c55e;
     --accent-red: #fb8585;       /* a touch lighter than the old #ef4444 so it's readable on cards */
     --accent-blue: #60a5fa;
-    --chart-red: #ef4444;        /* the chart keeps the original red line and fill */
+    --chart-red: #ef4444;        /* the chart and market table keep the original red and blue */
+    --chart-blue: #3b82f6;
     --focus-ring: #e7bc1c;
     --chart-grid-color: rgba(229, 224, 219, 0.1);
     --chart-bg: #252220;
@@ -44,6 +45,7 @@ html[data-theme="light"] {
     --accent-red: #b42318;
     --accent-blue: #1d5fc4;
     --chart-red: #b42318;
+    --chart-blue: #1d5fc4;
     --focus-ring: #8a5d00;
     --chart-grid-color: rgba(53, 45, 39, 0.08);
     --chart-bg: rgba(53, 45, 39, 0.03);
