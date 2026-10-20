@@ -18,6 +18,7 @@
     --accent-green: #22c55e;
     --accent-red: #fb8585;       /* a touch lighter than the old #ef4444 so it's readable on cards */
     --accent-blue: #60a5fa;
+    --chart-red: #ef4444;        /* the chart keeps the original red line and fill */
     --focus-ring: #e7bc1c;
     --chart-grid-color: rgba(229, 224, 219, 0.1);
     --chart-bg: #252220;
@@ -42,6 +43,7 @@ html[data-theme="light"] {
     --accent-green: #17723f;
     --accent-red: #b42318;
     --accent-blue: #1d5fc4;
+    --chart-red: #b42318;
     --focus-ring: #8a5d00;
     --chart-grid-color: rgba(53, 45, 39, 0.08);
     --chart-bg: rgba(53, 45, 39, 0.03);
@@ -60,7 +62,6 @@ body {
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
 }
 
 /* ---------- Colour helpers used across pages and by build.js ---------- */
