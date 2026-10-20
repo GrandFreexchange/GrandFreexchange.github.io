@@ -81,6 +81,13 @@ function replaceOnce(html, search, replacement, label) {
     return html.replace(search, typeof replacement === 'string' ? () => replacement : replacement);
 }
 
+// A piece of the dashboard template (shared header, footer, <head> assets) reused on other generated pages
+function sharedTemplatePart(pattern, label) {
+    const match = dashboardTemplate.match(pattern);
+    if (!match) throw new Error(`Template is missing ${label}`);
+    return match[0];
+}
+
 // Words used to find related items: "Torva platebody (damaged)" -> ["torva", "platebody"]
 function nameWords(name) {
     return name.toLowerCase().replace(/\(.*?\)/g, ' ').replace(/[^a-z0-9' ]/g, ' ').split(/\s+/).filter(Boolean);
@@ -214,7 +221,7 @@ function renderItemDetails(item, latestPrice, volume, context) {
 
     const related = relatedItems(item, context.index);
     const relatedList = related.length === 0 ? '' : `
-            <h3 class="text-lg font-bold section-title mt-6 mb-3">Related items</h3>
+            <h3 class="text-lg font-bold section-title mt-8 mb-3">Related items</h3>
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
 ${related.map(other => `                <li><a href="/items/${nameToSlug(other.name)}" class="text-accent hover:underline">${escapeHtml(other.name)}</a></li>`).join('\n')}
             </ul>`;
@@ -230,7 +237,7 @@ ${related.map(other => `                <li><a href="/items/${nameToSlug(other.n
             </nav>`;
 
     return `
-        <section id="item-details" class="mt-8 bg-main p-6 rounded-lg border border-custom">
+        <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About ${name}</h2>
             ${item.examine ? `<p class="text-secondary italic mb-4">“${escapeHtml(item.examine)}”</p>` : ''}
             <p class="mb-4">${summary}</p>
@@ -315,12 +322,14 @@ function generateItemHTML(item, latestPrice, volume, context) {
     `;
     html = replaceOnce(html, '</head>', `${headScripts}</head>`, '</head>');
 
-    // 4. One H1 per page: the item name. The site banner becomes a plain paragraph on item pages
-    html = replaceOnce(html, /<h1 (class="text-4xl font-bold mb-2" style="font-family: 'Cinzel', serif;">)([\s\S]*?)<\/h1>/, (match, attrs, text) => `<p ${attrs}${text}</p>`, 'site banner <h1>');
+    // 4. One H1 per page: the item name. Item pages drop the homepage's intro (and its H1), and the
+    //    header's "Prices" link no longer marks the current page
+    html = replaceOnce(html, /\s*<!-- item-page:hero -->[\s\S]*?<!-- \/item-page:hero -->/, '', 'homepage intro');
+    html = replaceOnce(html, 'class="nav-home" aria-current="page"', 'class="nav-home"', 'header Prices link');
     html = replaceOnce(html, '<h2 id="item-name-title" class="text-2xl font-bold text-primary"></h2>', `<h1 id="item-name-title" class="text-2xl font-bold text-primary">${escapeHtml(item.name)}</h1>`, 'item title');
 
     // 5. Visible breadcrumb under the header
-    const breadcrumb = `<nav aria-label="Breadcrumb" class="text-sm text-secondary mb-4">
+    const breadcrumb = `<nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
             <ol class="flex flex-wrap items-center gap-2">
                 <li><a href="/" class="text-accent hover:underline">Home</a></li>
                 <li aria-hidden="true">›</li>
@@ -560,8 +569,16 @@ function generateSitemap(items) {
 function generateAllItemsPage(items) {
     const itemsList = items
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(item => `                <li><a href="/items/${nameToSlug(item.name)}" class="hover:text-accent no-underline">${escapeHtml(item.name)}</a></li>`)
+        .map(item => `                <li><a href="/items/${nameToSlug(item.name)}">${escapeHtml(item.name)}</a></li>`)
         .join('\n');
+
+    // Same fonts, stylesheet, theme script, header and footer as the dashboard, so the directory
+    // looks like the rest of the site and keeps the visitor's light/dark choice
+    const siteHead = sharedTemplatePart(/<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">[\s\S]*?<script src="\/assets\/theme\.js"><\/script>/, 'shared <head> assets');
+    const siteHeader = sharedTemplatePart(/<header class="site-header">[\s\S]*?<\/header>/, 'site header')
+        .replace('class="nav-home" aria-current="page"', 'class="nav-home"')
+        .replace('<a href="/items/">', '<a href="/items/" aria-current="page">');
+    const siteFooter = sharedTemplatePart(/<footer class="site-footer">[\s\S]*?<\/footer>/, 'site footer');
 
     const html = `<!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -573,47 +590,65 @@ function generateAllItemsPage(items) {
     <link rel="canonical" href="https://osrs.lol/items/">
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    ${siteHead}
     <style>
-        body {
-            background-color: #211e1c;
-            color: #e5e0db;
-            font-family: 'Inter', sans-serif;
+        .item-directory a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 2rem;
+        .item-directory a:hover {
+            background-color: var(--bg-contrast);
+            color: var(--accent-gold);
         }
-        .text-accent { color: #e7bc1c; }
-        .bg-main { background-color: #3a3532; }
-        .border-custom { border-color: #504a45; }
-        .no-underline { text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="container mx-auto max-w-6xl p-4 md:p-8">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-2 text-accent">All OSRS Grand Exchange Items</h1>
-            <p class="text-lg text-secondary">Browse all items for price analysis and flipping opportunities.</p>
-            <nav class="mt-4">
-                <a href="/" class="text-accent hover:opacity-80 no-underline">← Back to Main Tool</a>
-            </nav>
-        </header>
+        ${siteHeader}
 
-        <main class="bg-main border border-custom rounded-lg p-6 mb-6">
-            <h2 class="text-2xl font-bold text-accent mb-4">Item Directory</h2>
-            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-secondary">
+        <div class="mt-7 mb-6">
+            <h1 class="page-title">All OSRS Grand Exchange items</h1>
+            <p class="page-lead">Every tradeable item, A to Z. Each one links to its live price, margin after tax and price history.</p>
+        </div>
+
+        <main class="card p-4 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+                <label for="item-filter" class="sr-only">Filter items</label>
+                <input type="search" id="item-filter" class="field sm:max-w-sm" placeholder="Filter ${items.length.toLocaleString('en-US')} items" autocomplete="off">
+                <p id="item-filter-count" class="text-sm text-secondary" aria-live="polite"></p>
+            </div>
+            <ul class="item-directory grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1">
 ${itemsList}
             </ul>
         </main>
 
-        <footer class="text-center text-secondary text-sm mt-12 py-6 border-t border-custom">
-            <p>Data provided by <a href="https://prices.runescape.wiki/" class="text-accent hover:underline">RuneScape Wiki</a></p>
-            <p class="mt-2">© ${new Date().getFullYear()} osrs.lol</p>
-        </footer>
+        ${siteFooter}
     </div>
+    <script>
+        // Hide items that don't match the filter box
+        (function () {
+            var input = document.getElementById('item-filter');
+            var count = document.getElementById('item-filter-count');
+            var rows = Array.prototype.slice.call(document.querySelectorAll('.item-directory li'));
+            var names = rows.map(function (row) { return row.textContent.toLowerCase(); });
+            input.addEventListener('input', function () {
+                var query = input.value.trim().toLowerCase();
+                var shown = 0;
+                rows.forEach(function (row, i) {
+                    var match = !query || names[i].indexOf(query) !== -1;
+                    row.hidden = !match;
+                    if (match) shown++;
+                });
+                count.textContent = query ? shown.toLocaleString('en-US') + (shown === 1 ? ' item' : ' items') : '';
+            });
+        })();
+    </script>
 </body>
-</html>`;
+</html>
+`;
 
     fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html, 'utf8');
     fs.writeFileSync(path.join(__dirname, 'all_items.html'), generateMovedPageHTML('/items/', 'All OSRS Grand Exchange Items'), 'utf8');

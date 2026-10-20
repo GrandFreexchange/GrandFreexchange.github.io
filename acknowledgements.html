@@ -3,61 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acknowledgements - GrandFreexchange</title>
+    <title>Acknowledgements - osrs.lol</title>
     <meta name="description" content="Credits and acknowledgements to Jagex, Runelite, OSRS Wiki, and the OSRS community.">
     <link rel="canonical" href="https://osrs.lol/acknowledgements">
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-dark: #211e1c;
-            --bg-main: #3a3532;
-            --bg-contrast: #2a2725;
-            --border-color: #504a45;
-            --text-primary: #e5e0db;
-            --text-secondary: #a8a29e;
-            --accent-gold: #e7bc1c;
-        }
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-        }
-        .bg-main { background-color: var(--bg-main); }
-        .border-custom { border-color: var(--border-color); }
-        .text-secondary { color: var(--text-secondary); }
-        .text-accent { color: var(--accent-gold); }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+    <script src="/assets/theme.js"></script>
 </head>
 <body>
     <div class="container mx-auto max-w-4xl p-4 md:p-8">
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="flex justify-center items-center space-x-4 mb-6">
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12">
-                <div>
-                    <a href="/" class="text-4xl font-bold text-accent no-underline hover:opacity-80">
-                        GrandFreexchange
-                    </a>
-                    <p class="text-lg text-secondary mt-2">Acknowledgements</p>
-                </div>
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12 transform -scale-x-100">
-            </div>
-            <nav class="mb-6">
-                <a href="/" class="text-accent hover:opacity-80 mr-4">← Back to Tool</a>
+        <header class="site-header">
+            <a href="/" class="site-brand"><img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="28" height="28"><span>osrs.lol</span></a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="/" class="nav-home">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Guide</a>
             </nav>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
         </header>
 
-        <!-- Main Content -->
         <main>
-            <section class="bg-main border border-custom rounded-lg p-8 mb-8">
-                <h1 class="text-3xl font-bold text-accent mb-6">Acknowledgements</h1>
-                
-                <div class="space-y-6 text-secondary">
+            <div class="mt-7 mb-6">
+                <h1 class="page-title">Acknowledgements</h1>
+            </div>
+
+            <section class="card p-6 md:p-8 mb-6">
+                <div class="space-y-4 text-secondary prose-site">
                     <p>
                         GrandFreexchange is a community-driven tool that brings together pricing information from various data sources for all items in Old School RuneScape to present the metrics flippers need to make informed decisions.
                     </p>
@@ -76,80 +54,49 @@
                 </div>
             </section>
 
-            <!-- Credits Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Jagex -->
-                <section class="bg-main border border-custom rounded-lg p-8">
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold text-accent">Jagex Games</h3>
-                    </div>
-                    <p class="text-secondary text-center">
-                        RuneScape is a registered trademark of Jagex Ltd. Thanks for creating a game that has kept us interested for more than half our lives.
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <section class="card p-6">
+                    <h2 class="text-xl font-bold mb-3">Jagex Games</h2>
+                    <p class="text-secondary">RuneScape is a registered trademark of Jagex Ltd. Thanks for creating a game that has kept us interested for more than half our lives.</p>
                 </section>
-
-                <!-- Runelite -->
-                <section class="bg-main border border-custom rounded-lg p-8">
-                    <div class="text-center mb-6">
-                        <img src="https://raw.githubusercontent.com/runelite/runelite.net/master/public/img/logo.png" alt="Runelite Logo" style="height: 60px; margin: 0 auto 12px;">
-                        <h3 class="text-2xl font-bold text-accent">Runelite</h3>
-                    </div>
-                    <p class="text-secondary text-center">
-                        Thanks to the Runelite team for developing and maintaining the client that has become essential to the OSRS community.
-                    </p>
+                <section class="card p-6">
+                    <img src="https://raw.githubusercontent.com/runelite/runelite.net/master/public/img/logo.png" alt="" width="48" height="48" style="height: 48px; width: auto; margin-bottom: 12px;">
+                    <h2 class="text-xl font-bold mb-3">RuneLite</h2>
+                    <p class="text-secondary">Thanks to the Runelite team for developing and maintaining the client that has become essential to the OSRS community.</p>
                 </section>
-
-                <!-- OSRS Wiki -->
-                <section class="bg-main border border-custom rounded-lg p-8">
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold text-accent">OSRS Wiki</h3>
-                    </div>
-                    <p class="text-secondary text-center">
-                        Thanks to the OSRS Wiki for having the talent to aggregate the hundreds of trades per second going through the Runelite client and developing a brilliant API.
-                    </p>
+                <section class="card p-6">
+                    <h2 class="text-xl font-bold mb-3">OSRS Wiki</h2>
+                    <p class="text-secondary">Thanks to the OSRS Wiki for having the talent to aggregate the hundreds of trades per second going through the Runelite client and developing a brilliant API.</p>
                 </section>
-
-                <!-- RuneScape Wiki Prices -->
-                <section class="bg-main border border-custom rounded-lg p-8">
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold text-accent">RuneScape Wiki Prices</h3>
-                    </div>
-                    <p class="text-secondary text-center">
-                        Thanks for publishing the first grand exchange API that gave us the idea for this website in the first place!
-                    </p>
+                <section class="card p-6">
+                    <h2 class="text-xl font-bold mb-3">RuneScape Wiki Prices</h2>
+                    <p class="text-secondary">Thanks for publishing the first grand exchange API that gave us the idea for this website in the first place!</p>
                 </section>
             </div>
 
-            <!-- Community Section -->
-            <section class="bg-main border border-custom rounded-lg p-8 mt-8">
-                <h3 class="text-2xl font-bold text-accent mb-6">Community</h3>
-                <p class="text-secondary mb-6">
-                    GrandFreexchange was built for the OSRS trading community. Every suggestion, bug report, and piece of feedback helps us improve. If you'd like to connect with other flippers, share strategies, or provide feedback:
-                </p>
-            </section>
-
-            <!-- Disclaimer -->
-            <section class="bg-main border border-custom rounded-lg p-8 mt-8">
-                <h3 class="text-2xl font-bold text-accent mb-4">Disclaimer</h3>
-                <p class="text-secondary">
-                    GrandFreexchange is a fan-made tool and is not affiliated with Jagex Games. OSRS is a registered trademark of Jagex Ltd. 
-                    This tool is provided as-is for the community. We are not responsible for any losses incurred from following trading strategies discussed on this site.
-                </p>
-            </section>
+            <div class="grid grid-cols-1 gap-6 mt-6">
+                <section class="card p-6">
+                    <h2 class="text-xl font-bold mb-3">Community</h2>
+                    <p class="text-secondary">GrandFreexchange was built for the OSRS trading community. Every suggestion, bug report, and piece of feedback helps us improve.</p>
+                </section>
+                <section class="card p-6">
+                    <h2 class="text-xl font-bold mb-3">Disclaimer</h2>
+                    <p class="text-secondary">GrandFreexchange is a fan-made tool and is not affiliated with Jagex Games. OSRS is a registered trademark of Jagex Ltd. 
+                    This tool is provided as-is for the community. We are not responsible for any losses incurred from following trading strategies discussed on this site.</p>
+                </section>
+            </div>
         </main>
 
-        <!-- Footer -->
-    <footer class="text-center text-secondary text-xs mt-12 py-6 border-t border-custom">
-        <p class="mb-1 text-xs">
-            <a href="/items/" class="text-accent hover:opacity-80 no-underline text-xs">All Items</a>
-        </p>
-        <p class="mb-1 text-xs">Data provided by <a href="https://prices.runescape.wiki/" class="text-accent hover:underline">RuneScape Wiki</a></p>
-        <p class="mb-1 text-xs">
-            <a href="/acknowledgements" class="hover:opacity-80 no-underline text-xs" style="color: #4b4745;">Acknowledgements</a>
-        </p>
-        <p class="mt-1 text-xs" style="color: #4b4745;">© OSRS.LOL • Fan site - Not affiliated with Jagex Ltd. or its registered trademarks "Runescape" or "OSRS" in any way.</p>
-    </footer>
-    </footer>
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
     </div>
 </body>
 </html>

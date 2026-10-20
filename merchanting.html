@@ -21,165 +21,46 @@
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        :root {
-            /* Dark Theme (Default) */
-            --bg-dark: #211e1c;
-            --bg-main: #3a3532;
-            --bg-contrast: #2a2725;
-            --border-color: #504a45;
-            --text-primary: #e5e0db;
-            --text-secondary: #a8a29e;
-            --accent-gold: #e7bc1c;
-            --accent-green: #22c55e;
-            --accent-red: #ef4444;
-            --accent-blue: #3b82f6;
-        }
-
-        html[data-theme="light"] {
-            /* Light Theme - Refined OSRS Sandstone Palette */
-            --bg-dark: #dbc8a7;
-            --bg-main: #ecdcb9;
-            --bg-contrast: #ceb995;
-            --border-color: #9c835c;
-            --text-primary: #3d2b1f;
-            --text-secondary: #6e5944;
-            --accent-gold: #553300;
-            --accent-green: #166534;
-            --accent-red: #991b1b;
-            --accent-blue: #1d4ed8;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .bg-main {
-            background-color: var(--bg-main);
-            transition: background-color 0.3s;
-        }
-
-        .border-custom {
-            border-color: var(--border-color);
-            transition: border-color 0.3s;
-        }
-
-        .text-accent {
-            color: var(--accent-gold);
-        }
-
-        .theme-toggle-btn {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .main-title {
-            color: var(--accent-gold);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .main-title:hover {
-            filter: brightness(1.1);
-        }
-
-        html[data-theme="light"] .main-title {
-            color: #2c2c2c;
-        }
-
-        .article-content h2 {
-            color: var(--accent-gold);
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
-
-        html[data-theme="light"] .article-content h2 {
-            color: #2c2c2c;
-        }
-
-        .article-content p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .article-content ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        .article-content li {
-            margin-bottom: 0.5rem;
-        }
-
-        .article-content strong {
-            color: var(--text-primary);
-        }
-    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+    <script src="/assets/theme.js"></script>
 </head>
 
-<body class="font-sans">
+<body>
 
     <div class="container mx-auto max-w-4xl p-4 md:p-8">
 
-        <!-- Header with Theme Toggle -->
-        <header class="text-center mb-10 relative">
-            <div class="flex justify-center items-center space-x-4 mb-4">
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP"
-                    class="h-12 hidden md:block">
-                <div>
-                    <a href="/" class="main-title no-underline">
-                        <h1 class="text-4xl font-bold mb-2">OSRS Merchanting Guide</h1>
-                    </a>
-                    <p class="text-lg text-secondary">
-                        The ultimate guide to Flipping on the Grand Exchange.
-                    </p>
-                </div>
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP"
-                    class="h-12 transform -scale-x-100 hidden md:block">
-            </div>
-
-            <a href="/"
-                class="inline-block mt-2 px-4 py-2 bg-main border border-custom rounded hover:border-[var(--accent-gold)] text-secondary transition-colors text-sm">
-                ← Back to OSRS.LOL Live Price Tool
-            </a>
-
-            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-lg theme-toggle-btn">
-                <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
+        <header class="site-header">
+            <a href="/" class="site-brand"><img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="28" height="28"><span>osrs.lol</span></a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="/" class="nav-home">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting" aria-current="page">Guide</a>
+            </nav>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
         </header>
 
-        <!-- Main Content -->
-        <main class="bg-main p-6 md:p-10 rounded-xl border border-custom shadow-sm article-content">
+        <div class="mt-7 mb-6">
+            <h1 class="page-title">OSRS merchanting guide</h1>
+            <p class="page-lead">How flipping on the Grand Exchange works, and how to find a margin that beats the 2% tax.</p>
+        </div>
 
-            <p class="text-lg text-secondary italic mb-8 border-l-4 border-[var(--accent-gold)] pl-4">
-                Merchanting (or "Flipping") is the art of buying items for a low price on the Grand Exchange and selling
-                them for a higher price, passively generating millions of GP while you train skills or log off.
+        <main class="card p-6 md:p-10 prose-site">
+
+            <p class="text-lg text-secondary mb-8 border-l-4 pl-4" style="border-color: var(--accent-gold);">
+                Merchanting (or "flipping") is buying items for a low price on the Grand Exchange and selling them for a
+                higher price, passively making GP while you train skills or log off.
             </p>
 
             <h2>How the Grand Exchange Works</h2>
             <p>
                 When a player attempts to insta-buy an item, they often put an overwhelmingly high price in the GE to
-                guarantee they get it immediately. Conversely, when a player insty-sells an item, they put in a deeply
+                guarantee they get it immediately. Conversely, when a player insta-sells an item, they put in a deeply
                 discounted price.
                 <strong>Merchanters act as the middlemen.</strong> We provide the liquidity. We place patient buy offers
                 at the low prices, wait for them to fill, and then place patient sell offers at the high prices.
@@ -193,7 +74,7 @@
             </p>
             <p>
                 Historically, you had to manually price-check items in-game by buying and selling one item and losing
-                money. Today, you can use our <a href="/" class="text-accent underline hover:opacity-80">OSRS.LOL Prices
+                money. Today, you can use our <a href="/">OSRS.LOL Prices
                     Tool</a> to instantly see the live tracked margins for every item in the game without wasting any
                 gold.
             </p>
@@ -205,7 +86,7 @@
             </p>
             <p>
                 <strong>The Golden Rule:</strong> An item is only profitable if the Margin is strictly greater than 2%
-                of your Sell Price! Our <a href="/" class="text-accent underline hover:opacity-80">live calculator</a>
+                of your Sell Price! Our <a href="/">live calculator</a>
                 automatically subtracts this tax for you, ensuring you only see pure net profits.
             </p>
 
@@ -213,9 +94,9 @@
             <p>There are two major philosophies when merchanting your GP stack:</p>
             <ul>
                 <li><strong>High Volume (Safe & Active):</strong> Buying thousands of cheap resources like 
-                <a href="/?view=advanced&category=runes" class="text-accent hover:underline">Runes</a>, 
-                <a href="/?view=advanced&category=logs" class="text-accent hover:underline">Logs</a>, and
-                <a href="/?view=advanced&category=ores" class="text-accent hover:underline">Ores</a>. 
+                <a href="/?view=advanced&category=runes">Runes</a>, 
+                <a href="/?view=advanced&category=logs">Logs</a>, and
+                <a href="/?view=advanced&category=ores">Ores</a>. 
                 The margin might only be 2 GP each, but moving 20,000 of them nets you a quick 40k. These items trade incredibly fast, minimizing risk.</li>
                 <li><strong>High Margin (Slow & Risky):</strong> Buying expensive, low-volume PvM gear (Elysian spirit
                     shields, Twisted bows). The margin could be a massive 5 Million GP, but it may take 12 hours to buy
@@ -231,53 +112,25 @@
             </p>
 
 
-            <div class="mt-10 text-center">
-                <a href="/"
-                    class="inline-block px-8 py-3 bg-[var(--accent-gold)] text-[#1c1917] font-bold rounded-lg hover:opacity-90 transition-opacity transform hover:scale-105">
-                    Start Flipping on the Live Dashboard
-                </a>
+
+            <div class="mt-10">
+                <a href="/" class="btn btn-primary" style="text-decoration: none;">Open the price dashboard</a>
             </div>
 
         </main>
 
-        <footer class="text-center text-secondary text-xs mt-12 py-6 border-t border-custom">
-            <p class="mb-1 text-xs space-x-4">
-                <a href="/items/" class="text-accent hover:opacity-80 no-underline">All Items</a>
-                <a href="/" class="text-accent hover:opacity-80 no-underline">Home Tool</a>
-            </p>
-            <p class="mt-4 text-xs" style="color: #4b4745;">© OSRS.LOL • Fan site - Not affiliated with Jagex Ltd. or
-                its registered trademarks "Runescape" or "OSRS" in any way.</p>
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
         </footer>
 
     </div>
-
-    <!-- Theme Initialization Script -->
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIconLight = document.getElementById('theme-icon-light');
-        const themeIconDark = document.getElementById('theme-icon-dark');
-
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            if (theme === 'dark') {
-                themeIconLight.classList.add('hidden');
-                themeIconDark.classList.remove('hidden');
-            } else {
-                themeIconLight.classList.remove('hidden');
-                themeIconDark.classList.add('hidden');
-            }
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
-        });
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(savedTheme);
-    </script>
 </body>
 
 </html>
