@@ -317,38 +317,35 @@ html .icon-btn:hover {
     background-color: var(--bg-contrast);
 }
 
-/* Segmented control (timeframe picker) */
+/* Segmented control (timeframe picker): the original look, separate rectangular buttons that fill gold
+   when picked or hovered */
 .segmented {
     display: inline-flex;
-    gap: 2px;
-    padding: 3px;
-    border-radius: 10px;
+    gap: 8px;
+    padding: 4px;
+    border-radius: 8px;
     background-color: var(--bg-contrast);
-    border: 1px solid var(--border-color);
 }
 
 html .segmented button {
-    min-height: 32px;
-    padding: 0 14px;
-    border-radius: 7px;
-    border: 1px solid transparent;
-    background: transparent;
+    padding: 4px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
     color: var(--text-secondary);
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 500;
+    line-height: 1.25rem;
     white-space: nowrap;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 
-html .segmented button:hover {
-    color: var(--text-primary);
-}
-
+html .segmented button:hover,
 html .segmented button.active,
 html .segmented button[aria-pressed="true"] {
-    background-color: var(--bg-main);
-    border-color: var(--border-color);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-card);
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: var(--text-on-accent);
 }
 
 /* ---------- Form fields ---------- */
