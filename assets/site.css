@@ -60,7 +60,8 @@ body {
 body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    /* Segoe UI ships with Windows; other devices fall back to their own interface font */
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.5;
 }
 
