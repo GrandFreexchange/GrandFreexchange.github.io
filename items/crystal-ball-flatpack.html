@@ -858,7 +858,7 @@
                 grid: get('--chart-grid-color'),
                 background: get('--chart-bg'),
                 green: get('--accent-green'),
-                red: get('--accent-red'),
+                red: get('--chart-red'),
                 blue: get('--accent-blue'),
                 light: document.documentElement.getAttribute('data-theme') === 'light'
             };
@@ -871,10 +871,10 @@
             return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
         }
 
-        // Soft fill under a price line, fading towards the bottom of the chart
+        // Fill under a price line, fading towards the bottom of the chart (dark mode keeps the original strength)
         function areaFill(ctx, hex, light) {
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.3));
+            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.5));
             gradient.addColorStop(1, withAlpha(hex, 0));
             return gradient;
         }

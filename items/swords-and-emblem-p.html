@@ -691,7 +691,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Swords and emblem (p)</h2>
             <p class="text-secondary italic mb-4">“Sadly, the blades are only decorative”</p>
-            <p class="mb-4">On 2026-10-20 16:56 UTC, Swords and emblem (p) was trading on the Grand Exchange at 19,484 GP (high) and 2,007 GP (low). After the 2% GE tax, buying at the low price and selling at the high price made about 17,088 GP per item.</p>
+            <p class="mb-4">On 2026-10-20 17:27 UTC, Swords and emblem (p) was trading on the Grand Exchange at 19,484 GP (high) and 2,007 GP (low). After the 2% GE tax, buying at the low price and selling at the high price made about 17,088 GP per item.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -863,7 +863,7 @@
                 grid: get('--chart-grid-color'),
                 background: get('--chart-bg'),
                 green: get('--accent-green'),
-                red: get('--accent-red'),
+                red: get('--chart-red'),
                 blue: get('--accent-blue'),
                 light: document.documentElement.getAttribute('data-theme') === 'light'
             };
@@ -876,10 +876,10 @@
             return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
         }
 
-        // Soft fill under a price line, fading towards the bottom of the chart
+        // Fill under a price line, fading towards the bottom of the chart (dark mode keeps the original strength)
         function areaFill(ctx, hex, light) {
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.3));
+            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.5));
             gradient.addColorStop(1, withAlpha(hex, 0));
             return gradient;
         }
