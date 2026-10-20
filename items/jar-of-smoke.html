@@ -266,9 +266,10 @@
             border-top-width: 0px;
         }
 
-        /* Market table */
+        /* Market table: the original look, with darker rows set apart from the card and one colour per column */
         .market-table thead {
-            background-color: var(--bg-contrast);
+            background-color: var(--bg-dark);
+            border-top: 1px solid var(--border-color);
         }
 
         .market-table th[data-sort] {
@@ -287,13 +288,22 @@
 
         .market-table tbody tr {
             cursor: pointer;
+            background-color: var(--bg-contrast);
             border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
         }
 
         .market-table tbody tr:hover,
         .market-table tbody tr:focus-visible {
-            background-color: var(--bg-contrast);
+            background-color: var(--bg-dark);
         }
+
+        .market-table .col-low,
+        .market-table .col-loss { color: var(--chart-red); }
+        .market-table .col-high,
+        .market-table .col-profit { color: var(--accent-green); }
+        .market-table .col-margin { color: var(--accent-gold); }
+        .market-table .col-volume { color: var(--chart-blue); }
 
         .market-table td {
             font-variant-numeric: tabular-nums;
@@ -747,7 +757,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Jar of Smoke</h2>
             <p class="text-secondary italic mb-4">“Don&#39;t breath in.”</p>
-            <p class="mb-4">On 2026-10-20 19:28 UTC, Jar of Smoke was trading on the Grand Exchange at 55,035 GP (high) and 52,000 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 1,935 GP per item, or 7,740 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 55,173 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:34 UTC, Jar of Smoke was trading on the Grand Exchange at 55,035 GP (high) and 52,000 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 1,935 GP per item, or 7,740 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 55,173 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -919,7 +929,7 @@
                 background: get('--chart-bg'),
                 green: get('--accent-green'),
                 red: get('--chart-red'),
-                blue: get('--accent-blue'),
+                blue: get('--chart-blue'),
                 light: document.documentElement.getAttribute('data-theme') === 'light'
             };
         }
@@ -1834,11 +1844,11 @@
                                 <span class="text-primary font-medium">${item.itemInfo.name}</span>
                             </div>
                         </td>
-                        <td class="text-right py-3 px-2">${item.priceInfo.low ? item.priceInfo.low.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2">${item.priceInfo.high ? item.priceInfo.high.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 text-secondary">${isFinite(netMarginPercent) ? netMarginPercent.toFixed(2) + '%' : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 font-semibold ${profit > 0 ? 'text-profit' : 'text-loss'}">${isFinite(profit) ? profit.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2">${typeof volume === 'number' ? volume.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 col-low">${item.priceInfo.low ? item.priceInfo.low.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 col-high">${item.priceInfo.high ? item.priceInfo.high.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 col-margin">${isFinite(netMarginPercent) ? netMarginPercent.toFixed(2) + '%' : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 ${profit > 0 ? 'col-profit' : 'col-loss'}">${isFinite(profit) ? profit.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 col-volume">${typeof volume === 'number' ? volume.toLocaleString() : 'N/A'}</td>
                         <td class="text-right py-3 px-2 text-secondary">${item.itemInfo.limit ? item.itemInfo.limit.toLocaleString() : 'N/A'}</td>
                     `;
                     row.addEventListener('click', () => {
