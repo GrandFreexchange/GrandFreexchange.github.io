@@ -87,6 +87,60 @@
             border-radius: 10px;
         }
 
+        /* The search box and the two main buttons get a soft gold ring that sets them apart from the page
+           and brightens on hover (the original site's values) */
+        html .search-input,
+        html #suggest-item-btn,
+        html #mode-toggle-btn {
+            --glow: 245, 158, 11;
+            border-color: var(--border-color);
+            transition: box-shadow 0.3s, border-color 0.3s, background-color 0.15s, color 0.15s;
+        }
+
+        html[data-theme="light"] .search-input,
+        html[data-theme="light"] #suggest-item-btn,
+        html[data-theme="light"] #mode-toggle-btn {
+            --glow: 138, 93, 0;
+        }
+
+        html .search-input {
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.35);
+        }
+
+        html .search-input:hover,
+        html .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.5);
+        }
+
+        html #suggest-item-btn,
+        html #mode-toggle-btn {
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
+        }
+
+        html #suggest-item-btn {
+            border-color: var(--accent-gold);
+        }
+
+        html #suggest-item-btn:hover,
+        html #mode-toggle-btn:hover,
+        html #mode-toggle-btn[aria-pressed="true"] {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
+        }
+
+        html #suggest-item-btn:hover {
+            border-color: var(--accent-gold-hover);
+        }
+
+        html #mode-toggle-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        html #suggest-item-btn:disabled {
+            box-shadow: none;
+        }
+
         html .search-btn {
             position: absolute;
             top: 0;
@@ -443,11 +497,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Gilded pickaxe</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="3202071" data-target="sell">3,202,071 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="3203745" data-target="sell">3,203,745 GP</span></p>
                     <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="3110000" data-target="buy">3,110,000 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">28,030 GP (0.90%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">28,030 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">29,671 GP (0.95%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">29,671 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -691,7 +745,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Gilded pickaxe</h2>
             <p class="text-secondary italic mb-4">“Used for mining and very stylish.”</p>
-            <p class="mb-4">On 2026-10-20 17:27 UTC, Gilded pickaxe was trading on the Grand Exchange at 3,202,071 GP (high) and 3,110,000 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 28,030 GP per item, or 112,120 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 3,172,211 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 17:39 UTC, Gilded pickaxe was trading on the Grand Exchange at 3,203,745 GP (high) and 3,110,000 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 29,671 GP per item, or 118,684 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 3,173,885 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>

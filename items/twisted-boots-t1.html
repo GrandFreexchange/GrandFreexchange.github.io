@@ -87,6 +87,60 @@
             border-radius: 10px;
         }
 
+        /* The search box and the two main buttons get a soft gold ring that sets them apart from the page
+           and brightens on hover (the original site's values) */
+        html .search-input,
+        html #suggest-item-btn,
+        html #mode-toggle-btn {
+            --glow: 245, 158, 11;
+            border-color: var(--border-color);
+            transition: box-shadow 0.3s, border-color 0.3s, background-color 0.15s, color 0.15s;
+        }
+
+        html[data-theme="light"] .search-input,
+        html[data-theme="light"] #suggest-item-btn,
+        html[data-theme="light"] #mode-toggle-btn {
+            --glow: 138, 93, 0;
+        }
+
+        html .search-input {
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.35);
+        }
+
+        html .search-input:hover,
+        html .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.5);
+        }
+
+        html #suggest-item-btn,
+        html #mode-toggle-btn {
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
+        }
+
+        html #suggest-item-btn {
+            border-color: var(--accent-gold);
+        }
+
+        html #suggest-item-btn:hover,
+        html #mode-toggle-btn:hover,
+        html #mode-toggle-btn[aria-pressed="true"] {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
+        }
+
+        html #suggest-item-btn:hover {
+            border-color: var(--accent-gold-hover);
+        }
+
+        html #mode-toggle-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        html #suggest-item-btn:disabled {
+            box-shadow: none;
+        }
+
         html .search-btn {
             position: absolute;
             top: 0;
@@ -691,7 +745,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Twisted boots (t1)</h2>
             <p class="text-secondary italic mb-4">“The boots of a twisted relic hunter.”</p>
-            <p class="mb-4">On 2026-10-20 17:27 UTC, Twisted boots (t1) was trading on the Grand Exchange at 21,516 GP (high) and 11,015 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 10,071 GP per item, or 50,355 GP for a full buy limit of 5. Buying one at the high price and casting High Level Alchemy on it lost 21,056 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 17:39 UTC, Twisted boots (t1) was trading on the Grand Exchange at 21,516 GP (high) and 11,015 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 10,071 GP per item, or 50,355 GP for a full buy limit of 5. Buying one at the high price and casting High Level Alchemy on it lost 21,056 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
