@@ -25,6 +25,51 @@
             background-color: var(--bg-contrast);
             color: var(--accent-gold);
         }
+        /* Page arrows: the site's original dark button with a soft gold ring that turns gold on hover */
+        .pager {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        html .pager-btn {
+            --glow: 245, 158, 11;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
+            transition: box-shadow 0.3s, border-color 0.3s, color 0.15s;
+        }
+        html[data-theme="light"] .pager-btn {
+            --glow: 138, 93, 0;
+        }
+        html .pager-btn:hover:not(:disabled) {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
+        }
+        html .pager-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.4;
+            box-shadow: none;
+        }
+        .pager-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        .pager-status {
+            min-width: 8.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            font-variant-numeric: tabular-nums;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +98,12 @@
                 <input type="search" id="item-filter" class="field sm:max-w-sm" placeholder="Filter 4,674 items" autocomplete="off">
                 <p id="item-filter-count" class="text-sm text-secondary" aria-live="polite"></p>
             </div>
-            <ul class="item-directory grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1">
+            <nav class="pager mb-4" data-pager="top" aria-label="Item pages" hidden>
+                <button type="button" class="pager-btn" data-step="-1" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                <span class="pager-status"></span>
+                <button type="button" class="pager-btn" data-step="1" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            </nav>
+            <ul id="item-directory" class="item-directory grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1">
                 <li><a href="/items/3rd-age-amulet">3rd Age amulet</a></li>
                 <li><a href="/items/3rd-age-axe">3rd Age axe</a></li>
                 <li><a href="/items/3rd-age-bow">3rd Age bow</a></li>
@@ -4729,6 +4779,11 @@
                 <li><a href="/items/zuriel-s-robe-top">Zuriel&#39;s robe top</a></li>
                 <li><a href="/items/zuriel-s-staff">Zuriel&#39;s staff</a></li>
             </ul>
+            <nav class="pager mt-5" data-pager="bottom" aria-label="Item pages" hidden>
+                <button type="button" class="pager-btn" data-step="-1" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                <span class="pager-status"></span>
+                <button type="button" class="pager-btn" data-step="1" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            </nav>
         </main>
 
         <footer class="site-footer">
@@ -4743,22 +4798,68 @@
         </footer>
     </div>
     <script>
-        // Hide items that don't match the filter box
+        // Every item link stays in the HTML so crawlers find them all; the browser just shows them
+        // 60 at a time. The filter box searches the whole list, and the page number is
+        // kept in the URL hash (#page-3) so back/forward and shared links work.
         (function () {
+            var PER_PAGE = 60;
             var input = document.getElementById('item-filter');
             var count = document.getElementById('item-filter-count');
-            var rows = Array.prototype.slice.call(document.querySelectorAll('.item-directory li'));
+            var list = document.getElementById('item-directory');
+            var rows = Array.prototype.slice.call(list.querySelectorAll('li'));
             var names = rows.map(function (row) { return row.textContent.toLowerCase(); });
+            var pagers = Array.prototype.slice.call(document.querySelectorAll('[data-pager]'));
+            var matches = rows;
+            var page = 1;
+
+            function pageCount() { return Math.max(1, Math.ceil(matches.length / PER_PAGE)); }
+
+            function pageFromHash() {
+                var m = /^#page-(\d+)$/.exec(location.hash);
+                return m ? parseInt(m[1], 10) : 1;
+            }
+
+            function render() {
+                var pages = pageCount();
+                page = Math.min(Math.max(page, 1), pages);
+                var start = (page - 1) * PER_PAGE;
+                var visible = {};
+                matches.slice(start, start + PER_PAGE).forEach(function (row) { visible[rows.indexOf(row)] = true; });
+                rows.forEach(function (row, i) { row.hidden = !visible[i]; });
+                pagers.forEach(function (pager) {
+                    pager.hidden = pages < 2;
+                    pager.querySelector('.pager-status').textContent = 'Page ' + page + ' of ' + pages;
+                    pager.querySelector('[data-step="-1"]').disabled = page <= 1;
+                    pager.querySelector('[data-step="1"]').disabled = page >= pages;
+                });
+            }
+
+            function goTo(next, fromBottom) {
+                page = next;
+                render();
+                var hash = page > 1 ? '#page-' + page : '';
+                if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
+                if (fromBottom) list.scrollIntoView({ block: 'start' });
+            }
+
+            pagers.forEach(function (pager) {
+                pager.addEventListener('click', function (e) {
+                    var btn = e.target.closest('[data-step]');
+                    if (btn && !btn.disabled) goTo(page + parseInt(btn.getAttribute('data-step'), 10), pager.getAttribute('data-pager') === 'bottom');
+                });
+            });
+
             input.addEventListener('input', function () {
                 var query = input.value.trim().toLowerCase();
-                var shown = 0;
-                rows.forEach(function (row, i) {
-                    var match = !query || names[i].indexOf(query) !== -1;
-                    row.hidden = !match;
-                    if (match) shown++;
-                });
-                count.textContent = query ? shown.toLocaleString('en-US') + (shown === 1 ? ' item' : ' items') : '';
+                matches = query ? rows.filter(function (row, i) { return names[i].indexOf(query) !== -1; }) : rows;
+                count.textContent = query ? matches.length.toLocaleString('en-US') + (matches.length === 1 ? ' item' : ' items') : '';
+                goTo(1, false);
             });
+
+            window.addEventListener('hashchange', function () { page = pageFromHash(); render(); });
+
+            page = pageFromHash();
+            render();
         })();
     </script>
 </body>
