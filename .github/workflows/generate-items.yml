@@ -5,8 +5,10 @@ on:
     branches: [ main ]
     paths:
       - 'index.html'
+      - 'dev.html'
       - 'build.js'
       - 'package.json'
+      - '.github/workflows/generate-items.yml'
   schedule:
     - cron: '0 2 * * *'
   workflow_dispatch:
@@ -35,8 +37,9 @@ jobs:
 
       - name: Check for changes
         id: check_changes
+        # git status also sees brand-new item pages, which git diff misses
         run: |
-          if git diff --quiet items/ sitemap.xml 2>/dev/null; then
+          if [ -z "$(git status --porcelain items/ sitemap.xml all_items.html)" ]; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
             echo "changes=true" >> $GITHUB_OUTPUT
@@ -47,6 +50,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add items/ sitemap.xml
+          git add -A items/ sitemap.xml all_items.html
           git commit -m "chore: regenerate OSRS item pages [skip ci]"
           git push
