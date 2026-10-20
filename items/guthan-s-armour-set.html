@@ -127,8 +127,7 @@
         }
 
         html #suggest-item-btn:hover,
-        html #mode-toggle-btn:hover,
-        html #mode-toggle-btn[aria-pressed="true"] {
+        html #mode-toggle-btn:hover {
             background-color: var(--bg-main);
             border-color: var(--accent-gold);
             color: var(--accent-gold);
@@ -324,16 +323,15 @@
             height: 24px;
         }
 
+        /* The original simple slider: a solid track and a plain gold knob that glows on hover */
         #budget-slider::-webkit-slider-runnable-track {
-            background-color: var(--bg-contrast);
-            border: 1px solid var(--border-strong);
+            background-color: var(--border-color);
             height: 8px;
             border-radius: 4px;
         }
 
         #budget-slider::-moz-range-track {
-            background-color: var(--bg-contrast);
-            border: 1px solid var(--border-strong);
+            background-color: var(--border-color);
             height: 8px;
             border-radius: 4px;
         }
@@ -341,34 +339,33 @@
         #budget-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 22px;
-            height: 22px;
-            margin-top: -8px;
+            width: 20px;
+            height: 20px;
+            margin-top: -6px;
             background: var(--accent-gold);
-            border: 3px solid var(--bg-main);
             cursor: pointer;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px var(--accent-gold);
+            transition: box-shadow 0.2s ease-in-out;
         }
 
         #budget-slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             background: var(--accent-gold);
-            border: 3px solid var(--bg-main);
             cursor: pointer;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px var(--accent-gold);
+            border: none;
+            transition: box-shadow 0.2s ease-in-out;
         }
 
         #budget-slider:hover::-webkit-slider-thumb,
         #budget-slider:active::-webkit-slider-thumb {
-            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
         }
 
         #budget-slider:hover::-moz-range-thumb,
         #budget-slider:active::-moz-range-thumb {
-            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
         }
 
         /* Loading & skeleton */
@@ -462,7 +459,7 @@
             <div class="flex flex-col md:flex-row justify-center items-center gap-4">
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
-                        <span id="budget-value" class="text-primary font-bold"><span class="text-accent">10m</span>
+                        <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10m</span>
                             GP</span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
@@ -470,7 +467,7 @@
                 <div class="flex gap-2 w-full md:w-auto">
                     <button id="suggest-item-btn" type="button"
                         class="btn flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest Item</button>
-                    <button id="mode-toggle-btn" type="button" aria-pressed="false"
+                    <button id="mode-toggle-btn" type="button"
                         class="btn flex-1 md:flex-none">Advanced</button>
                 </div>
             </div>
@@ -510,10 +507,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="700102" data-target="sell">700,102 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="610563" data-target="buy">610,563 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="628809" data-target="buy">628,809 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">75,537 GP (12.37%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">75,537 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">57,291 GP (9.11%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">57,291 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -757,7 +754,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Guthan&#39;s armour set</h2>
             <p class="text-secondary italic mb-4">“A set containing a Guthan&#39;s helm, chainskirt, platebody and warspear.”</p>
-            <p class="mb-4">On 2026-10-20 19:34 UTC, Guthan&#39;s armour set was trading on the Grand Exchange at 700,102 GP (high) and 610,563 GP (low), with 27 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 75,537 GP per item, or 604,296 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 460,241 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:46 UTC, Guthan&#39;s armour set was trading on the Grand Exchange at 700,102 GP (high) and 628,809 GP (low), with 27 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 57,291 GP per item, or 458,328 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 460,239 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -1682,13 +1679,13 @@
             if (isAdvancedMode) {
                 // Switch to Simple mode (charts only)
                 isAdvancedMode = false;
-                modeToggleBtn.setAttribute('aria-pressed', 'false');
+                modeToggleBtn.textContent = 'Advanced';
                 advancedContainer.classList.add('hidden');
                 url.searchParams.delete('view');
             } else {
                 // Switch to Advanced mode (table + charts)
                 isAdvancedMode = true;
-                modeToggleBtn.setAttribute('aria-pressed', 'true');
+                modeToggleBtn.textContent = 'Simple';
                 advancedContainer.classList.remove('hidden');
                 populateAdvancedTable();
                 url.searchParams.set('view', 'advanced');
@@ -2115,7 +2112,12 @@
                     displayText = (value / 1000).toFixed(0) + 'k';
                 }
 
-                budgetValue.innerHTML = `<span class="text-accent">${displayText}</span> GP`;
+                // 10m and up shows green, like the game's green cash stack
+                if (value >= 10000000) {
+                    budgetValue.innerHTML = `<span class="text-profit">${displayText}</span> GP`;
+                } else {
+                    budgetValue.textContent = `${displayText} GP`;
+                }
             }
             filterItemsByBudget();
             updatePlaceholder();
