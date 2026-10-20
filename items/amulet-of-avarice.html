@@ -113,32 +113,36 @@
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.5);
         }
 
+        /* Suggest Item and Advanced keep the original site's look: dark buttons with muted text that turn gold on hover */
         html #suggest-item-btn,
         html #mode-toggle-btn {
+            min-height: 0;
+            padding: 8px 24px;
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            /* The original page's font-sans class meant these used the system font, not Inter */
+            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
-        }
-
-        html #suggest-item-btn {
-            border-color: var(--accent-gold);
         }
 
         html #suggest-item-btn:hover,
         html #mode-toggle-btn:hover,
         html #mode-toggle-btn[aria-pressed="true"] {
+            background-color: var(--bg-main);
             border-color: var(--accent-gold);
+            color: var(--accent-gold);
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
         }
 
-        html #suggest-item-btn:hover {
-            border-color: var(--accent-gold-hover);
-        }
-
-        html #mode-toggle-btn:hover {
-            color: var(--accent-gold);
-        }
-
         html #suggest-item-btn:disabled {
+            background-color: var(--bg-contrast);
+            border-color: var(--border-color);
+            color: var(--text-secondary);
             box-shadow: none;
+            opacity: 1;
         }
 
         html .search-btn {
@@ -457,7 +461,7 @@
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
                     <button id="suggest-item-btn" type="button"
-                        class="btn btn-primary flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest item</button>
+                        class="btn flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest Item</button>
                     <button id="mode-toggle-btn" type="button" aria-pressed="false"
                         class="btn flex-1 md:flex-none">Advanced</button>
                 </div>
@@ -497,11 +501,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Amulet of avarice</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="275459" data-target="sell">275,459 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="248078" data-target="buy">248,078 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="293105" data-target="sell">293,105 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="251882" data-target="buy">251,882 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">21,872 GP (8.82%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">21,872 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">35,361 GP (14.04%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">35,361 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -745,7 +749,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Amulet of avarice</h2>
             <p class="text-secondary italic mb-4">“A hauntingly beautiful amulet bearing the shape of a skull.”</p>
-            <p class="mb-4">On 2026-10-20 17:39 UTC, Amulet of avarice was trading on the Grand Exchange at 275,459 GP (high) and 248,078 GP (low), with 182 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 21,872 GP per item, or 174,976 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 248,599 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:00 UTC, Amulet of avarice was trading on the Grand Exchange at 293,105 GP (high) and 251,882 GP (low), with 182 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 35,361 GP per item, or 282,888 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 266,245 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -1041,7 +1045,7 @@
                 showError("Could not load market data. Please refresh.")
             } finally {
                 suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest item';
+                suggestItemBtn.textContent = 'Suggest Item';
             }
         }
 
@@ -1909,7 +1913,7 @@
             setTimeout(() => {
                 isApiThrottled = false;
                 searchBtn.disabled = false; suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest item';
+                suggestItemBtn.textContent = 'Suggest Item';
             }, 500);
         }
 

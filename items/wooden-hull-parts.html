@@ -113,32 +113,36 @@
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.5);
         }
 
+        /* Suggest Item and Advanced keep the original site's look: dark buttons with muted text that turn gold on hover */
         html #suggest-item-btn,
         html #mode-toggle-btn {
+            min-height: 0;
+            padding: 8px 24px;
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            /* The original page's font-sans class meant these used the system font, not Inter */
+            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.2);
-        }
-
-        html #suggest-item-btn {
-            border-color: var(--accent-gold);
         }
 
         html #suggest-item-btn:hover,
         html #mode-toggle-btn:hover,
         html #mode-toggle-btn[aria-pressed="true"] {
+            background-color: var(--bg-main);
             border-color: var(--accent-gold);
+            color: var(--accent-gold);
             box-shadow: 0 0 0 2px rgba(var(--glow), 0.4);
         }
 
-        html #suggest-item-btn:hover {
-            border-color: var(--accent-gold-hover);
-        }
-
-        html #mode-toggle-btn:hover {
-            color: var(--accent-gold);
-        }
-
         html #suggest-item-btn:disabled {
+            background-color: var(--bg-contrast);
+            border-color: var(--border-color);
+            color: var(--text-secondary);
             box-shadow: none;
+            opacity: 1;
         }
 
         html .search-btn {
@@ -457,7 +461,7 @@
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
                     <button id="suggest-item-btn" type="button"
-                        class="btn btn-primary flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest item</button>
+                        class="btn flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest Item</button>
                     <button id="mode-toggle-btn" type="button" aria-pressed="false"
                         class="btn flex-1 md:flex-none">Advanced</button>
                 </div>
@@ -497,11 +501,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Wooden hull parts</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="26" data-target="sell">26 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="20" data-target="buy">20 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="35" data-target="sell">35 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="5" data-target="buy">5 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">6 GP (30.00%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">6 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">30 GP (600.00%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">30 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -745,7 +749,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Wooden hull parts</h2>
             <p class="text-secondary italic mb-4">“Parts for creating a wooden hull for a boat.”</p>
-            <p class="mb-4">On 2026-10-20 17:39 UTC, Wooden hull parts was trading on the Grand Exchange at 26 GP (high) and 20 GP (low), with 241 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 6 GP per item, or 600 GP for a full buy limit of 100. Buying one at the high price and casting High Level Alchemy on it lost 16 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 19:00 UTC, Wooden hull parts was trading on the Grand Exchange at 35 GP (high) and 5 GP (low), with 241 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 30 GP per item, or 3,000 GP for a full buy limit of 100. Buying one at the high price and casting High Level Alchemy on it lost 25 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -1044,7 +1048,7 @@
                 showError("Could not load market data. Please refresh.")
             } finally {
                 suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest item';
+                suggestItemBtn.textContent = 'Suggest Item';
             }
         }
 
@@ -1912,7 +1916,7 @@
             setTimeout(() => {
                 isApiThrottled = false;
                 searchBtn.disabled = false; suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest item';
+                suggestItemBtn.textContent = 'Suggest Item';
             }, 500);
         }
 
