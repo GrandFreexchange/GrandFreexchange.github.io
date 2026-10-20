@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Canonical URL — tells Google this is the definitive homepage URL -->
+    <link rel="canonical" href="https://osrs.lol/items/ascension-shards">
+
+    <!-- Redirect /?item= URLs to static /items/ pages for proper SEO indexing -->
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var itemParam = params.get('item');
+            if (itemParam && (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/dev.html')) {
+                // Extract item name from "25862-Bow_of_faerdhinen_(inactive)" format
+                var parts = itemParam.split('-');
+                parts.shift(); // Remove the ID prefix
+                var name = parts.join('-').replace(/_/g, ' '); // "Bow of faerdhinen (inactive)"
+                // Convert to slug matching build.js nameToSlug()
+                var slug = name.toLowerCase().trim()
+                    .replace(/\+/g, '-plus')
+                    .replace(/[^\w\s-]/g, ' ')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+                if (slug) {
+                    // Preserve all other parameters (like view=advanced)
+                    params.delete('item');
+                    var queryString = params.toString();
+                    var targetURL = '/items/' + slug + (queryString ? '?' + queryString : '');
+                    window.location.replace(targetURL);
+                    return;
+                }
+            }
+        })();
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascension Shards OSRS Price & Trends | Grand Exchange</title>
+    <meta name="description" content="Ascension shards price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit (100) and high alch value. Shards of powerful crystal.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://osrs.lol/items/ascension-shards">
+    <meta property="og:title" content="Ascension Shards OSRS Price & Trends">
+    <meta property="og:description" content="Track Ascension Shards prices, volume, and market trends in Old School RuneScape.">
+    <meta property="og:image" content="https://tiles.runescape.wiki/static/public/images/osrs/items/34669.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://osrs.lol/items/ascension-shards">
+    <meta property="twitter:title" content="Ascension Shards OSRS Price & Trends">
+    <meta property="twitter:description" content="Track Ascension Shards prices, volume, and market trends in Old School RuneScape.">
+    <meta property="twitter:image" content="https://tiles.runescape.wiki/static/public/images/osrs/items/34669.png">
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Tailwind CSS (Recommended in head for Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+    <script src="/assets/theme.js"></script>
+    <style>
+        /* Dashboard-only styles. Colours, buttons, header and footer come from /assets/site.css */
+        .hero {
+            margin: 28px 0 24px;
+        }
+
+        /* Search box */
+        html .search-input {
+            padding: 14px 52px 14px 16px;
+            font-size: 1.0625rem;
+            background-color: var(--bg-main);
+            border-radius: 10px;
+        }
+
+        html .search-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: 0 16px;
+            color: var(--text-secondary);
+            border-radius: 0 10px 10px 0;
+        }
+
+        html .search-btn:hover {
+            color: var(--text-primary);
+        }
+
+        html .search-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #suggestions {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-pop);
+        }
+
+        html .suggestion {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 12px;
+            text-align: left;
+            color: var(--text-primary);
+        }
+
+        html .suggestion:hover,
+        html .suggestion:focus-visible {
+            background-color: var(--bg-contrast);
+        }
+
+        #suggestions::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #suggestions::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+
+        #suggestions::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        #suggestions::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .clickable-price,
+        .clickable-limit {
+            cursor: pointer;
+        }
+
+        .clickable-price:hover,
+        .clickable-limit:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* Popovers (formula and confidence explanations) */
+        .popover {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: var(--shadow-pop);
+        }
+
+        /* Profit calculator */
+        .calc-panel {
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        html .calc-toggle {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 10px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        html .calc-toggle:hover {
+            background-color: var(--bg-main);
+        }
+
+        .calc-arrow {
+            margin-left: auto;
+            transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .calc-toggle[aria-expanded="true"] .calc-arrow {
+            transform: rotate(180deg);
+        }
+
+        #calculator-body {
+            max-height: 500px;
+            transition: max-height 0.4s cubic-bezier(0.2, 0, 0, 1), padding 0.4s cubic-bezier(0.2, 0, 0, 1);
+            overflow: hidden;
+            border-top-width: 1px;
+        }
+
+        #calculator-body.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top-width: 0px;
+        }
+
+        /* Market table */
+        .market-table thead {
+            background-color: var(--bg-contrast);
+        }
+
+        .market-table th[data-sort] {
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .market-table th[data-sort="name"] {
+            cursor: default;
+        }
+
+        .market-table th[data-sort]:not([data-sort="name"]):hover {
+            color: var(--text-primary);
+        }
+
+        .market-table tbody tr {
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .market-table tbody tr:hover,
+        .market-table tbody tr:focus-visible {
+            background-color: var(--bg-contrast);
+        }
+
+        .market-table td {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sort-icon {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.75em;
+            color: var(--accent-gold);
+        }
+
+        /* Budget slider */
+        #budget-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            height: 24px;
+        }
+
+        #budget-slider::-webkit-slider-runnable-track {
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-strong);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        #budget-slider::-moz-range-track {
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-strong);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        #budget-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            margin-top: -8px;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-main);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--accent-gold);
+        }
+
+        #budget-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-main);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--accent-gold);
+        }
+
+        #budget-slider:hover::-webkit-slider-thumb,
+        #budget-slider:active::-webkit-slider-thumb {
+            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+        }
+
+        #budget-slider:hover::-moz-range-thumb,
+        #budget-slider:active::-moz-range-thumb {
+            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+        }
+
+        /* Loading & skeleton */
+        .skeleton {
+            background-color: var(--bg-contrast);
+            background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0) 100%);
+            background-size: 200% 100%;
+            animation: skeleton-pulse 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes skeleton-pulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .is-loading .content-fade {
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        /* Keep the layout steady while data loads */
+        #results-container {
+            min-height: 480px;
+        }
+
+        .chart-container-stable {
+            min-height: 320px;
+        }
+
+        #error {
+            background-color: color-mix(in srgb, var(--accent-red) 10%, transparent);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+        }
+    </style>
+
+    <script>
+        window.PRELOAD_ITEM_NAME = "Ascension shards";
+    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"All Items","item":"https://osrs.lol/items/"},{"@type":"ListItem","position":3,"name":"Ascension shards","item":"https://osrs.lol/items/ascension-shards"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebPage","name":"Ascension Shards OSRS Price & Trends","url":"https://osrs.lol/items/ascension-shards","description":"Ascension shards price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit (100) and high alch value. Shards of powerful crystal.","dateModified":"2026-10-20","primaryImageOfPage":"https://tiles.runescape.wiki/static/public/images/osrs/items/34669.png","isPartOf":{"@type":"WebSite","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
+    </head>
+
+<body>
+
+    <div class="container mx-auto max-w-6xl p-4 md:p-8">
+
+        <header class="site-header">
+            <a href="/" class="site-brand"><img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="28" height="28"><span>osrs.lol</span></a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="/" class="nav-home">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Guide</a>
+            </nav>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="/items/" class="text-accent hover:underline">All Items</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Ascension shards</li>
+            </ol>
+        </nav>
+
+        <!-- Search Section -->
+        <div class="tool-controls">
+            <div class="relative mb-4">
+                <label for="itemName" class="sr-only">Search for an item</label>
+                <input type="text" id="itemName" placeholder="Analyzing market for suggestions..." autocomplete="off"
+                    class="field search-input">
+                <button id="search-btn" type="button" aria-label="Search"
+                    class="search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-search">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                </button>
+                <div id="suggestions"
+                    class="absolute z-20 w-full rounded-lg mt-1 max-h-72 overflow-y-auto hidden">
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-end gap-4">
+                <div class="w-full md:flex-1 md:max-w-md">
+                    <label for="budget-slider" class="block text-sm font-medium text-secondary mb-2">Budget:
+                        <span id="budget-value" class="text-primary font-bold"><span class="text-accent">10m</span>
+                            GP</span></label>
+                    <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
+                        class="w-full h-2 rounded-lg appearance-none cursor-pointer">
+                </div>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <button id="suggest-item-btn" type="button"
+                        class="btn btn-primary flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest item</button>
+                    <button id="mode-toggle-btn" type="button" aria-pressed="false"
+                        class="btn flex-1 md:flex-none">Advanced</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loader" class="text-center my-8 hidden">
+            <svg class="animate-spin h-8 w-8 mx-auto text-accent" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+            <p class="mt-2 text-secondary">Fetching latest data...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error" class="text-center my-6 p-4 rounded-lg hidden" role="alert">
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8" data-prerendered="Ascension shards">
+            <!-- Content Wrapper for Fade Effect -->
+            <div class="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 gap-6 content-fade">
+                <!-- Left Column: Item Info & Prices -->
+                <div class="lg:col-span-1 flex flex-col gap-6">
+                    <!-- Item Info & Price Box -->
+                    <div class="card p-6 space-y-6 relative" style="min-height: 400px;">
+                        <div id="item-header" class="flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-dark-contrast flex-shrink-0 mr-3 overflow-hidden flex items-center justify-center">
+                                <img id="item-icon" src="https://static.runelite.net/cache/item/icon/34669.png" alt="Ascension shards" class="h-full"
+                                    style="transform: translateX(1.5px);">
+                            </div>
+                            <h1 id="item-name-title" class="text-2xl font-bold text-primary">Ascension shards</h1>
+                        </div>
+                        <div id="price-info" class="space-y-3 text-lg">
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="1000" data-target="sell">1,000 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="750" data-target="buy">750 GP</span></p>
+                    <hr class="my-3 border-custom">
+                    <p><strong>Net Margin:</strong> <span class="text-accent">230 GP (30.67%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">230 GP</span></p>
+                </div>
+                        <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1zm4-2a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                        24h Volume
+                    </span>
+                    <span class="font-bold text-primary">66,617</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        Buy Limit
+                    </span>
+                    <span class="font-bold text-primary clickable-limit" data-limit="100">100</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M8.433 7.418c.158-.103.346-.195.574-.277a6.213 6.213 0 014.228 0c.228.082.416.174.574.277a1 1 0 01.348 1.311l-.348.347a1 1 0 01-1.414 0L11 8.414V14a1 1 0 11-2 0V8.414l-.879.879a1 1 0 01-1.414 0l-.348-.347a1 1 0 01.073-1.403z" /><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.998 3.998 0 00-5.656 0L6.92 12.754A7.963 7.963 0 016 10c0-4.418 3.582-8 8-8s8 3.582 8 8z" clip-rule="evenodd" /></svg>
+                        High Alch
+                    </span>
+                    <span class="font-bold text-primary">N/A</span>
+                </div>
+                <div id="trend-analysis"></div>
+            </div>
+
+                        <!-- Confidence Explanation Modal -->
+                        <div id="confidence-modal"
+                                class="popover absolute z-10 p-4 text-sm hidden"
+                            style="bottom: 1.5rem; left: 1.5rem; right: 1.5rem;">
+                            <h4 class="font-bold mb-2 text-primary">Trend Confidence</h4>
+                            <p class="text-secondary">Confidence is a rating based on the item's 24-hour trade volume. High
+                                volume suggests the price trend is more reliable.</p>
+                            <ul class="list-disc list-inside text-secondary mt-2 space-y-1 text-xs">
+                                <li><strong class="text-primary">High:</strong> >50k volume or >5x buy limit.</li>
+                                <li><strong class="text-primary">Medium:</strong> >10k volume or >1x buy limit.</li>
+                                <li><strong class="text-primary">Low:</strong> All other cases.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Historical Data Graph & Calculator -->
+                <div class="lg:col-span-2 card p-4 sm:p-6 chart-container-stable">
+                    <div class="flex flex-wrap items-center justify-center gap-3 mb-4">
+                        <div id="timeframe-controls" class="segmented" role="group" aria-label="Chart timeframe">
+                            <button type="button" class="timeframe-btn" aria-pressed="false"
+                                data-timeframe="1d">1 day</button>
+                            <button type="button" class="timeframe-btn active" aria-pressed="true"
+                                data-timeframe="5d">5 days</button>
+                            <button type="button" class="timeframe-btn" aria-pressed="false"
+                                data-timeframe="30d">30 days</button>
+                        </div>
+                        <button id="reset-zoom-btn" type="button"
+                            class="btn btn-sm hidden">Reset zoom</button>
+                    </div>
+                    <!-- New Price & Volume Graph -->
+                    <div class="h-80 md:h-96">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+
+                    <!-- Profit Calculator -->
+                    <div id="profit-calculator"
+                        class="calc-panel w-full mt-6 hidden relative z-20">
+
+                    <!-- Header: the toggle and the help button are separate buttons -->
+                    <div class="flex items-center gap-1 p-1">
+                        <button type="button" id="calculator-header" class="calc-toggle" aria-expanded="false"
+                            aria-controls="calculator-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <rect width="16" height="20" x="4" y="2" rx="2" />
+                                <line x1="8" x2="16" y1="6" y2="6" />
+                                <line x1="16" x2="16" y1="14" y2="18" />
+                                <line x1="8" x2="8" y1="14" y2="18" />
+                                <line x1="12" x2="12" y1="14" y2="18" />
+                            </svg>
+                            <span>Profit calculator</span>
+                            <svg id="calculator-arrow" class="calc-arrow" xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <button type="button" id="calc-help-icon" class="icon-btn" aria-label="How profit is worked out"
+                            aria-expanded="false" aria-controls="formula-modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Formula Explanation Modal -->
+                    <div id="formula-modal"
+                        class="popover absolute z-10 p-4 text-sm hidden"
+                        style="bottom: 100%; right: 0; margin-bottom: 8px; width: min(300px, calc(100vw - 48px));">
+                        <h4 class="font-bold mb-2 text-primary">Profit Calculation</h4>
+                        <p class="text-secondary">Profit is calculated using the following formula:</p>
+                        <code class="block bg-main p-2 rounded-md my-2 text-accent text-xs">
+                            (Sell Price - Buy Price) * Qty - GE Tax
+                        </code>
+                        <p class="text-secondary mt-2">The Grand Exchange (GE) tax is <strong
+                                class="text-primary">2%</strong> of each item's sale price, rounded down and capped at
+                            <strong class="text-primary">5m GP</strong> per item. Bonds and a few low-level tools
+                            (like chisels and hammers) are tax-free.</p>
+                    </div>
+
+                    <!-- Body is now collapsible and expanded by default when an item is loaded -->
+                    <div id="calculator-body"
+                        class="p-4 flex flex-col md:flex-row items-center gap-4 border-custom collapsed" role="region" aria-label="Profit calculator">
+                        <!-- Input Fields Section -->
+                        <div class="w-full md:flex-grow grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label for="calc-quantity"
+                                    class="block text-sm font-medium text-secondary mb-1">Quantity</label>
+                                <input type="number" id="calc-quantity" value="1"
+                                    class="field">
+                            </div>
+                            <div>
+                                <label for="calc-buy-price" class="block text-sm font-medium text-secondary mb-1">Buy
+                                    Price</label>
+                                <input type="number" id="calc-buy-price"
+                                    class="field">
+                            </div>
+                            <div>
+                                <label for="calc-sell-price" class="block text-sm font-medium text-secondary mb-1">Sell
+                                    Price</label>
+                                <input type="number" id="calc-sell-price"
+                                    class="field">
+                            </div>
+                        </div>
+
+                        <!-- Separator -->
+                        <div class="hidden md:block h-16 border-l border-custom"></div>
+
+                        <!-- Profit Result Section -->
+                        <div class="w-full md:w-auto md:flex-shrink-0 md:pl-4 text-center">
+                            <p class="text-sm text-secondary">Net profit</p>
+                            <p id="net-profit-result" class="text-2xl font-bold">0 GP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+        <!-- Advanced View Section -->
+        <div id="advanced-container" class="hidden mt-8">
+            <div class="card p-4 sm:p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold section-title">Market table</h2>
+                </div>
+
+                <!-- Advanced Controls -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label for="advanced-category"
+                            class="block text-sm font-medium text-secondary mb-1">Category:</label>
+                        <select id="advanced-category"
+                            class="field">
+                            <option value="all">All Items</option>
+                            <option value="armour">Armour</option>
+                            <option value="food">Food</option>
+                            <option value="herbs">Herbs</option>
+                            <option value="logs">Logs</option>
+                            <option value="ores">Ores & Bars</option>
+                            <option value="potions">Potions</option>
+                            <option value="runes">Runes</option>
+                            <option value="seeds">Seeds</option>
+                            <option value="weapons">Weapons</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="advanced-sort" class="block text-sm font-medium text-secondary mb-1">Sort
+                            by:</label>
+                        <select id="advanced-sort"
+                            class="field">
+                            <option value="profit_volume">Profit x Volume</option>
+                            <option value="profit">Profit (High to Low)</option>
+                            <option value="volume">Volume (High to Low)</option>
+                            <option value="margin">Margin % (High to Low)</option>
+                            <option value="low">Price (Low to High)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="advanced-limit" class="block text-sm font-medium text-secondary mb-1">Show
+                            items:</label>
+                        <select id="advanced-limit"
+                            class="field">
+                            <option value="25">Top 25</option>
+                            <option value="50">Top 50</option>
+                            <option value="100">Top 100</option>
+                            <option value="200">Top 200</option>
+                            <option value="500">Top 500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- "Show All" Checkbox -->
+                <div class="flex items-center my-4">
+                    <input id="advanced-show-all" type="checkbox" class="field">
+                    <label for="advanced-show-all" class="ml-2 text-sm text-secondary">Show All Items (ignores
+                        profitability)</label>
+                </div>
+
+
+                <!-- Advanced Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm market-table">
+                        <thead id="advanced-table-header">
+                            <tr class="border-b border-custom">
+                                <th scope="col" class="text-left py-3 px-2 text-secondary font-medium" data-sort="name">Item</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="low" tabindex="0">Low</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="high" tabindex="0">High</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="margin" tabindex="0">Margin
+                                </th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="profit" tabindex="0">Profit
+                                </th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="volume" tabindex="0">Volume
+                                </th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="limit" tabindex="0">Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="advanced-table-body">
+                            <!-- Table rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        
+        <section id="item-details" class="mt-8 card p-6">
+            <h2 class="text-2xl font-bold section-title mb-3">About Ascension shards</h2>
+            <p class="text-secondary italic mb-4">“Shards of powerful crystal.”</p>
+            <p class="mb-4">On 2026-10-20 16:38 UTC, Ascension shards was trading on the Grand Exchange at 1,000 GP (high) and 750 GP (low), with 66,617 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 230 GP per item, or 23,000 GP for a full buy limit of 100.</p>
+            <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div>
+                    <dt class="text-sm text-secondary">Buy limit</dt>
+                    <dd class="font-bold text-primary">100 every 4 hours</dd>
+                </div>
+                <div>
+                    <dt class="text-sm text-secondary">High alch</dt>
+                    <dd class="font-bold text-primary">N/A</dd>
+                </div>
+                <div>
+                    <dt class="text-sm text-secondary">Low alch</dt>
+                    <dd class="font-bold text-primary">N/A</dd>
+                </div>
+                <div>
+                    <dt class="text-sm text-secondary">Store value</dt>
+                    <dd class="font-bold text-primary">N/A</dd>
+                </div>
+                <div>
+                    <dt class="text-sm text-secondary">Members</dt>
+                    <dd class="font-bold text-primary">Yes</dd>
+                </div>
+                <div>
+                    <dt class="text-sm text-secondary">Item ID</dt>
+                    <dd class="font-bold text-primary">34669</dd>
+                </div>
+            </dl>
+            <h3 class="text-lg font-bold section-title mt-8 mb-3">Related items</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                <li><a href="/items/ascension-crossbows" class="text-accent hover:underline">Ascension crossbows</a></li>
+                <li><a href="/items/ascension-bolts" class="text-accent hover:underline">Ascension bolts</a></li>
+                <li><a href="/items/oathplate-shards" class="text-accent hover:underline">Oathplate shards</a></li>
+            </ul>
+            <nav aria-label="Browse items" class="flex flex-wrap justify-between gap-2 mt-6 text-sm">
+                <a href="/items/ascension-crossbows" rel="prev" class="text-accent hover:underline">← Ascension crossbows</a>
+                <a href="/items/" class="text-accent hover:underline">All items</a>
+                <a href="/items/asgarnian-ale" rel="next" class="text-accent hover:underline">Asgarnian ale →</a>
+            </nav>
+        </section>
+
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+    </div>
+
+    <!-- Chart.js scripts are deferred here to improve initial page load performance -->
+    <!-- Versions are pinned so a new major release on the CDN can't break the charts overnight -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"
+        defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js" defer></script>
+
+    <script>
+        // DOM Element References
+        const itemNameInput = document.getElementById('itemName');
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchBtn = document.getElementById('search-btn');
+        const errorDiv = document.getElementById('error');
+        const loader = document.getElementById('loader');
+        const resultsContainer = document.getElementById('results-container');
+        const profitCalculator = document.getElementById('profit-calculator');
+        const priceInfoDiv = document.getElementById('price-info');
+        const additionalInfoDiv = document.getElementById('additional-info');
+        const itemNameTitle = document.getElementById('item-name-title');
+        const itemIcon = document.getElementById('item-icon');
+        const timeframeControls = document.getElementById('timeframe-controls');
+        const suggestItemBtn = document.getElementById('suggest-item-btn');
+        const resetZoomBtn = document.getElementById('reset-zoom-btn');
+        // Advanced View References
+        const modeToggleBtn = document.getElementById('mode-toggle-btn');
+        const advancedContainer = document.getElementById('advanced-container');
+        const advancedCategory = document.getElementById('advanced-category');
+        const advancedSort = document.getElementById('advanced-sort');
+        const advancedLimit = document.getElementById('advanced-limit');
+        const advancedShowAllCheckbox = document.getElementById('advanced-show-all');
+        const advancedTableHeader = document.getElementById('advanced-table-header');
+        const advancedTableBody = document.getElementById('advanced-table-body');
+        // Profit Calculator References
+        const calcQuantityInput = document.getElementById('calc-quantity');
+        const calcBuyPriceInput = document.getElementById('calc-buy-price');
+        const calcSellPriceInput = document.getElementById('calc-sell-price');
+        const netProfitResult = document.getElementById('net-profit-result');
+        const calculatorHeader = document.getElementById('calculator-header');
+        const calculatorBody = document.getElementById('calculator-body');
+        const calculatorArrow = document.getElementById('calculator-arrow');
+        // Help icon and modal references
+        const calcHelpIcon = document.getElementById('calc-help-icon');
+        const formulaModal = document.getElementById('formula-modal');
+        const confidenceModal = document.getElementById('confidence-modal');
+        // Budget Slider references
+        const budgetSlider = document.getElementById('budget-slider');
+        const budgetValue = document.getElementById('budget-value');
+
+        // --- API Configuration ---
+        const WIKI_API_HEADERS = {
+            'User-Agent': 'GrandFreexchange.github.io - Contact @DOPEY on Discord'
+        };
+
+        let itemMapping = [];
+        let priceChart = null;
+        let fetchController;
+        let currentItem = null;
+        let lastSuggestedItem = null;
+        let timeSeriesData = {}; // Store all timeframe data here
+        let masterFlippableItems = []; // Holds the full sorted list of items
+        let latestPriceData = {}; // Holds the latest price for ALL items
+        let allVolumesData = {}; // Holds the volume for ALL traded items
+        let flippableItems = []; // Holds the current budget-filtered list
+        let isApiThrottled = false; // Flag to prevent API spam
+        let isAdvancedMode = false; // Flag to track current view mode
+        let advancedSortState = { column: 'profit_volume', direction: 'desc' };
+
+        // Custom budget steps for the slider
+        const budgetSteps = [
+            100000, 200000, 300000, 400000, 500000,
+            1000000,
+            5000000, 10000000, 15000000, 20000000, 25000000,
+            30000000, 35000000, 40000000, 45000000, 50000000,
+            100000000, 250000000,
+            Number.MAX_SAFE_INTEGER // High Roller Tier
+        ];
+
+        // GE tax: 2% of each item's sale price, rounded down and capped at 5m per item.
+        const GE_TAX_RATE = 0.02;
+        const GE_TAX_CAP_PER_ITEM = 5000000;
+
+        // Items with no GE tax: Old school bond and the low-level tools Jagex exempted.
+        const taxExemptIds = new Set([
+            13190, // Old school bond
+            1755, 5325, 1785, 2347, 1733, 233, 5341, 8794, 5329, 5343, 1735, 952, 5331 // Chisel, Gardening trowel, Glassblowing pipe, Hammer, Needle, Pestle and mortar, Rake, Saw, Secateurs, Seed dibber, Shears, Spade, Watering can
+        ]);
+
+        // GE tax paid when ONE item sells for sellPrice
+        function geTaxPerItem(itemId, sellPrice) {
+            if (!sellPrice || taxExemptIds.has(itemId)) return 0;
+            return Math.min(Math.floor(sellPrice * GE_TAX_RATE), GE_TAX_CAP_PER_ITEM);
+        }
+
+        // **FIX**: Definitive list of Ore and Bar IDs for accurate filtering
+        const oreAndBarIds = new Set([
+            // Ores
+            436, 438, 440, 442, 453, 444, 447, 449, 451, 21347, 13358, 24227, 1436, 7936, 12011, 13361, 21622, 6971, 6973, 6975, 6977, 6979, 6981, 6983, 3211, 668,
+            // Bars
+            2349, 2351, 2353, 2355, 2357, 2359, 2361, 2363, 9170, 23493, 13359, 2365
+        ]);
+
+        // --- Theme ---
+        // /assets/theme.js switches the theme; the chart picks up the new colours here
+        document.addEventListener('themechange', () => updateChartColors());
+
+        // Chart colours come from the CSS custom properties in /assets/site.css
+        function chartColors() {
+            const style = getComputedStyle(document.documentElement);
+            const get = (name) => style.getPropertyValue(name).trim();
+            return {
+                text: get('--text-primary'),
+                secondary: get('--text-secondary'),
+                grid: get('--chart-grid-color'),
+                background: get('--chart-bg'),
+                green: get('--accent-green'),
+                red: get('--accent-red'),
+                blue: get('--accent-blue'),
+                light: document.documentElement.getAttribute('data-theme') === 'light'
+            };
+        }
+
+        // "#22c55e" -> "rgba(34, 197, 94, 0.5)"
+        function withAlpha(hex, alpha) {
+            const value = hex.replace('#', '');
+            const n = parseInt(value.length === 3 ? value.split('').map(c => c + c).join('') : value, 16);
+            return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+        }
+
+        // Soft fill under a price line, fading towards the bottom of the chart
+        function areaFill(ctx, hex, light) {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.3));
+            gradient.addColorStop(1, withAlpha(hex, 0));
+            return gradient;
+        }
+
+        function updateChartColors() {
+            if (!priceChart) return;
+            const colors = chartColors();
+            const ctx = priceChart.ctx;
+
+            priceChart.options.plugins.legend.labels.color = colors.text;
+            priceChart.options.plugins.title.color = colors.text;
+            priceChart.options.scales.x.ticks.color = colors.secondary;
+            priceChart.options.scales.y.ticks.color = colors.secondary;
+            priceChart.options.scales.y1.ticks.color = colors.secondary;
+            priceChart.options.scales.x.grid.color = colors.grid;
+            priceChart.options.scales.y.grid.color = colors.grid;
+
+            const [high, low, volume] = priceChart.data.datasets;
+            high.borderColor = colors.green;
+            high.backgroundColor = areaFill(ctx, colors.green, colors.light);
+            low.borderColor = colors.red;
+            low.backgroundColor = areaFill(ctx, colors.red, colors.light);
+            volume.backgroundColor = withAlpha(colors.blue, 0.3);
+            volume.borderColor = withAlpha(colors.blue, 0.5);
+
+            priceChart.update();
+        }
+
+        // --- Core Functions ---
+
+        async function loadItemMapping() {
+            try {
+                const response = await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping', { headers: WIKI_API_HEADERS });
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                // The mapping only lists items tradeable on the main-game Grand Exchange, so use all of it
+                itemMapping = await response.json();
+
+                await loadFlippableItems(); // Load dynamic list after mapping is ready
+            } catch (error) {
+                showError('Could not load item data. Please refresh the page.');
+            }
+        }
+
+        // Updates the search bar placeholder with random items
+        function updatePlaceholder() {
+            if (flippableItems.length < 3) {
+                itemNameInput.placeholder = 'e.g. Abyssal whip, Dragon bones...';
+                return;
+            };
+
+            const shuffled = [...flippableItems].sort(() => 0.5 - Math.random());
+            const selectedItems = shuffled.slice(0, 3);
+
+            if (selectedItems.length === 3) {
+                const placeholderText = `e.g. ${selectedItems[0].itemInfo.name}, ${selectedItems[1].itemInfo.name}, ${selectedItems[2].itemInfo.name}`;
+                itemNameInput.placeholder = placeholderText;
+            }
+        }
+
+        // Fetches high volume items and ranks them by a new flip score
+        async function loadFlippableItems() {
+            suggestItemBtn.disabled = true;
+            suggestItemBtn.textContent = 'Loading market…';
+
+            try {
+                const [volumesRes, latestRes] = await Promise.all([
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/volumes', { headers: WIKI_API_HEADERS }),
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest', { headers: WIKI_API_HEADERS })
+                ]);
+                if (!volumesRes.ok || !latestRes.ok) throw new Error('Failed to fetch market data.');
+
+                const volumesData = await volumesRes.json();
+                const latestData = await latestRes.json();
+                latestPriceData = latestData.data;
+                allVolumesData = volumesData.data;
+
+                const allTradedItems = Object.keys(volumesData.data);
+
+                const scoredItems = allTradedItems.map(id => {
+                    const itemInfo = itemMapping.find(i => i.id == id);
+                    const priceInfo = latestPriceData[id];
+                    const dailyVolume = allVolumesData[id];
+
+                    if (!itemInfo || !priceInfo || !priceInfo.high || !priceInfo.low || !dailyVolume || priceInfo.low === 0) {
+                        return null;
+                    }
+
+                    const netProfit = (priceInfo.high - priceInfo.low) - geTaxPerItem(itemInfo.id, priceInfo.high);
+
+                    if (netProfit <= 0) return null;
+
+                    // NEW FORMULA: Prioritizes total profit potential
+                    const flipScore = netProfit * dailyVolume;
+
+                    return { itemInfo, priceInfo, flipScore };
+                }).filter(Boolean);
+
+                scoredItems.sort((a, b) => b.flipScore - a.flipScore);
+
+                masterFlippableItems = scoredItems;
+
+            } catch (error) {
+                console.error("Could not load flippable items:", error);
+                showError("Could not load market data. Please refresh.")
+            } finally {
+                suggestItemBtn.disabled = false;
+                suggestItemBtn.textContent = 'Suggest item';
+            }
+        }
+
+        // Filters the master list based on the budget slider
+        function filterItemsByBudget() {
+            const sliderIndex = parseInt(budgetSlider.value);
+            const budget = budgetSteps[sliderIndex];
+
+            if (budget === Number.MAX_SAFE_INTEGER) {
+                flippableItems = masterFlippableItems
+                    .filter(item => item.priceInfo.low > 250000000); // High Roller: items over 250m
+            } else {
+                flippableItems = masterFlippableItems
+                    .filter(item => {
+                        const price = item.priceInfo.low;
+                        const minPrice = budget > 1000000 ? budget * 0.01 : 1; // Only show items >1% of budget if budget is >1m
+                        return price <= budget && price >= minPrice;
+                    });
+            }
+
+            if (flippableItems.length === 0 && masterFlippableItems.length > 0) {
+                showError("No profitable items found for your budget. Try increasing it.");
+            } else {
+                hideError();
+            }
+        }
+
+        // Now uses the dynamic flippableItems list
+        function loadInitialItem() {
+            if (flippableItems.length === 0) return;
+            const item = flippableItems[Math.floor(Math.random() * flippableItems.length)];
+            if (item) {
+                fetchAllData(item.itemInfo.name, { initialLoad: true });
+            }
+        }
+
+        // options.initialLoad: the homepage's random first item, which shouldn't change the URL or page title
+        async function fetchAllData(itemName, options = {}) {
+            if (fetchController) {
+                fetchController.abort();
+            }
+            fetchController = new AbortController();
+            const { signal } = fetchController;
+
+            calcQuantityInput.value = '1';
+            calcBuyPriceInput.value = '';
+            calcSellPriceInput.value = '';
+            calculateNetProfit();
+
+            hideError();
+            resultsContainer.classList.remove('hidden'); // Ensure it starts visible
+            resultsContainer.classList.add('is-loading');
+
+            // Item pages ship with this item's daily snapshot already rendered; keep it on screen while live data loads
+            const showingSnapshot = resultsContainer.dataset.prerendered === itemName;
+            delete resultsContainer.dataset.prerendered;
+
+            if (!showingSnapshot) {
+                // Show skeleton placeholders instead of clearing (keeps height)
+                itemNameTitle.innerHTML = '<span class="skeleton h-8 w-48 block"></span>';
+                priceInfoDiv.innerHTML = `
+                    <div class="skeleton h-6 w-full mb-2"></div>
+                    <div class="skeleton h-6 w-3/4 mb-2"></div>
+                    <div class="skeleton h-6 w-1/2"></div>
+                `;
+                additionalInfoDiv.innerHTML = '<div class="skeleton h-24 w-full"></div>';
+            }
+
+            profitCalculator.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const item = itemMapping.find(i => i.name.toLowerCase() === itemName.toLowerCase());
+            if (!item) {
+                showError('Item not found. Please select an item from the list.');
+                loader.classList.add('hidden');
+                resultsContainer.classList.remove('is-loading'); // Don't leave whatever is shown faded out
+                return;
+            }
+
+            // Item pages keep their static title and description; the homepage only retitles when the user picks an item
+            if (!window.PRELOAD_ITEM_NAME && !options.initialLoad) {
+                document.title = `${item.name} - OSRS Price & Flipping | GrandFreexchange`;
+                const metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription) {
+                    metaDescription.setAttribute('content', `Live Grand Exchange price, 24h volume, and profit margin for ${item.name}. Analyze trends and flip OSRS items for profit.`);
+                }
+            }
+
+            // SMART URL MANAGEMENT
+            try {
+                // IMPORTANT: Slug logic must match build.js nameToSlug()
+                const slug = item.name.toLowerCase().trim()
+                    .replace(/\+/g, '-plus')
+                    .replace(/[^\w\s-]/g, ' ')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+
+                const url = new URL(window.location);
+
+                // If we are on a static page and searching for a DIFFERENT item, navigate to its clean URL
+                if (window.PRELOAD_ITEM_NAME && window.PRELOAD_ITEM_NAME !== item.name) {
+                    url.pathname = `/items/${slug}`; 
+                    window.location.href = url.toString();
+                    return; // Stop fetching on current page
+                }
+
+                // If we are on a static page for THIS item, clear any redundant query params (but keep view state)
+                if (window.PRELOAD_ITEM_NAME === item.name) {
+                    if (url.searchParams.has('item')) {
+                        url.searchParams.delete('item');
+                        history.replaceState({}, '', url);
+                    }
+                } else if (!options.initialLoad) {
+                    // On homepage: Update URL for sharing/SPA behavior (not for the random first item)
+                    const trackingSlug = `${item.id}-${item.name.replace(/ /g, '_').replace(/'/g, '')}`;
+                    url.searchParams.set('item', trackingSlug);
+                    history.pushState({}, '', url);
+                }
+            } catch (e) {
+                console.warn("Could not handle URL update:", e);
+            }
+
+
+
+            currentItem = item;
+
+            const latestUrl = 'https://prices.runescape.wiki/api/v1/osrs/latest';
+            const oneHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=1h&id=${item.id}`;
+            const sixHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=6h&id=${item.id}`;
+
+            try {
+                const fetchOptions = { headers: WIKI_API_HEADERS, signal };
+                const [latestRes, oneHourRes, sixHourRes] = await Promise.all([
+                    fetch(latestUrl, fetchOptions),
+                    fetch(oneHourUrl, fetchOptions),
+                    fetch(sixHourUrl, fetchOptions)
+                ]);
+
+                if (!latestRes.ok || !oneHourRes.ok || !sixHourRes.ok) throw new Error('Failed to fetch price data.');
+
+                const latestData = await latestRes.json();
+                const oneHourData = await oneHourRes.json();
+                const sixHourData = await sixHourRes.json();
+
+                timeSeriesData['1d'] = oneHourData.data.slice(-24);
+                timeSeriesData['5d'] = sixHourData.data.slice(-20);
+                // The API returns ~90 days (365 points) for 6h timesteps. 
+                // We enforce a hard slice to -120 (4 points/day * 30 days) for true 30-day view.
+                timeSeriesData['30d'] = sixHourData.data.slice(-120);
+
+                const dailyVolume = timeSeriesData['1d'].reduce((acc, p) => acc + (p.highPriceVolume || 0) + (p.lowPriceVolume || 0), 0);
+
+                displayItemInfo(item, latestData.data[item.id], dailyVolume);
+                calculateAndDisplayTrend(timeSeriesData['1d'], dailyVolume);
+                updateDynamicContent('5d');
+
+
+
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    showError('Error fetching price data. The API might be down.');
+                    resultsContainer.classList.remove('is-loading'); // Item pages keep showing their snapshot
+                }
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        // Track recent suggestions to prevent repeating. Kept for the browser tab's session, because
+        // suggesting from an item page opens the suggested item's own page.
+        const SUGGEST_HISTORY_KEY = 'suggestHistory';
+        const suggestHistory = (() => {
+            try {
+                const saved = JSON.parse(sessionStorage.getItem(SUGGEST_HISTORY_KEY));
+                return Array.isArray(saved) ? saved.slice(-10) : [];
+            } catch (e) {
+                return [];
+            }
+        })();
+
+        // Now uses the dynamic flippableItems list
+        async function suggestItem() {
+            if (flippableItems.length === 0) {
+                showError("No items found for your current budget. Try increasing it.");
+                return;
+            }
+
+            // Increase the pool significantly (top 50) rather than top 20
+            // This prevents repeating the same 1 or 2 items if the rest of the pool goes stale
+            const topTierSize = 50;
+            const suggestionPool = flippableItems.slice(0, topTierSize);
+
+            // Filter out any items we have suggested recently (up to 10)
+            let potentialSuggestions = suggestionPool.filter(item => !suggestHistory.includes(item.itemInfo.id));
+
+            // If the filter is too aggressive and we removed everything, fall back to the full pool
+            if (potentialSuggestions.length === 0) {
+                potentialSuggestions = suggestionPool;
+            }
+
+            // Shuffle the suggestions
+            const shuffled = [...potentialSuggestions].sort(() => 0.5 - Math.random());
+            
+            // Instantly select the first randomized item from the historically profitable pool
+            let selectedItem = shuffled[0];
+
+            if (selectedItem) {
+                // Add to history and keep history strictly to the last 10 items
+                suggestHistory.push(selectedItem.itemInfo.id);
+                if (suggestHistory.length > 10) suggestHistory.shift();
+                try {
+                    sessionStorage.setItem(SUGGEST_HISTORY_KEY, JSON.stringify(suggestHistory));
+                } catch (e) { }
+
+                lastSuggestedItem = selectedItem; // Remember the full item object
+                itemNameInput.value = selectedItem.itemInfo.name;
+                fetchAllData(selectedItem.itemInfo.name);
+            }
+        }
+
+        function calculateNetProfit() {
+            const quantity = parseInt(calcQuantityInput.value) || 0;
+            const buyPrice = parseInt(calcBuyPriceInput.value) || 0;
+            const sellPrice = parseInt(calcSellPriceInput.value) || 0;
+
+            if (quantity <= 0 || buyPrice <= 0 || sellPrice <= 0 || !currentItem) {
+                netProfitResult.textContent = '0 GP';
+                netProfitResult.className = 'text-2xl font-bold';
+                return;
+            }
+
+            const totalBuyCost = quantity * buyPrice;
+            const totalSellRevenue = quantity * sellPrice;
+
+            // Tax is charged on each item sold, so the 5m cap applies per item, not to the whole stack
+            const geTax = geTaxPerItem(currentItem.id, sellPrice) * quantity;
+            const netProfit = totalSellRevenue - totalBuyCost - geTax;
+
+            netProfitResult.textContent = `${netProfit.toLocaleString()} GP`;
+            netProfitResult.className = `text-2xl font-bold ${netProfit > 0 ? 'text-profit' : 'text-loss'}`;
+        }
+
+        // --- UI Update Functions ---
+        function displayItemInfo(item, prices, dailyVolume) {
+            itemNameTitle.textContent = item.name;
+            itemIcon.src = `https://static.runelite.net/cache/item/icon/${item.id}.png`;
+            itemIcon.onerror = () => {
+                itemIcon.onerror = null; // Don't retry forever if the placeholder fails too
+                itemIcon.src = 'https://placehold.co/48x48/2a2725/a8a29e?text=?';
+            };
+            itemIcon.alt = item.name;
+
+            if (prices && prices.high && prices.low) {
+                const highPrice = prices.high;
+                const lowPrice = prices.low;
+
+                const tax = geTaxPerItem(item.id, highPrice);
+
+                // Net margin is the raw margin minus the tax
+                const netMargin = (highPrice - lowPrice) - tax;
+                const netMarginPercent = lowPrice > 0 ? (netMargin / lowPrice) * 100 : 0;
+
+                priceInfoDiv.innerHTML = `
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="${highPrice}" data-target="sell">${highPrice.toLocaleString()} GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="${lowPrice}" data-target="buy">${lowPrice.toLocaleString()} GP</span></p>
+                    <hr class="my-3 border-custom">
+                    <p><strong>Net Margin:</strong> <span class="text-accent">${netMargin.toLocaleString()} GP (${netMarginPercent.toFixed(2)}%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="${netMargin > 0 ? 'text-profit' : 'text-loss'} font-bold">${netMargin.toLocaleString()} GP</span></p>
+                `;
+            } else if (prices && (prices.high || prices.low)) {
+                // Only one side has traded recently, so there is no margin to show
+                priceInfoDiv.innerHTML = `
+                    <p><strong>High Price:</strong> ${prices.high ? `<span class="text-profit clickable-price" data-price="${prices.high}" data-target="sell">${prices.high.toLocaleString()} GP</span>` : '<span class="text-secondary">No recent trades</span>'}</p>
+                    <p><strong>Low Price:</strong> ${prices.low ? `<span class="text-loss clickable-price" data-price="${prices.low}" data-target="buy">${prices.low.toLocaleString()} GP</span>` : '<span class="text-secondary">No recent trades</span>'}</p>
+                `;
+            } else {
+                priceInfoDiv.innerHTML = `<p class="text-secondary">No live price data available.</p>`;
+            }
+
+            additionalInfoDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1zm4-2a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                        24h Volume
+                    </span>
+                    <span class="font-bold text-primary">${dailyVolume ? dailyVolume.toLocaleString() : 'N/A'}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                        Buy Limit
+                    </span>
+                    <span class="font-bold text-primary clickable-limit" data-limit="${item.limit}">${item.limit ? item.limit.toLocaleString() : 'N/A'}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M8.433 7.418c.158-.103.346-.195.574-.277a6.213 6.213 0 014.228 0c.228.082.416.174.574.277a1 1 0 01.348 1.311l-.348.347a1 1 0 01-1.414 0L11 8.414V14a1 1 0 11-2 0V8.414l-.879.879a1 1 0 01-1.414 0l-.348-.347a1 1 0 01.073-1.403z" /><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.998 3.998 0 00-5.656 0L6.92 12.754A7.963 7.963 0 016 10c0-4.418 3.582-8 8-8s8 3.582 8 8z" clip-rule="evenodd" /></svg>
+                        High Alch
+                    </span>
+                    <span class="font-bold text-primary">${item.highalch ? item.highalch.toLocaleString() + ' GP' : 'N/A'}</span>
+                </div>
+                <!-- Trend Analysis section will be populated by JS -->
+                <div id="trend-analysis"></div>
+            `;
+
+            resultsContainer.classList.remove('is-loading');
+            resultsContainer.classList.remove('hidden');
+            profitCalculator.classList.remove('hidden');
+        }
+
+        function calculateAndDisplayTrend(dailyData, dailyVolume) {
+            const trendDiv = document.getElementById('trend-analysis');
+            if (!dailyData || dailyData.length < 2) {
+                trendDiv.innerHTML = '';
+                return;
+            }
+
+            // 1. Prepare data for linear regression (hours where only one side traded use that side's price,
+            // hours with no trades are skipped, and each point keeps its hour so gaps don't distort the slope)
+            const points = dailyData
+                .map((p, i) => ({ x: i, y: (p.avgHighPrice && p.avgLowPrice) ? (p.avgHighPrice + p.avgLowPrice) / 2 : (p.avgHighPrice || p.avgLowPrice) }))
+                .filter(p => p.y);
+            const n = points.length;
+            if (n < 2) {
+                trendDiv.innerHTML = '';
+                return;
+            }
+
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+            for (const { x, y } of points) {
+                sumX += x;
+                sumY += y;
+                sumXY += x * y;
+                sumX2 += x * x;
+            }
+
+            // 2. Calculate the slope of the trend line
+            const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const avgPrice = sumY / n;
+
+            // The slope is now per 1-hour interval due to the optimized daily view.
+            const hourlySlopeEquivalent = slope; // No need to multiply
+            const relativeSlope = (hourlySlopeEquivalent / avgPrice) * 100; // Trend as a percentage change per hour (equivalent)
+
+            // 3. Determine trend text and color with a tolerance for "Stable"
+            let trendText, trendColor;
+            const trendThreshold = 0.05; // 0.05% change per hour
+            if (relativeSlope > trendThreshold) {
+                trendText = 'Rising';
+                trendColor = 'text-profit';
+            } else if (relativeSlope < -trendThreshold) {
+                trendText = 'Falling';
+                trendColor = 'text-loss';
+            } else {
+                trendText = 'Stable';
+                trendColor = 'text-secondary';
+            }
+
+            // 4. Determine confidence based on volume with more tiers
+            let confidence;
+            if (dailyVolume > 100000) {
+                confidence = 'Very High';
+            } else if (dailyVolume > 50000 || (currentItem && dailyVolume > currentItem.limit * 5)) {
+                confidence = 'High';
+            } else if (dailyVolume > 10000 || (currentItem && dailyVolume > currentItem.limit)) {
+                confidence = 'Medium';
+            } else {
+                confidence = 'Low';
+            }
+
+            // 5. Display the results
+            trendDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="flex items-center text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                        24h Trend
+                    </span>
+                    <span class="font-bold ${trendColor}">${trendText}</span>
+                </div>
+                <div class="flex items-center justify-between mt-3">
+                    <span class="flex items-center text-secondary">
+                        <button type="button" id="confidence-help-icon" class="icon-btn -ml-1 mr-1" aria-label="What confidence means" aria-controls="confidence-modal"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></button>
+                        Confidence
+                    </span>
+                    <span class="font-bold text-primary">${confidence}</span>
+                </div>
+            `;
+        }
+
+
+        function updateDynamicContent(timeframe) {
+            const timeseries = timeSeriesData[timeframe];
+            if (!timeseries) return;
+            updateChart(currentItem.name, timeseries, timeframe);
+        }
+
+        // step is the gap between axis ticks: labels get enough decimals to tell neighbouring
+        // ticks apart (1.21m, 1.22m rather than 1.2m, 1.2m), up to 3
+        function formatAxisLabel(value, step) {
+            const units = [[1000000000, 'b'], [1000000, 'm'], [1000, 'k']];
+            for (const [size, suffix] of units) {
+                if (value >= size) {
+                    const decimals = step ? Math.min(3, Math.max(1, Math.ceil(-Math.log10(step / size)))) : 1;
+                    return (value / size).toFixed(decimals).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '') + suffix;
+                }
+            }
+            return value.toLocaleString();
+        }
+
+        function tickStep(ticks) {
+            return ticks.length > 1 ? Math.abs(ticks[1].value - ticks[0].value) : 0;
+        }
+
+        function updateChart(itemName, dataPoints, timeframe) {
+            if (priceChart) priceChart.destroy();
+
+            const colors = chartColors();
+            const textColor = colors.text;
+            const secondaryTextColor = colors.secondary;
+            const gridColor = colors.grid;
+
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            const greenGradient = areaFill(ctx, colors.green, colors.light);
+            const redGradient = areaFill(ctx, colors.red, colors.light);
+
+            const labels = dataPoints.map(p => new Date(p.timestamp * 1000));
+            const highPrices = dataPoints.map(p => p.avgHighPrice);
+            const lowPrices = dataPoints.map(p => p.avgLowPrice);
+            const volumes = dataPoints.map(p => (p.highPriceVolume || 0) + (p.lowPriceVolume || 0));
+
+            const minDate = labels.length > 0 ? labels[0].getTime() : null;
+            const maxDate = labels.length > 0 ? labels[labels.length - 1].getTime() : null;
+
+            const timeUnit = (timeframe === '1d') ? 'hour' : 'day';
+
+            // Custom plugin to paint a darker background on the chart canvas
+            const chartBgPlugin = {
+                id: 'chartBackground',
+                beforeDraw: (chart) => {
+                    const { ctx: c, chartArea } = chart;
+                    if (!chartArea) return;
+                    c.save();
+                    c.fillStyle = chartColors().background;
+                    const r = 6;
+                    const x = chartArea.left;
+                    const y = chartArea.top;
+                    const w = chartArea.right - chartArea.left;
+                    const h = chartArea.bottom - chartArea.top;
+                    c.beginPath();
+                    c.moveTo(x + r, y);
+                    c.lineTo(x + w - r, y);
+                    c.quadraticCurveTo(x + w, y, x + w, y + r);
+                    c.lineTo(x + w, y + h - r);
+                    c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    c.lineTo(x + r, y + h);
+                    c.quadraticCurveTo(x, y + h, x, y + h - r);
+                    c.lineTo(x, y + r);
+                    c.quadraticCurveTo(x, y, x + r, y);
+                    c.closePath();
+                    c.fill();
+                    c.restore();
+                }
+            };
+
+            Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+            // Axis labels are measured when the chart is built; re-measure once Inter has loaded
+            if (document.fonts && document.fonts.status !== 'loaded') {
+                document.fonts.ready.then(() => { if (priceChart) priceChart.update('none'); });
+            }
+            priceChart = new Chart(ctx, {
+                type: 'bar',
+                plugins: [chartBgPlugin],
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Avg High Price',
+                            data: highPrices,
+                            borderColor: colors.green,
+                            backgroundColor: greenGradient,
+                            fill: true,
+                            tension: 0,
+                            borderWidth: 2.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            yAxisID: 'y',
+                            order: 1,
+                            spanGaps: true // Connects lines over missing data points
+                        },
+                        {
+                            type: 'line',
+                            label: 'Avg Low Price',
+                            data: lowPrices,
+                            borderColor: colors.red,
+                            backgroundColor: redGradient,
+                            fill: true,
+                            tension: 0,
+                            borderWidth: 2.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            yAxisID: 'y',
+                            order: 1,
+                            spanGaps: true // Connects lines over missing data points
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Volume',
+                            data: volumes,
+                            backgroundColor: withAlpha(colors.blue, 0.3),
+                            borderColor: withAlpha(colors.blue, 0.5),
+                            borderWidth: 1,
+                            yAxisID: 'y1',
+                            order: 2,
+                            hidden: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    stacked: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor,
+                                boxWidth: 14,
+                                boxHeight: 14,
+                                // Chart.js strikes through hidden series, which reads like an error.
+                                // Show the hidden volume series as a faded "Show volume" toggle instead
+                                generateLabels: (chart) => Chart.defaults.plugins.legend.labels.generateLabels(chart).map(label => {
+                                    if (!label.hidden) return label;
+                                    const faded = withAlpha(chartColors().secondary, 0.9);
+                                    return { ...label, hidden: false, text: `Show ${label.text.toLowerCase()}`, fontColor: faded, fillStyle: 'transparent', strokeStyle: faded };
+                                })
+                            }
+                        },
+                        title: { display: true, text: `${itemName} price history`, color: textColor, font: { size: 15, weight: '600' }, padding: { bottom: 8 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString();
+                                        if (context.dataset.type === 'line') label += ' GP';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'x',
+                            },
+                            zoom: {
+                                wheel: { enabled: true },
+                                pinch: { enabled: true },
+                                mode: 'x',
+                                onZoomComplete: () => resetZoomBtn.classList.remove('hidden'),
+                            },
+                            limits: {
+                                x: { min: minDate, max: maxDate, minRange: 3600000 } // minRange of 1 hour
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            min: minDate,
+                            max: maxDate,
+                            offset: false,
+                            time: {
+                                unit: timeUnit,
+                                tooltipFormat: 'MMM d, h:mm a'
+                            },
+                            grid: { color: gridColor },
+                            ticks: { color: secondaryTextColor, maxRotation: 0, autoSkipPadding: 12 }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            beginAtZero: false,
+                            grace: '10%',
+                            grid: { color: gridColor },
+                            ticks: {
+                                color: secondaryTextColor,
+                                // Narrow charts drop the " GP" suffix so the labels fit the axis width
+                                callback: function (value, index, ticks) { return formatAxisLabel(value, tickStep(ticks)) + (this.chart.width < 360 ? '' : ' GP'); }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: 'auto', // only while the volume bars are shown
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: {
+                                color: secondaryTextColor,
+                                callback: function (value, index, ticks) { return formatAxisLabel(value, tickStep(ticks)); }
+                            }
+                        },
+                    }
+                }
+            });
+        }
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        function hideError() {
+            errorDiv.classList.add('hidden');
+        }
+
+        // --- Advanced View Functions ---
+        function toggleViewMode() {
+            const url = new URL(window.location);
+            if (isAdvancedMode) {
+                // Switch to Simple mode (charts only)
+                isAdvancedMode = false;
+                modeToggleBtn.setAttribute('aria-pressed', 'false');
+                advancedContainer.classList.add('hidden');
+                url.searchParams.delete('view');
+            } else {
+                // Switch to Advanced mode (table + charts)
+                isAdvancedMode = true;
+                modeToggleBtn.setAttribute('aria-pressed', 'true');
+                advancedContainer.classList.remove('hidden');
+                populateAdvancedTable();
+                url.searchParams.set('view', 'advanced');
+            }
+            try {
+                history.pushState({}, '', url);
+            } catch (e) {
+                console.warn("Could not update URL:", e);
+            }
+        }
+
+        const categoryKeywords = {
+            armour: [' helm', ' body', ' legs', ' skirt', ' shield', ' boots', ' gloves', ' vambraces', ' coif', ' chaps', ' platebody', ' platelegs', ' plateskirt', ' full helm', ' kiteshield', ' dragonfire ward', ' defender'],
+            weapons: ['scimitar', 'longsword', 'dagger', 'warhammer', 'battleaxe', 'mace', '2h sword', 'halberd', ' cbow', ' xbow', ' bow', ' staff', ' spear', ' whip', ' abyssal bludgeon', ' godsword', ' tentacle'],
+            food: ['shark', 'manta ray', 'anglerfish', 'karambwan', 'sea turtle'],
+            herbs: ['ranarr weed', 'toadflax', 'irit leaf', 'avantoe', 'kwuarm', 'snapdragon', 'cadantine', 'lantadyme', 'dwarf weed', 'torstol'],
+            logs: [' logs'],
+            potions: ['potion(', ' antifire(', ' super', ' restore(', ' ranging(', ' compost', 'antidote++'],
+            runes: [' rune'],
+            seeds: [' seed']
+        };
+
+        function filterByCategory(items, category) {
+            if (category === 'all') return items;
+
+            // Handle ores and bars by ID for 100% accuracy
+            if (category === 'ores') {
+                return items.filter(item => oreAndBarIds.has(item.itemInfo.id));
+            }
+
+            const keywords = categoryKeywords[category] || [];
+
+            return items.filter(item => {
+                const name = item.itemInfo.name.toLowerCase();
+
+                // Special handling for herbs to exclude seeds
+                if (category === 'herbs' && name.includes('seed')) {
+                    return false;
+                }
+
+                // Match runes and logs on the last word, so rune armour sets are left out and plain "Logs" is kept
+                if (category === 'runes') return name.endsWith(' rune');
+                if (category === 'logs') return name === 'logs' || name.endsWith(' logs');
+
+                return keywords.some(keyword => name.includes(keyword));
+            });
+        }
+
+        function populateAdvancedTable() {
+            const showAll = advancedShowAllCheckbox.checked;
+
+            if (Object.keys(latestPriceData).length === 0) {
+                advancedTableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary">Loading market data... Please wait.</td></tr>';
+                return;
+            }
+
+            if (!showAll && masterFlippableItems.length === 0) {
+                advancedTableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary">No profitable items found. Try increasing your budget or check "Show All".</td></tr>';
+                return;
+            }
+
+            const category = advancedCategory.value;
+            const limit = parseInt(advancedLimit.value);
+
+            let sourceItems;
+            if (showAll) {
+                // Use the complete item map, enriched with the latest price data
+                sourceItems = itemMapping.map(item => {
+                    const priceInfo = latestPriceData[item.id];
+                    return {
+                        itemInfo: item,
+                        priceInfo: priceInfo || { high: 0, low: 0 },
+                        flipScore: 0
+                    };
+                });
+            } else {
+                // Use the pre-filtered list of profitable items
+                sourceItems = masterFlippableItems;
+            }
+
+            // 1. Filter by category first
+            let filteredItems = filterByCategory(sourceItems, category);
+
+            // 2. Sort the filtered items
+            const getProfit = item => {
+                if (!item.priceInfo || !item.priceInfo.high || !item.priceInfo.low) return -Infinity;
+                return (item.priceInfo.high - item.priceInfo.low) - geTaxPerItem(item.itemInfo.id, item.priceInfo.high);
+            };
+
+            const getVolume = item => {
+                const profit = getProfit(item);
+                if ('flipScore' in item && item.flipScore > 0 && profit > 0) {
+                    return Math.floor(item.flipScore / profit);
+                } else {
+                    return allVolumesData[item.itemInfo.id] || 0;
+                }
+            };
+
+            const getMargin = item => {
+                if (!item.priceInfo || !item.priceInfo.low) return -Infinity;
+                const netMargin = getProfit(item);
+                return item.priceInfo.low > 0 ? (netMargin / item.priceInfo.low) * 100 : 0;
+            };
+
+            filteredItems.sort((a, b) => {
+                let valA, valB;
+                switch (advancedSortState.column) {
+                    case 'profit_volume': valA = a.flipScore || 0; valB = b.flipScore || 0; break;
+                    case 'profit': valA = getProfit(a); valB = getProfit(b); break;
+                    case 'volume':
+                        valA = getVolume(a);
+                        valB = getVolume(b);
+                        break;
+                    case 'margin': valA = getMargin(a); valB = getMargin(b); break;
+                    case 'low': valA = a.priceInfo.low || 0; valB = b.priceInfo.low || 0; break;
+                    case 'high': valA = a.priceInfo.high || 0; valB = b.priceInfo.high || 0; break;
+                    case 'limit': valA = a.itemInfo.limit || 0; valB = b.itemInfo.limit || 0; break;
+                    default: return 0;
+                }
+
+                return advancedSortState.direction === 'desc' ? valB - valA : valA - valB;
+            });
+
+            // Apply margin-specific filters when sorting by margin to prevent junk outliers
+            if (advancedSortState.column === 'margin') {
+                const MAX_MARGIN_PERCENT = 15; // Only show realistic flips (max 15%)
+                const MIN_VOLUME_THRESHOLD = 50; // Require minimum volume for tradeable items
+
+                filteredItems = filteredItems.filter(item => {
+                    const margin = getMargin(item);
+                    const volume = getVolume(item);
+                    // Filter out high-margin low-volume junk and excessive margins
+                    return margin <= MAX_MARGIN_PERCENT && volume >= MIN_VOLUME_THRESHOLD;
+                });
+            }
+
+            // 3. Limit results
+            const finalItems = filteredItems.slice(0, limit);
+
+            // 4. Populate table
+            advancedTableBody.innerHTML = '';
+            if (finalItems.length === 0) {
+                advancedTableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary">No items found for the selected category.</td></tr>';
+            } else {
+                finalItems.forEach(item => {
+                    const profit = getProfit(item);
+                    const netMarginPercent = getMargin(item);
+                    const volume = getVolume(item);
+                    const row = document.createElement('tr');
+                    row.tabIndex = 0;
+                    row.innerHTML = `
+                        <td class="py-3 px-2">
+                            <div class="flex items-center">
+                                <img src="https://static.runelite.net/cache/item/icon/${item.itemInfo.id}.png" 
+                                     class="w-6 h-6 mr-2" alt="" loading="lazy"
+                                     onerror="this.style.display='none'">
+                                <span class="text-primary font-medium">${item.itemInfo.name}</span>
+                            </div>
+                        </td>
+                        <td class="text-right py-3 px-2">${item.priceInfo.low ? item.priceInfo.low.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2">${item.priceInfo.high ? item.priceInfo.high.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 text-secondary">${isFinite(netMarginPercent) ? netMarginPercent.toFixed(2) + '%' : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 font-semibold ${profit > 0 ? 'text-profit' : 'text-loss'}">${isFinite(profit) ? profit.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2">${typeof volume === 'number' ? volume.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 text-secondary">${item.itemInfo.limit ? item.itemInfo.limit.toLocaleString() : 'N/A'}</td>
+                    `;
+                    row.addEventListener('click', () => {
+                        itemNameInput.value = item.itemInfo.name;
+                        // Keep advanced mode active if it's already active
+                        resultsContainer.classList.remove('hidden'); 
+                        throttleApiCall(() => fetchAllData(item.itemInfo.name));
+                    });
+                    row.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            row.click();
+                        }
+                    });
+                    advancedTableBody.appendChild(row);
+                });
+            }
+
+            // 5. Update header sort indicators
+            advancedTableHeader.querySelectorAll('th[data-sort]').forEach(th => {
+                // Clear existing icons
+                const existingIcon = th.querySelector('.sort-icon');
+                if (existingIcon) existingIcon.remove();
+                th.removeAttribute('aria-sort');
+
+                if (th.dataset.sort === advancedSortState.column) {
+                    const icon = document.createElement('span');
+                    icon.className = 'sort-icon';
+                    icon.innerHTML = advancedSortState.direction === 'desc' ? '&#9660;' : '&#9650;'; // ▼ or ▲
+                    icon.setAttribute('aria-hidden', 'true');
+                    th.appendChild(icon);
+                    th.setAttribute('aria-sort', advancedSortState.direction === 'desc' ? 'descending' : 'ascending');
+                }
+            });
+        }
+
+        // --- Event Listeners ---
+
+        // Items whose name contains the query: exact name first, then names starting with it,
+        // then names with a word starting with it, shortest names first within each group
+        function findItemsByName(query) {
+            const q = query.toLowerCase().trim();
+            const rank = (name) => name === q ? 0 : name.startsWith(q) ? 1 : name.includes(' ' + q) ? 2 : 3;
+            return itemMapping
+                .filter(item => item.name.toLowerCase().includes(q) && !item.name.includes('(item)'))
+                .map(item => ({ item, rank: rank(item.name.toLowerCase()) }))
+                .sort((a, b) => a.rank - b.rank || a.item.name.length - b.item.name.length || a.item.name.localeCompare(b.item.name))
+                .map(match => match.item);
+        }
+
+        // Runs inside throttleApiCall (Enter key / search button), so it loads the item directly
+        function handleSearch() {
+            const query = itemNameInput.value.toLowerCase();
+            if (query.length < 2) return;
+            const filteredItems = findItemsByName(query);
+            if (filteredItems.length > 0) {
+                const bestMatch = filteredItems[0];
+                itemNameInput.value = bestMatch.name;
+                suggestionsDiv.classList.add('hidden');
+                fetchAllData(bestMatch.name);
+            }
+        }
+
+        function throttleApiCall(callback) {
+            if (isApiThrottled) return;
+            isApiThrottled = true;
+            searchBtn.disabled = true; suggestItemBtn.disabled = true;
+            callback();
+            setTimeout(() => {
+                isApiThrottled = false;
+                searchBtn.disabled = false; suggestItemBtn.disabled = false;
+                suggestItemBtn.textContent = 'Suggest item';
+            }, 500);
+        }
+
+        itemNameInput.addEventListener('input', () => {
+            const query = itemNameInput.value.toLowerCase();
+            if (query.length < 2) {
+                suggestionsDiv.classList.add('hidden');
+                return;
+            }
+            const filteredItems = findItemsByName(query).slice(0, 50);
+            suggestionsDiv.innerHTML = '';
+            if (filteredItems.length > 0) {
+                filteredItems.forEach(item => {
+                    const div = document.createElement('button');
+                    div.type = 'button';
+                    div.className = 'suggestion';
+                    div.innerHTML = `<img src="https://static.runelite.net/cache/item/icon/${item.id}.png" class="w-6 h-6 mr-3" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+                                     <span>${item.name}</span>`;
+                    div.addEventListener('click', () => {
+                        itemNameInput.value = item.name;
+                        suggestionsDiv.classList.add('hidden');
+                        throttleApiCall(() => fetchAllData(item.name));
+                    });
+                    suggestionsDiv.appendChild(div);
+                });
+                suggestionsDiv.classList.remove('hidden');
+            } else {
+                suggestionsDiv.classList.add('hidden');
+            }
+        });
+
+        itemNameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                throttleApiCall(handleSearch);
+            }
+        });
+
+        searchBtn.addEventListener('click', () => throttleApiCall(handleSearch));
+        suggestItemBtn.addEventListener('click', () => throttleApiCall(suggestItem));
+
+        // --- Advanced View Event Listeners ---
+        modeToggleBtn.addEventListener('click', toggleViewMode);
+        advancedLimit.addEventListener('change', populateAdvancedTable);
+        advancedCategory.addEventListener('change', populateAdvancedTable);
+        advancedShowAllCheckbox.addEventListener('change', populateAdvancedTable);
+
+        advancedSort.addEventListener('change', () => {
+            const column = advancedSort.value;
+            advancedSortState.column = column;
+            // Set default direction based on selection. 'low' is ascending, others descending.
+            advancedSortState.direction = (column === 'low') ? 'asc' : 'desc';
+            populateAdvancedTable();
+        });
+
+        advancedTableHeader.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('th[data-sort]')) {
+                e.preventDefault();
+                e.target.closest('th').click();
+            }
+        });
+
+        advancedTableHeader.addEventListener('click', (e) => {
+            const header = e.target.closest('th');
+            if (!header || !header.dataset.sort || header.dataset.sort === 'name') return; // Ignore clicks on non-sortable headers
+
+            const column = header.dataset.sort;
+            if (advancedSortState.column === column) {
+                advancedSortState.direction = advancedSortState.direction === 'desc' ? 'asc' : 'desc';
+            } else {
+                advancedSortState.column = column;
+                advancedSortState.direction = 'desc';
+            }
+            populateAdvancedTable();
+        });
+
+        timeframeControls.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const selectedTimeframe = e.target.dataset.timeframe;
+                if (!currentItem || e.target.classList.contains('active')) return;
+                const previous = timeframeControls.querySelector('.active');
+                previous.classList.remove('active');
+                previous.setAttribute('aria-pressed', 'false');
+                e.target.classList.add('active');
+                e.target.setAttribute('aria-pressed', 'true');
+                updateDynamicContent(selectedTimeframe);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!itemNameInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+                suggestionsDiv.classList.add('hidden');
+            }
+            if (!formulaModal.classList.contains('hidden') && !formulaModal.contains(e.target) && !calcHelpIcon.contains(e.target)) {
+                formulaModal.classList.add('hidden');
+                calcHelpIcon.setAttribute('aria-expanded', 'false');
+            }
+            if (!confidenceModal.classList.contains('hidden') && !confidenceModal.contains(e.target) && !e.target.closest('#confidence-help-icon')) {
+                confidenceModal.classList.add('hidden');
+            }
+        });
+
+        resetZoomBtn.addEventListener('click', () => {
+            if (priceChart) {
+                priceChart.resetZoom();
+                resetZoomBtn.classList.add('hidden');
+            }
+        });
+
+        [calcQuantityInput, calcBuyPriceInput, calcSellPriceInput].forEach(input => {
+            input.addEventListener('input', calculateNetProfit);
+        });
+
+        function setCalculatorOpen(open) {
+            calculatorBody.classList.toggle('collapsed', !open);
+            calculatorHeader.setAttribute('aria-expanded', String(open));
+        }
+
+        calculatorHeader.addEventListener('click', () => {
+            setCalculatorOpen(calculatorBody.classList.contains('collapsed'));
+        });
+
+        calcHelpIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formulaModal.classList.toggle('hidden');
+            calcHelpIcon.setAttribute('aria-expanded', String(!formulaModal.classList.contains('hidden')));
+        });
+
+        additionalInfoDiv.addEventListener('click', (e) => {
+            const helpIcon = e.target.closest('#confidence-help-icon');
+            if (helpIcon) {
+                e.stopPropagation();
+                confidenceModal.classList.toggle('hidden');
+            }
+
+            const limitEl = e.target.closest('.clickable-limit');
+            if (limitEl && limitEl.dataset.limit) {
+                calcQuantityInput.value = limitEl.dataset.limit;
+                calculateNetProfit();
+                setCalculatorOpen(true);
+                calcQuantityInput.focus();
+            }
+        });
+
+        priceInfoDiv.addEventListener('click', (e) => {
+            const priceEl = e.target.closest('.clickable-price');
+            if (priceEl && priceEl.dataset.price) {
+                const targetInput = priceEl.dataset.target === 'buy' ? calcBuyPriceInput : calcSellPriceInput;
+                targetInput.value = priceEl.dataset.price;
+                calculateNetProfit();
+                setCalculatorOpen(true);
+                targetInput.focus();
+            }
+        });
+
+        // The budget is remembered for the browser tab's session, so suggesting from an item page (which
+        // opens the suggested item's own page) or going Back keeps the user's choice
+        const BUDGET_STORAGE_KEY = 'budgetIndex';
+        const DEFAULT_BUDGET_INDEX = 7; // 10m
+
+        function getSavedBudgetIndex() {
+            try {
+                const saved = parseInt(sessionStorage.getItem(BUDGET_STORAGE_KEY), 10);
+                if (saved >= 0 && saved < budgetSteps.length) return saved;
+            } catch (e) { }
+            return DEFAULT_BUDGET_INDEX;
+        }
+
+        // Syncs the budget label and the suggestion pool with the slider, and remembers the choice
+        function applyBudget() {
+            const index = parseInt(budgetSlider.value);
+            const value = budgetSteps[index];
+
+            try {
+                sessionStorage.setItem(BUDGET_STORAGE_KEY, String(index));
+            } catch (e) { }
+
+            if (value === Number.MAX_SAFE_INTEGER) {
+                budgetValue.innerHTML = `<span class="text-accent">High roller</span> (no limit)`;
+            } else {
+                budgetValue.style.color = ''; // Reset color
+                let displayText = '';
+                if (value >= 1000000000) {
+                    displayText = (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'b';
+                } else if (value >= 1000000) {
+                    displayText = (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+                } else {
+                    displayText = (value / 1000).toFixed(0) + 'k';
+                }
+
+                budgetValue.innerHTML = `<span class="text-accent">${displayText}</span> GP`;
+            }
+            filterItemsByBudget();
+            updatePlaceholder();
+        }
+
+        budgetSlider.addEventListener('input', () => {
+            itemNameInput.value = ''; // Clear search bar on slider change
+            applyBudget();
+        });
+
+        // --- Initial Load ---
+
+        async function onAppReady() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slugFromUrl = urlParams.get('item');
+            const viewFromUrl = urlParams.get('view');
+
+            if (viewFromUrl === 'advanced') {
+                const categoryFromUrl = urlParams.get('category');
+                if (categoryFromUrl) {
+                    const advancedCategory = document.getElementById('advanced-category');
+                    if (advancedCategory) advancedCategory.value = categoryFromUrl;
+                }
+                toggleViewMode();
+            }
+
+            // Priority: 1. Preloaded Item (for SEO pages) 2. URL slug
+            const itemName = window.PRELOAD_ITEM_NAME || (slugFromUrl ? null : null); // Placeholder for logic
+
+            if (window.PRELOAD_ITEM_NAME) {
+                itemNameInput.value = window.PRELOAD_ITEM_NAME;
+                await fetchAllData(window.PRELOAD_ITEM_NAME);
+                return;
+            }
+
+            if (slugFromUrl) {
+                const itemId = slugFromUrl.split('-')[0];
+                const item = itemMapping.find(i => i.id == itemId);
+
+                if (item) {
+                    itemNameInput.value = item.name;
+                    await fetchAllData(item.name);
+                } else {
+                    console.error("Item ID from URL not found, loading a random item.");
+                    loadInitialItem();
+                }
+            } else {
+                loadInitialItem();
+            }
+        }
+
+        async function initialize() {
+            // Restore the budget chosen earlier in this tab (10m on a new visit). pageshow re-applies it after
+            // browser form restoration and when Back/Forward brings the page out of the cache
+            budgetSlider.value = getSavedBudgetIndex();
+            applyBudget();
+            window.addEventListener('pageshow', function () {
+                const savedIndex = getSavedBudgetIndex();
+                if (parseInt(budgetSlider.value) === savedIndex) return;
+                budgetSlider.value = savedIndex;
+                applyBudget();
+            });
+
+            await loadItemMapping();
+
+            filterItemsByBudget();
+            updatePlaceholder();
+
+            onAppReady();
+        }
+
+        initialize();
+
+    </script>
+</body>
+
+</html>
+
+</html>

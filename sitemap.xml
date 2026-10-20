@@ -3907,6 +3907,36 @@
         </image:image>
     </url>
     <url>
+        <loc>https://osrs.lol/items/ascension-bolts</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34684.png</image:loc>
+            <image:title>Ascension bolts OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/ascension-crossbows</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34681.png</image:loc>
+            <image:title>Ascension crossbows OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/ascension-shards</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34669.png</image:loc>
+            <image:title>Ascension shards OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
         <loc>https://osrs.lol/items/asgarnian-ale</loc>
         <lastmod>2026-10-20</lastmod>
         <changefreq>daily</changefreq>
@@ -12627,6 +12657,26 @@
         </image:image>
     </url>
     <url>
+        <loc>https://osrs.lol/items/diamond-ascension-bolts</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34690.png</image:loc>
+            <image:title>Diamond ascension bolts OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/diamond-ascension-bolts-e</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34696.png</image:loc>
+            <image:title>Diamond ascension bolts (e) OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
         <loc>https://osrs.lol/items/diamond-bolt-tips</loc>
         <lastmod>2026-10-20</lastmod>
         <changefreq>daily</changefreq>
@@ -20084,6 +20134,16 @@
         <image:image>
             <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/20128.png</image:loc>
             <image:title>Hood of darkness OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/horn-of-bran</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34679.png</image:loc>
+            <image:title>Horn of Bran OSRS Price &amp; Trends</image:title>
         </image:image>
     </url>
     <url>
@@ -27617,6 +27677,16 @@
         </image:image>
     </url>
     <url>
+        <loc>https://osrs.lol/items/obligator-uncharged</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34717.png</image:loc>
+            <image:title>Obligator (uncharged) OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
         <loc>https://osrs.lol/items/obsidian-armour-set</loc>
         <lastmod>2026-10-20</lastmod>
         <changefreq>daily</changefreq>
@@ -27934,6 +28004,26 @@
         <image:image>
             <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/6579.png</image:loc>
             <image:title>Onyx amulet (u) OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/onyx-ascension-bolts</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34702.png</image:loc>
+            <image:title>Onyx ascension bolts OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/onyx-ascension-bolts-e</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34708.png</image:loc>
+            <image:title>Onyx ascension bolts (e) OSRS Price &amp; Trends</image:title>
         </image:image>
     </url>
     <url>
@@ -32274,6 +32364,16 @@
         <image:image>
             <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/7445.png</image:loc>
             <image:title>Rolling pin OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/rondache</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34719.png</image:loc>
+            <image:title>Rondache OSRS Price &amp; Trends</image:title>
         </image:image>
     </url>
     <url>
@@ -46594,6 +46694,16 @@
         <image:image>
             <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/29449.png</image:loc>
             <image:title>Zombie pirate key OSRS Price &amp; Trends</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://osrs.lol/items/zorya-s-tome-uncharged</loc>
+        <lastmod>2026-10-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://tiles.runescape.wiki/static/public/images/osrs/items/34727.png</image:loc>
+            <image:title>Zorya's tome (uncharged) OSRS Price &amp; Trends</image:title>
         </image:image>
     </url>
     <url>

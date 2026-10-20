@@ -68,102 +68,62 @@
     <!-- Tailwind CSS (Recommended in head for Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css">
+    <script src="/assets/theme.js"></script>
     <style>
-        :root {
-            /* Dark Theme (Default) */
-            --bg-dark: #211e1c;
-            --bg-main: #3a3532;
-            --bg-contrast: #2a2725;
-            --border-color: #504a45;
-            --text-primary: #e5e0db;
-            --text-secondary: #a8a29e;
-            --accent-gold: #e7bc1c;
-            --accent-green: #22c55e;
-            --accent-red: #ef4444;
-            --accent-blue: #3b82f6;
-            --chart-grid-color: rgba(229, 224, 219, 0.1);
+        /* Dashboard-only styles. Colours, buttons, header and footer come from /assets/site.css */
+        .hero {
+            margin: 28px 0 24px;
         }
 
-        html[data-theme="light"] {
-            /* Light Theme - Refined OSRS Sandstone Palette */
-            --bg-dark: #dbc8a7;
-            /* Soft sandstone page background */
-            --bg-main: #ecdcb9;
-            /* Bright, clean parchment for cards */
-            --bg-contrast: #ceb995;
-            /* Deeper sand for inputs, hovers, and contrast */
-            --border-color: #9c835c;
-            /* Warm, muted brown-gold for refined borders */
-            --text-primary: #3d2b1f;
-            /* Very dark, rich brown (like dried leather) */
-            --text-secondary: #6e5944;
-            /* Medium earthy brown for secondary text */
-
-            /* Readable Accents for Light Theme */
-            --accent-gold: #553300;
-            /* Deep amber/gold for readability (replaces bright yellow) */
-            --accent-green: #166534;
-            /* Deep forest green for 'profit' */
-            --accent-red: #991b1b;
-            /* Deep crimson for 'loss' */
-            --accent-blue: #1d4ed8;
-            /* Deep blue for volume */
-
-            --chart-grid-color: rgba(61, 43, 31, 0.1);
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .bg-main {
+        /* Search box */
+        html .search-input {
+            padding: 14px 52px 14px 16px;
+            font-size: 1.0625rem;
             background-color: var(--bg-main);
-            transition: background-color 0.3s;
+            border-radius: 10px;
         }
 
-        .bg-dark-contrast {
-            background-color: var(--bg-contrast);
-            transition: background-color 0.3s;
-        }
-
-        .border-custom {
-            border-color: var(--border-color);
-            transition: border-color 0.3s;
-        }
-
-        .placeholder-custom::placeholder {
+        html .search-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: 0 16px;
             color: var(--text-secondary);
+            border-radius: 0 10px 10px 0;
         }
 
-        #itemName {
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
-            /* Increased brightness of default glow */
-            transition: box-shadow 0.3s, border-color 0.3s;
+        html .search-btn:hover {
+            color: var(--text-primary);
         }
 
-        .focus-accent:hover,
-        .focus-accent:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
+        html .search-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
         }
 
-        .text-accent {
-            color: var(--accent-gold);
+        #suggestions {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-pop);
         }
 
-        .text-profit {
-            color: var(--accent-green);
+        html .suggestion {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 12px;
+            text-align: left;
+            color: var(--text-primary);
         }
 
-        .text-loss {
-            color: var(--accent-red);
-        }
-
-        .text-volume {
-            color: var(--accent-blue);
+        html .suggestion:hover,
+        html .suggestion:focus-visible {
+            background-color: var(--bg-contrast);
         }
 
         #suggestions::-webkit-scrollbar {
@@ -171,7 +131,7 @@
         }
 
         #suggestions::-webkit-scrollbar-track {
-            background: var(--bg-dark);
+            background: var(--bg-main);
         }
 
         #suggestions::-webkit-scrollbar-thumb {
@@ -180,109 +140,65 @@
         }
 
         #suggestions::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
+            background: var(--text-muted);
         }
 
-        .timeframe-btn {
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .timeframe-btn.active,
-        .timeframe-btn:hover {
-            background-color: var(--accent-gold);
-            color: #1c1917;
-            /* Dark text for contrast on gold button */
-            border-color: var(--accent-gold);
-        }
-
-        .theme-toggle-btn {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .suggest-btn {
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-        }
-
-        .suggest-btn:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4);
-        }
-
-        .suggest-btn:disabled {
-            cursor: not-allowed;
-            background-color: var(--bg-contrast);
-            color: var(--text-secondary);
-            border-color: var(--border-color);
-            box-shadow: none;
-        }
-
-        #search-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        .clickable-price:hover {
-            text-decoration: underline;
+        .clickable-price,
+        .clickable-limit {
             cursor: pointer;
         }
 
-        .calc-input {
-            background-color: var(--bg-dark);
+        .clickable-price:hover,
+        .clickable-limit:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* Popovers (formula and confidence explanations) */
+        .popover {
+            background-color: var(--bg-main);
             border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            border-radius: 10px;
+            box-shadow: var(--shadow-pop);
         }
 
-        .table-row-hover {
+        /* Profit calculator */
+        .calc-panel {
             background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
         }
 
-        .table-row-hover:hover {
-            background-color: var(--bg-dark) !important;
+        html .calc-toggle {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 10px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            text-align: left;
         }
 
-        #advanced-table-header {
-            background-color: var(--bg-dark);
-            border-top: 1px solid var(--border-color);
+        html .calc-toggle:hover {
+            background-color: var(--bg-main);
         }
 
-        .main-title {
-            color: var(--accent-gold);
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 0, 0, 0.3), 0 2px 10px rgba(231, 188, 28, 0.15);
-            transition: all 0.3s ease-in-out;
+        .calc-arrow {
+            margin-left: auto;
+            transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .main-title:hover {
-            filter: brightness(1.15);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 2px 16px rgba(231, 188, 28, 0.3);
-            transform: scale(1.02);
-        }
-
-        html[data-theme="light"] .main-title {
-            color: #2c2c2c;
-            /* Dark grey for title to stand out on beige theme */
-        }
-
-        .section-title {
-            color: var(--accent-gold);
-        }
-
-        html[data-theme="light"] .section-title {
-            color: #2c2c2c;
+        .calc-toggle[aria-expanded="true"] .calc-arrow {
+            transform: rotate(180deg);
         }
 
         #calculator-body {
             max-height: 500px;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, border 0.5s ease-in-out;
+            transition: max-height 0.4s cubic-bezier(0.2, 0, 0, 1), padding 0.4s cubic-bezier(0.2, 0, 0, 1);
             overflow: hidden;
             border-top-width: 1px;
         }
@@ -294,80 +210,108 @@
             border-top-width: 0px;
         }
 
-        /* Custom Slider Styles */
-        #budget-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-gold);
-            cursor: pointer;
-            border-radius: 50%;
-            transition: box-shadow 0.2s ease-in-out;
+        /* Market table */
+        .market-table thead {
+            background-color: var(--bg-contrast);
         }
 
-        #budget-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--accent-gold);
-            cursor: pointer;
-            border-radius: 50%;
-            border: none;
-            transition: box-shadow 0.2s ease-in-out;
-        }
-
-        #budget-slider::-webkit-slider-runnable-track {
-            background-color: var(--border-color);
-            height: 8px;
-            border-radius: 4px;
-        }
-
-        #budget-slider::-moz-range-track {
-            background-color: var(--border-color);
-            height: 8px;
-            border-radius: 4px;
-        }
-
-        #budget-slider:hover::-webkit-slider-thumb,
-        #budget-slider:active::-webkit-slider-thumb {
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
-        }
-
-        #budget-slider:hover::-moz-range-thumb,
-        #budget-slider:active::-moz-range-thumb {
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
-        }
-
-        /* Styles for clickable table headers in advanced view */
-        #advanced-table-header th[data-sort] {
+        .market-table th[data-sort] {
             cursor: pointer;
             user-select: none;
+            white-space: nowrap;
         }
 
-        #advanced-table-header th[data-sort]:hover {
+        .market-table th[data-sort="name"] {
+            cursor: default;
+        }
+
+        .market-table th[data-sort]:not([data-sort="name"]):hover {
             color: var(--text-primary);
+        }
+
+        .market-table tbody tr {
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .market-table tbody tr:hover,
+        .market-table tbody tr:focus-visible {
+            background-color: var(--bg-contrast);
+        }
+
+        .market-table td {
+            font-variant-numeric: tabular-nums;
         }
 
         .sort-icon {
             display: inline-block;
             margin-left: 6px;
-            font-size: 0.9em;
+            font-size: 0.75em;
             color: var(--accent-gold);
         }
 
-        /* Loading & Skeleton Styles */
+        /* Budget slider */
+        #budget-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            height: 24px;
+        }
+
+        #budget-slider::-webkit-slider-runnable-track {
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-strong);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        #budget-slider::-moz-range-track {
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-strong);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        #budget-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            margin-top: -8px;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-main);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--accent-gold);
+        }
+
+        #budget-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-main);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--accent-gold);
+        }
+
+        #budget-slider:hover::-webkit-slider-thumb,
+        #budget-slider:active::-webkit-slider-thumb {
+            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+        }
+
+        #budget-slider:hover::-moz-range-thumb,
+        #budget-slider:active::-moz-range-thumb {
+            box-shadow: 0 0 0 1px var(--accent-gold), 0 0 0 6px rgba(231, 188, 28, 0.25);
+        }
+
+        /* Loading & skeleton */
         .skeleton {
             background-color: var(--bg-contrast);
-            background-image: linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0) 0,
-                rgba(255, 255, 255, 0.05) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
+            background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0) 100%);
             background-size: 200% 100%;
             animation: skeleton-pulse 1.5s infinite;
             border-radius: 4px;
-            border: 1px solid var(--border-color);
         }
 
         @keyframes skeleton-pulse {
@@ -375,17 +319,12 @@
             100% { background-position: -200% 0; }
         }
 
-        .is-loading {
-            pointer-events: none;
-        }
-
         .is-loading .content-fade {
-            opacity: 0.3;
-            filter: blur(2px);
-            transition: opacity 0.3s, filter 0.3s;
+            opacity: 0.4;
+            transition: opacity 0.3s;
         }
 
-        /* Container Stability */
+        /* Keep the layout steady while data loads */
         #results-container {
             min-height: 480px;
         }
@@ -394,11 +333,12 @@
             min-height: 320px;
         }
 
+        #error {
+            background-color: color-mix(in srgb, var(--accent-red) 10%, transparent);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+        }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;700&display=swap"
-        rel="stylesheet">
 
     <script>
         window.PRELOAD_ITEM_NAME = "Yew stock";
@@ -407,61 +347,24 @@
     <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebPage","name":"Yew Stock OSRS Price & Trends","url":"https://osrs.lol/items/yew-stock","description":"Yew stock price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit (10,000) and high alch value. A yew crossbow stock.","dateModified":"2026-10-20","primaryImageOfPage":"https://tiles.runescape.wiki/static/public/images/osrs/items/9452.png","isPartOf":{"@type":"WebSite","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
     </head>
 
-<body class="font-sans">
+<body>
 
     <div class="container mx-auto max-w-6xl p-4 md:p-8">
 
-        <!-- Header with Theme Toggle -->
-        <header class="text-center mb-8 relative">
-            <div class="flex justify-center items-center space-x-4">
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP" class="h-12">
-                <div>
-                    <a href="/" class="main-title no-underline">
-                        <p class="text-4xl font-bold mb-2" style="font-family: 'Cinzel', serif;">Quick and FREE OSRS GE
-                            Flipping Tool</p>
-                    </a>
-                    <p class="text-lg text-secondary flex items-center justify-center flex-wrap gap-1">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="flex-shrink-0">
-                            <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14" />
-                            <path
-                                d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
-                            <path d="m2 16 6 6" />
-                            <circle cx="16" cy="9" r="2.9" />
-                            <circle cx="6" cy="5" r="3" />
-                        </svg>
-                        <span>Grand Exchange Live Item Prices & Analysis</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="flex-shrink-0">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                            <line x1="9" x2="9.01" y1="9" y2="9" />
-                            <line x1="15" x2="15.01" y1="9" y2="9" />
-                        </svg>
-                        <span>(osrs.lol)</span>
-                    </p>
-                </div>
-                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="OSRS GP"
-                    class="h-12 transform -scale-x-100">
-            </div>
-            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-lg theme-toggle-btn">
-                <!-- Sun Icon -->
-                <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <!-- Moon Icon -->
-                <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
+        <header class="site-header">
+            <a href="/" class="site-brand"><img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="28" height="28"><span>osrs.lol</span></a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="/" class="nav-home">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Guide</a>
+            </nav>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
         </header>
 
-        <nav aria-label="Breadcrumb" class="text-sm text-secondary mb-4">
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
             <ol class="flex flex-wrap items-center gap-2">
                 <li><a href="/" class="text-accent hover:underline">Home</a></li>
                 <li aria-hidden="true">›</li>
@@ -472,12 +375,13 @@
         </nav>
 
         <!-- Search Section -->
-        <div>
+        <div class="tool-controls">
             <div class="relative mb-4">
-                <input type="text" id="itemName" placeholder="Analyzing market for suggestions..."
-                    class="w-full p-4 pr-12 bg-main border-2 border-custom rounded-lg text-primary placeholder-custom focus:outline-none focus-accent transition-colors">
-                <button id="search-btn"
-                    class="absolute top-0 right-0 h-full px-4 text-secondary hover:text-primary transition-colors">
+                <label for="itemName" class="sr-only">Search for an item</label>
+                <input type="text" id="itemName" placeholder="Analyzing market for suggestions..." autocomplete="off"
+                    class="field search-input">
+                <button id="search-btn" type="button" aria-label="Search"
+                    class="search-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-search">
@@ -486,22 +390,22 @@
                     </svg>
                 </button>
                 <div id="suggestions"
-                    class="absolute z-20 w-full bg-main border border-custom rounded-lg mt-1 max-h-60 overflow-y-auto hidden">
+                    class="absolute z-20 w-full rounded-lg mt-1 max-h-72 overflow-y-auto hidden">
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-                <div class="w-full md:w-1/2 lg:w-2/5">
-                    <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
-                        <span id="budget-value" class="text-primary font-bold"><span style="color: #22c55e;">10m</span>
+            <div class="flex flex-col md:flex-row md:items-end gap-4">
+                <div class="w-full md:flex-1 md:max-w-md">
+                    <label for="budget-slider" class="block text-sm font-medium text-secondary mb-2">Budget:
+                        <span id="budget-value" class="text-primary font-bold"><span class="text-accent">10m</span>
                             GP</span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
-                    <button id="suggest-item-btn"
-                        class="suggest-btn px-6 py-2 rounded-lg font-medium flex-1 md:flex-none">Suggest Item</button>
-                    <button id="mode-toggle-btn"
-                        class="suggest-btn px-6 py-2 rounded-lg font-medium flex-1 md:flex-none">Advanced</button>
+                    <button id="suggest-item-btn" type="button"
+                        class="btn btn-primary flex-1 md:flex-none" style="min-width: 9.5rem;">Suggest item</button>
+                    <button id="mode-toggle-btn" type="button" aria-pressed="false"
+                        class="btn flex-1 md:flex-none">Advanced</button>
                 </div>
             </div>
         </div>
@@ -519,8 +423,7 @@
         </div>
 
         <!-- Error Message -->
-        <div id="error" class="text-center my-6 p-4 rounded-lg hidden"
-            style="background-color: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red)">
+        <div id="error" class="text-center my-6 p-4 rounded-lg hidden" role="alert">
         </div>
 
         <!-- Results Section -->
@@ -530,7 +433,7 @@
                 <!-- Left Column: Item Info & Prices -->
                 <div class="lg:col-span-1 flex flex-col gap-6">
                     <!-- Item Info & Price Box -->
-                    <div class="bg-main p-6 rounded-lg border border-custom space-y-6 relative" style="min-height: 400px;">
+                    <div class="card p-6 space-y-6 relative" style="min-height: 400px;">
                         <div id="item-header" class="flex items-center justify-center">
                             <div
                                 class="w-12 h-12 rounded-full bg-dark-contrast flex-shrink-0 mr-3 overflow-hidden flex items-center justify-center">
@@ -540,11 +443,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Yew stock</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="117" data-target="sell">117 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="120" data-target="sell">120 GP</span></p>
                     <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="20" data-target="buy">20 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">95 GP (475.00%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">95 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">98 GP (490.00%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">98 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -552,7 +455,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1zm4-2a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
                         24h Volume
                     </span>
-                    <span class="font-bold text-primary">2</span>
+                    <span class="font-bold text-primary">N/A</span>
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="flex items-center text-secondary">
@@ -573,7 +476,7 @@
 
                         <!-- Confidence Explanation Modal -->
                         <div id="confidence-modal"
-                            class="absolute z-10 bg-dark-contrast p-4 rounded-lg border border-custom shadow-lg text-sm hidden"
+                                class="popover absolute z-10 p-4 text-sm hidden"
                             style="bottom: 1.5rem; left: 1.5rem; right: 1.5rem;">
                             <h4 class="font-bold mb-2 text-primary">Trend Confidence</h4>
                             <p class="text-secondary">Confidence is a rating based on the item's 24-hour trade volume. High
@@ -588,18 +491,18 @@
                 </div>
 
                 <!-- Right Column: Historical Data Graph & Calculator -->
-                <div class="lg:col-span-2 bg-main p-6 rounded-lg border border-custom chart-container-stable">
-                    <div class="flex justify-center mb-4">
-                        <div id="timeframe-controls" class="flex space-x-2 p-1 bg-dark-contrast rounded-lg">
-                            <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium"
-                                data-timeframe="1d">Daily</button>
-                            <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium active"
-                                data-timeframe="5d">5-Day</button>
-                            <button class="timeframe-btn px-4 py-1 rounded-md text-sm font-medium"
-                                data-timeframe="30d">30-Day</button>
+                <div class="lg:col-span-2 card p-4 sm:p-6 chart-container-stable">
+                    <div class="flex flex-wrap items-center justify-center gap-3 mb-4">
+                        <div id="timeframe-controls" class="segmented" role="group" aria-label="Chart timeframe">
+                            <button type="button" class="timeframe-btn" aria-pressed="false"
+                                data-timeframe="1d">1 day</button>
+                            <button type="button" class="timeframe-btn active" aria-pressed="true"
+                                data-timeframe="5d">5 days</button>
+                            <button type="button" class="timeframe-btn" aria-pressed="false"
+                                data-timeframe="30d">30 days</button>
                         </div>
-                        <button id="reset-zoom-btn"
-                            class="ml-4 suggest-btn px-4 py-1 rounded-md text-sm font-medium hidden">Reset Zoom</button>
+                        <button id="reset-zoom-btn" type="button"
+                            class="btn btn-sm hidden">Reset zoom</button>
                     </div>
                     <!-- New Price & Volume Graph -->
                     <div class="h-80 md:h-96">
@@ -608,43 +511,44 @@
 
                     <!-- Profit Calculator -->
                     <div id="profit-calculator"
-                        class="bg-dark-contrast rounded-lg shadow-inner w-full mt-6 hidden relative z-20">
+                        class="calc-panel w-full mt-6 hidden relative z-20">
 
-                    <!-- Header is now a clickable toggle -->
-                    <div id="calculator-header" class="flex items-center justify-between p-3 cursor-pointer">
-                        <h3 class="text-lg font-bold text-primary flex items-center">
+                    <!-- Header: the toggle and the help button are separate buttons -->
+                    <div class="flex items-center gap-1 p-1">
+                        <button type="button" id="calculator-header" class="calc-toggle" aria-expanded="false"
+                            aria-controls="calculator-body">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="mr-2 lucide lucide-calculator">
+                                stroke-linejoin="round" aria-hidden="true">
                                 <rect width="16" height="20" x="4" y="2" rx="2" />
                                 <line x1="8" x2="16" y1="6" y2="6" />
                                 <line x1="16" x2="16" y1="14" y2="18" />
                                 <line x1="8" x2="8" y1="14" y2="18" />
                                 <line x1="12" x2="12" y1="14" y2="18" />
                             </svg>
-                            Profit Calculator
-                            <!-- Help Icon -->
-                            <svg id="calc-help-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="ml-2 h-5 w-5 text-secondary hover:text-primary cursor-pointer transition-colors">
+                            <span>Profit calculator</span>
+                            <svg id="calculator-arrow" class="calc-arrow" xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <button type="button" id="calc-help-icon" class="icon-btn" aria-label="How profit is worked out"
+                            aria-expanded="false" aria-controls="formula-modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                                 <path d="M12 17h.01" />
                             </svg>
-                        </h3>
-                        <svg id="calculator-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="transition-transform transform rotate-180">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        </button>
                     </div>
 
                     <!-- Formula Explanation Modal -->
                     <div id="formula-modal"
-                        class="absolute z-10 bg-dark-contrast p-4 rounded-lg border border-custom shadow-lg text-sm hidden"
-                        style="bottom: 100%; right: 0; margin-bottom: 8px; width: 300px;">
+                        class="popover absolute z-10 p-4 text-sm hidden"
+                        style="bottom: 100%; right: 0; margin-bottom: 8px; width: min(300px, calc(100vw - 48px));">
                         <h4 class="font-bold mb-2 text-primary">Profit Calculation</h4>
                         <p class="text-secondary">Profit is calculated using the following formula:</p>
                         <code class="block bg-main p-2 rounded-md my-2 text-accent text-xs">
@@ -658,26 +562,26 @@
 
                     <!-- Body is now collapsible and expanded by default when an item is loaded -->
                     <div id="calculator-body"
-                        class="p-4 flex flex-col md:flex-row items-center gap-4 border-custom collapsed">
+                        class="p-4 flex flex-col md:flex-row items-center gap-4 border-custom collapsed" role="region" aria-label="Profit calculator">
                         <!-- Input Fields Section -->
                         <div class="w-full md:flex-grow grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                                 <label for="calc-quantity"
                                     class="block text-sm font-medium text-secondary mb-1">Quantity</label>
                                 <input type="number" id="calc-quantity" value="1"
-                                    class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                                    class="field">
                             </div>
                             <div>
                                 <label for="calc-buy-price" class="block text-sm font-medium text-secondary mb-1">Buy
                                     Price</label>
                                 <input type="number" id="calc-buy-price"
-                                    class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                                    class="field">
                             </div>
                             <div>
                                 <label for="calc-sell-price" class="block text-sm font-medium text-secondary mb-1">Sell
                                     Price</label>
                                 <input type="number" id="calc-sell-price"
-                                    class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                                    class="field">
                             </div>
                         </div>
 
@@ -686,7 +590,7 @@
 
                         <!-- Profit Result Section -->
                         <div class="w-full md:w-auto md:flex-shrink-0 md:pl-4 text-center">
-                            <p class="text-sm text-secondary">NET PROFIT</p>
+                            <p class="text-sm text-secondary">Net profit</p>
                             <p id="net-profit-result" class="text-2xl font-bold">0 GP</p>
                     </div>
                 </div>
@@ -700,9 +604,9 @@
 
         <!-- Advanced View Section -->
         <div id="advanced-container" class="hidden mt-8">
-            <div class="bg-main p-6 rounded-lg border border-custom">
+            <div class="card p-4 sm:p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold section-title">Advanced Market View</h2>
+                    <h2 class="text-2xl font-bold section-title">Market table</h2>
                 </div>
 
                 <!-- Advanced Controls -->
@@ -711,7 +615,7 @@
                         <label for="advanced-category"
                             class="block text-sm font-medium text-secondary mb-1">Category:</label>
                         <select id="advanced-category"
-                            class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            class="field">
                             <option value="all">All Items</option>
                             <option value="armour">Armour</option>
                             <option value="food">Food</option>
@@ -728,7 +632,7 @@
                         <label for="advanced-sort" class="block text-sm font-medium text-secondary mb-1">Sort
                             by:</label>
                         <select id="advanced-sort"
-                            class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            class="field">
                             <option value="profit_volume">Profit x Volume</option>
                             <option value="profit">Profit (High to Low)</option>
                             <option value="volume">Volume (High to Low)</option>
@@ -740,7 +644,7 @@
                         <label for="advanced-limit" class="block text-sm font-medium text-secondary mb-1">Show
                             items:</label>
                         <select id="advanced-limit"
-                            class="w-full p-2 rounded-md calc-input focus:outline-none focus-accent">
+                            class="field">
                             <option value="25">Top 25</option>
                             <option value="50">Top 50</option>
                             <option value="100">Top 100</option>
@@ -752,8 +656,7 @@
 
                 <!-- "Show All" Checkbox -->
                 <div class="flex items-center my-4">
-                    <input id="advanced-show-all" type="checkbox"
-                        class="h-4 w-4 rounded calc-input focus:outline-none focus-accent" style="box-shadow: none;">
+                    <input id="advanced-show-all" type="checkbox" class="field">
                     <label for="advanced-show-all" class="ml-2 text-sm text-secondary">Show All Items (ignores
                         profitability)</label>
                 </div>
@@ -761,19 +664,19 @@
 
                 <!-- Advanced Table -->
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
+                    <table class="w-full text-sm market-table">
                         <thead id="advanced-table-header">
                             <tr class="border-b border-custom">
-                                <th class="text-left py-3 px-2 text-secondary font-medium" data-sort="name">Item</th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="low">Low</th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="high">High</th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="margin">Margin
+                                <th scope="col" class="text-left py-3 px-2 text-secondary font-medium" data-sort="name">Item</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="low" tabindex="0">Low</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="high" tabindex="0">High</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="margin" tabindex="0">Margin
                                 </th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="profit">Profit
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="profit" tabindex="0">Profit
                                 </th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="volume">Volume
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="volume" tabindex="0">Volume
                                 </th>
-                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="limit">Limit</th>
+                                <th class="text-right py-3 px-2 text-secondary font-medium" data-sort="limit" tabindex="0">Limit</th>
                             </tr>
                         </thead>
                         <tbody id="advanced-table-body">
@@ -785,10 +688,10 @@
         </div>
 
         
-        <section id="item-details" class="mt-8 bg-main p-6 rounded-lg border border-custom">
+        <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Yew stock</h2>
             <p class="text-secondary italic mb-4">“A yew crossbow stock.”</p>
-            <p class="mb-4">On 2026-10-20 07:24 UTC, Yew stock was trading on the Grand Exchange at 117 GP (high) and 20 GP (low), with 2 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 95 GP per item, or 950,000 GP for a full buy limit of 10,000. Buying one at the high price and casting High Level Alchemy on it lost 162 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-20 16:38 UTC, Yew stock was trading on the Grand Exchange at 120 GP (high) and 20 GP (low). After the 2% GE tax, buying at the low price and selling at the high price made about 98 GP per item, or 980,000 GP for a full buy limit of 10,000. Buying one at the high price and casting High Level Alchemy on it lost 159 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -815,7 +718,7 @@
                     <dd class="font-bold text-primary">9452</dd>
                 </div>
             </dl>
-            <h3 class="text-lg font-bold section-title mt-6 mb-3">Related items</h3>
+            <h3 class="text-lg font-bold section-title mt-8 mb-3">Related items</h3>
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                 <li><a href="/items/yew-shortbow-u" class="text-accent hover:underline">Yew shortbow (u)</a></li>
                 <li><a href="/items/yew-shortbow" class="text-accent hover:underline">Yew shortbow</a></li>
@@ -835,6 +738,17 @@
             </nav>
         </section>
 
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
     </div>
 
     <!-- Chart.js scripts are deferred here to improve initial page load performance -->
@@ -858,9 +772,6 @@
         const itemNameTitle = document.getElementById('item-name-title');
         const itemIcon = document.getElementById('item-icon');
         const timeframeControls = document.getElementById('timeframe-controls');
-        const themeToggleButton = document.getElementById('theme-toggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
         const suggestItemBtn = document.getElementById('suggest-item-btn');
         const resetZoomBtn = document.getElementById('reset-zoom-btn');
         // Advanced View References
@@ -941,40 +852,61 @@
             2349, 2351, 2353, 2355, 2357, 2359, 2361, 2363, 9170, 23493, 13359, 2365
         ]);
 
-        // --- Theme Functions ---
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (theme === 'light') {
-                lightIcon.classList.remove('hidden');
-                darkIcon.classList.add('hidden');
-            } else {
-                lightIcon.classList.add('hidden');
-                darkIcon.classList.remove('hidden');
-            }
-            if (priceChart) {
-                updateChartColors();
-            }
+        // --- Theme ---
+        // /assets/theme.js switches the theme; the chart picks up the new colours here
+        document.addEventListener('themechange', () => updateChartColors());
+
+        // Chart colours come from the CSS custom properties in /assets/site.css
+        function chartColors() {
+            const style = getComputedStyle(document.documentElement);
+            const get = (name) => style.getPropertyValue(name).trim();
+            return {
+                text: get('--text-primary'),
+                secondary: get('--text-secondary'),
+                grid: get('--chart-grid-color'),
+                background: get('--chart-bg'),
+                green: get('--accent-green'),
+                red: get('--accent-red'),
+                blue: get('--accent-blue'),
+                light: document.documentElement.getAttribute('data-theme') === 'light'
+            };
+        }
+
+        // "#22c55e" -> "rgba(34, 197, 94, 0.5)"
+        function withAlpha(hex, alpha) {
+            const value = hex.replace('#', '');
+            const n = parseInt(value.length === 3 ? value.split('').map(c => c + c).join('') : value, 16);
+            return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+        }
+
+        // Soft fill under a price line, fading towards the bottom of the chart
+        function areaFill(ctx, hex, light) {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, withAlpha(hex, light ? 0.14 : 0.3));
+            gradient.addColorStop(1, withAlpha(hex, 0));
+            return gradient;
         }
 
         function updateChartColors() {
             if (!priceChart) return;
-            const style = getComputedStyle(document.body);
-            const textColor = style.getPropertyValue('--text-primary');
-            const secondaryTextColor = style.getPropertyValue('--text-secondary');
-            const gridColor = style.getPropertyValue('--chart-grid-color');
-            const accentGreen = style.getPropertyValue('--accent-green');
-            const accentRed = style.getPropertyValue('--accent-red');
+            const colors = chartColors();
+            const ctx = priceChart.ctx;
 
-            priceChart.options.plugins.legend.labels.color = textColor;
-            priceChart.options.plugins.title.color = textColor;
-            priceChart.options.scales.x.ticks.color = secondaryTextColor;
-            priceChart.options.scales.y.ticks.color = secondaryTextColor;
-            priceChart.options.scales.y1.ticks.color = secondaryTextColor;
-            priceChart.options.scales.y.grid.color = gridColor;
+            priceChart.options.plugins.legend.labels.color = colors.text;
+            priceChart.options.plugins.title.color = colors.text;
+            priceChart.options.scales.x.ticks.color = colors.secondary;
+            priceChart.options.scales.y.ticks.color = colors.secondary;
+            priceChart.options.scales.y1.ticks.color = colors.secondary;
+            priceChart.options.scales.x.grid.color = colors.grid;
+            priceChart.options.scales.y.grid.color = colors.grid;
 
-            priceChart.data.datasets[0].borderColor = accentGreen;
-            priceChart.data.datasets[1].borderColor = accentRed;
+            const [high, low, volume] = priceChart.data.datasets;
+            high.borderColor = colors.green;
+            high.backgroundColor = areaFill(ctx, colors.green, colors.light);
+            low.borderColor = colors.red;
+            low.backgroundColor = areaFill(ctx, colors.red, colors.light);
+            volume.backgroundColor = withAlpha(colors.blue, 0.3);
+            volume.borderColor = withAlpha(colors.blue, 0.5);
 
             priceChart.update();
         }
@@ -1014,7 +946,7 @@
         // Fetches high volume items and ranks them by a new flip score
         async function loadFlippableItems() {
             suggestItemBtn.disabled = true;
-            suggestItemBtn.textContent = 'Analyzing Market...';
+            suggestItemBtn.textContent = 'Loading market…';
 
             try {
                 const [volumesRes, latestRes] = await Promise.all([
@@ -1058,7 +990,7 @@
                 showError("Could not load market data. Please refresh.")
             } finally {
                 suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest Item';
+                suggestItemBtn.textContent = 'Suggest item';
             }
         }
 
@@ -1441,7 +1373,7 @@
                 </div>
                 <div class="flex items-center justify-between mt-3">
                     <span class="flex items-center text-secondary">
-                         <svg id="confidence-help-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 hover:text-primary cursor-pointer transition-colors"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <button type="button" id="confidence-help-icon" class="icon-btn -ml-1 mr-1" aria-label="What confidence means" aria-controls="confidence-modal"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></button>
                         Confidence
                     </span>
                     <span class="font-bold text-primary">${confidence}</span>
@@ -1476,22 +1408,14 @@
         function updateChart(itemName, dataPoints, timeframe) {
             if (priceChart) priceChart.destroy();
 
-            const style = getComputedStyle(document.body);
-            const textColor = style.getPropertyValue('--text-primary');
-            const secondaryTextColor = style.getPropertyValue('--text-secondary');
-            const gridColor = style.getPropertyValue('--chart-grid-color');
-            const accentGreen = style.getPropertyValue('--accent-green');
-            const accentRed = style.getPropertyValue('--accent-red');
+            const colors = chartColors();
+            const textColor = colors.text;
+            const secondaryTextColor = colors.secondary;
+            const gridColor = colors.grid;
 
             const ctx = document.getElementById('priceChart').getContext('2d');
-
-            const greenGradient = ctx.createLinearGradient(0, 0, 0, 400);
-            greenGradient.addColorStop(0, 'rgba(34, 197, 94, 0.5)');
-            greenGradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
-
-            const redGradient = ctx.createLinearGradient(0, 0, 0, 400);
-            redGradient.addColorStop(0, 'rgba(239, 68, 68, 0.5)');
-            redGradient.addColorStop(1, 'rgba(239, 68, 68, 0)');
+            const greenGradient = areaFill(ctx, colors.green, colors.light);
+            const redGradient = areaFill(ctx, colors.red, colors.light);
 
             const labels = dataPoints.map(p => new Date(p.timestamp * 1000));
             const highPrices = dataPoints.map(p => p.avgHighPrice);
@@ -1510,7 +1434,7 @@
                     const { ctx: c, chartArea } = chart;
                     if (!chartArea) return;
                     c.save();
-                    c.fillStyle = document.documentElement.getAttribute('data-theme') === 'light' ? 'rgba(0,0,0,0.04)' : '#252220';
+                    c.fillStyle = chartColors().background;
                     const r = 6;
                     const x = chartArea.left;
                     const y = chartArea.top;
@@ -1532,6 +1456,11 @@
                 }
             };
 
+            Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+            // Axis labels are measured when the chart is built; re-measure once Inter has loaded
+            if (document.fonts && document.fonts.status !== 'loaded') {
+                document.fonts.ready.then(() => { if (priceChart) priceChart.update('none'); });
+            }
             priceChart = new Chart(ctx, {
                 type: 'bar',
                 plugins: [chartBgPlugin],
@@ -1542,7 +1471,7 @@
                             type: 'line',
                             label: 'Avg High Price',
                             data: highPrices,
-                            borderColor: accentGreen,
+                            borderColor: colors.green,
                             backgroundColor: greenGradient,
                             fill: true,
                             tension: 0,
@@ -1557,7 +1486,7 @@
                             type: 'line',
                             label: 'Avg Low Price',
                             data: lowPrices,
-                            borderColor: accentRed,
+                            borderColor: colors.red,
                             backgroundColor: redGradient,
                             fill: true,
                             tension: 0,
@@ -1572,8 +1501,8 @@
                             type: 'bar',
                             label: 'Volume',
                             data: volumes,
-                            backgroundColor: 'rgba(59, 130, 246, 0.3)',
-                            borderColor: 'rgba(59, 130, 246, 0.5)',
+                            backgroundColor: withAlpha(colors.blue, 0.3),
+                            borderColor: withAlpha(colors.blue, 0.5),
                             borderWidth: 1,
                             yAxisID: 'y1',
                             order: 2,
@@ -1587,8 +1516,21 @@
                     interaction: { mode: 'index', intersect: false },
                     stacked: false,
                     plugins: {
-                        legend: { labels: { color: textColor } },
-                        title: { display: true, text: `${itemName} - Price & Volume History`, color: textColor, font: { size: 18 } },
+                        legend: {
+                            labels: {
+                                color: textColor,
+                                boxWidth: 14,
+                                boxHeight: 14,
+                                // Chart.js strikes through hidden series, which reads like an error.
+                                // Show the hidden volume series as a faded "Show volume" toggle instead
+                                generateLabels: (chart) => Chart.defaults.plugins.legend.labels.generateLabels(chart).map(label => {
+                                    if (!label.hidden) return label;
+                                    const faded = withAlpha(chartColors().secondary, 0.9);
+                                    return { ...label, hidden: false, text: `Show ${label.text.toLowerCase()}`, fontColor: faded, fillStyle: 'transparent', strokeStyle: faded };
+                                })
+                            }
+                        },
+                        title: { display: true, text: `${itemName} price history`, color: textColor, font: { size: 15, weight: '600' }, padding: { bottom: 8 } },
                         tooltip: {
                             callbacks: {
                                 label: function (context) {
@@ -1629,7 +1571,7 @@
                                 tooltipFormat: 'MMM d, h:mm a'
                             },
                             grid: { color: gridColor },
-                            ticks: { color: secondaryTextColor }
+                            ticks: { color: secondaryTextColor, maxRotation: 0, autoSkipPadding: 12 }
                         },
                         y: {
                             type: 'linear',
@@ -1640,12 +1582,13 @@
                             grid: { color: gridColor },
                             ticks: {
                                 color: secondaryTextColor,
-                                callback: function (value, index, ticks) { return formatAxisLabel(value, tickStep(ticks)) + ' GP'; }
+                                // Narrow charts drop the " GP" suffix so the labels fit the axis width
+                                callback: function (value, index, ticks) { return formatAxisLabel(value, tickStep(ticks)) + (this.chart.width < 360 ? '' : ' GP'); }
                             }
                         },
                         y1: {
                             type: 'linear',
-                            display: true,
+                            display: 'auto', // only while the volume bars are shown
                             position: 'right',
                             grid: { drawOnChartArea: false },
                             ticks: {
@@ -1673,13 +1616,13 @@
             if (isAdvancedMode) {
                 // Switch to Simple mode (charts only)
                 isAdvancedMode = false;
-                modeToggleBtn.textContent = 'Advanced';
+                modeToggleBtn.setAttribute('aria-pressed', 'false');
                 advancedContainer.classList.add('hidden');
                 url.searchParams.delete('view');
             } else {
                 // Switch to Advanced mode (table + charts)
                 isAdvancedMode = true;
-                modeToggleBtn.textContent = 'Simple';
+                modeToggleBtn.setAttribute('aria-pressed', 'true');
                 advancedContainer.classList.remove('hidden');
                 populateAdvancedTable();
                 url.searchParams.set('view', 'advanced');
@@ -1829,21 +1772,21 @@
                     const netMarginPercent = getMargin(item);
                     const volume = getVolume(item);
                     const row = document.createElement('tr');
-                    row.className = 'border-b border-custom table-row-hover cursor-pointer transition-colors duration-200';
+                    row.tabIndex = 0;
                     row.innerHTML = `
                         <td class="py-3 px-2">
                             <div class="flex items-center">
                                 <img src="https://static.runelite.net/cache/item/icon/${item.itemInfo.id}.png" 
-                                     class="w-6 h-6 mr-2" 
+                                     class="w-6 h-6 mr-2" alt="" loading="lazy"
                                      onerror="this.style.display='none'">
                                 <span class="text-primary font-medium">${item.itemInfo.name}</span>
                             </div>
                         </td>
-                        <td class="text-right py-3 px-2 text-loss">${item.priceInfo.low ? item.priceInfo.low.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 text-profit">${item.priceInfo.high ? item.priceInfo.high.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 text-accent">${isFinite(netMarginPercent) ? netMarginPercent.toFixed(2) + '%' : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 ${profit > 0 ? 'text-profit' : 'text-loss'}">${isFinite(profit) ? profit.toLocaleString() : 'N/A'}</td>
-                        <td class="text-right py-3 px-2 text-volume">${typeof volume === 'number' ? volume.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2">${item.priceInfo.low ? item.priceInfo.low.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2">${item.priceInfo.high ? item.priceInfo.high.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 text-secondary">${isFinite(netMarginPercent) ? netMarginPercent.toFixed(2) + '%' : 'N/A'}</td>
+                        <td class="text-right py-3 px-2 font-semibold ${profit > 0 ? 'text-profit' : 'text-loss'}">${isFinite(profit) ? profit.toLocaleString() : 'N/A'}</td>
+                        <td class="text-right py-3 px-2">${typeof volume === 'number' ? volume.toLocaleString() : 'N/A'}</td>
                         <td class="text-right py-3 px-2 text-secondary">${item.itemInfo.limit ? item.itemInfo.limit.toLocaleString() : 'N/A'}</td>
                     `;
                     row.addEventListener('click', () => {
@@ -1851,6 +1794,12 @@
                         // Keep advanced mode active if it's already active
                         resultsContainer.classList.remove('hidden'); 
                         throttleApiCall(() => fetchAllData(item.itemInfo.name));
+                    });
+                    row.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            row.click();
+                        }
                     });
                     advancedTableBody.appendChild(row);
                 });
@@ -1861,12 +1810,15 @@
                 // Clear existing icons
                 const existingIcon = th.querySelector('.sort-icon');
                 if (existingIcon) existingIcon.remove();
+                th.removeAttribute('aria-sort');
 
                 if (th.dataset.sort === advancedSortState.column) {
                     const icon = document.createElement('span');
                     icon.className = 'sort-icon';
                     icon.innerHTML = advancedSortState.direction === 'desc' ? '&#9660;' : '&#9650;'; // ▼ or ▲
+                    icon.setAttribute('aria-hidden', 'true');
                     th.appendChild(icon);
+                    th.setAttribute('aria-sort', advancedSortState.direction === 'desc' ? 'descending' : 'ascending');
                 }
             });
         }
@@ -1902,12 +1854,11 @@
             if (isApiThrottled) return;
             isApiThrottled = true;
             searchBtn.disabled = true; suggestItemBtn.disabled = true;
-            suggestItemBtn.textContent = `Waiting...`;
             callback();
             setTimeout(() => {
                 isApiThrottled = false;
                 searchBtn.disabled = false; suggestItemBtn.disabled = false;
-                suggestItemBtn.textContent = 'Suggest Item';
+                suggestItemBtn.textContent = 'Suggest item';
             }, 500);
         }
 
@@ -1921,11 +1872,11 @@
             suggestionsDiv.innerHTML = '';
             if (filteredItems.length > 0) {
                 filteredItems.forEach(item => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `<div class="p-3 hover:bg-dark-contrast cursor-pointer flex items-center">
-                                        <img src="https://static.runelite.net/cache/item/icon/${item.id}.png" class="w-6 h-6 mr-3" onerror="this.style.display='none'">
-                                        <span>${item.name}</span>
-                                     </div>`;
+                    const div = document.createElement('button');
+                    div.type = 'button';
+                    div.className = 'suggestion';
+                    div.innerHTML = `<img src="https://static.runelite.net/cache/item/icon/${item.id}.png" class="w-6 h-6 mr-3" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+                                     <span>${item.name}</span>`;
                     div.addEventListener('click', () => {
                         itemNameInput.value = item.name;
                         suggestionsDiv.classList.add('hidden');
@@ -1963,6 +1914,13 @@
             populateAdvancedTable();
         });
 
+        advancedTableHeader.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('th[data-sort]')) {
+                e.preventDefault();
+                e.target.closest('th').click();
+            }
+        });
+
         advancedTableHeader.addEventListener('click', (e) => {
             const header = e.target.closest('th');
             if (!header || !header.dataset.sort || header.dataset.sort === 'name') return; // Ignore clicks on non-sortable headers
@@ -1981,8 +1939,11 @@
             if (e.target.tagName === 'BUTTON') {
                 const selectedTimeframe = e.target.dataset.timeframe;
                 if (!currentItem || e.target.classList.contains('active')) return;
-                timeframeControls.querySelector('.active').classList.remove('active');
+                const previous = timeframeControls.querySelector('.active');
+                previous.classList.remove('active');
+                previous.setAttribute('aria-pressed', 'false');
                 e.target.classList.add('active');
+                e.target.setAttribute('aria-pressed', 'true');
                 updateDynamicContent(selectedTimeframe);
             }
         });
@@ -1993,16 +1954,11 @@
             }
             if (!formulaModal.classList.contains('hidden') && !formulaModal.contains(e.target) && !calcHelpIcon.contains(e.target)) {
                 formulaModal.classList.add('hidden');
+                calcHelpIcon.setAttribute('aria-expanded', 'false');
             }
             if (!confidenceModal.classList.contains('hidden') && !confidenceModal.contains(e.target) && !e.target.closest('#confidence-help-icon')) {
                 confidenceModal.classList.add('hidden');
             }
-        });
-
-        themeToggleButton.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
         });
 
         resetZoomBtn.addEventListener('click', () => {
@@ -2016,14 +1972,19 @@
             input.addEventListener('input', calculateNetProfit);
         });
 
+        function setCalculatorOpen(open) {
+            calculatorBody.classList.toggle('collapsed', !open);
+            calculatorHeader.setAttribute('aria-expanded', String(open));
+        }
+
         calculatorHeader.addEventListener('click', () => {
-            calculatorBody.classList.toggle('collapsed');
-            calculatorArrow.classList.toggle('rotate-180');
+            setCalculatorOpen(calculatorBody.classList.contains('collapsed'));
         });
 
         calcHelpIcon.addEventListener('click', (e) => {
             e.stopPropagation();
             formulaModal.classList.toggle('hidden');
+            calcHelpIcon.setAttribute('aria-expanded', String(!formulaModal.classList.contains('hidden')));
         });
 
         additionalInfoDiv.addEventListener('click', (e) => {
@@ -2037,6 +1998,7 @@
             if (limitEl && limitEl.dataset.limit) {
                 calcQuantityInput.value = limitEl.dataset.limit;
                 calculateNetProfit();
+                setCalculatorOpen(true);
                 calcQuantityInput.focus();
             }
         });
@@ -2047,6 +2009,7 @@
                 const targetInput = priceEl.dataset.target === 'buy' ? calcBuyPriceInput : calcSellPriceInput;
                 targetInput.value = priceEl.dataset.price;
                 calculateNetProfit();
+                setCalculatorOpen(true);
                 targetInput.focus();
             }
         });
@@ -2074,7 +2037,7 @@
             } catch (e) { }
 
             if (value === Number.MAX_SAFE_INTEGER) {
-                budgetValue.innerHTML = `<span style="color: #e7bc1c;">$HIGH ROLLER$</span>`;
+                budgetValue.innerHTML = `<span class="text-accent">High roller</span> (no limit)`;
             } else {
                 budgetValue.style.color = ''; // Reset color
                 let displayText = '';
@@ -2086,11 +2049,7 @@
                     displayText = (value / 1000).toFixed(0) + 'k';
                 }
 
-                if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span style="color: #22c55e;">${displayText}</span> GP`;
-                } else {
-                    budgetValue.textContent = `${displayText} GP`;
-                }
+                budgetValue.innerHTML = `<span class="text-accent">${displayText}</span> GP`;
             }
             filterItemsByBudget();
             updatePlaceholder();
@@ -2143,9 +2102,6 @@
         }
 
         async function initialize() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            applyTheme(savedTheme);
-
             // Restore the budget chosen earlier in this tab (10m on a new visit). pageshow re-applies it after
             // browser form restoration and when Back/Forward brings the page out of the cache
             budgetSlider.value = getSavedBudgetIndex();
@@ -2168,20 +2124,8 @@
         initialize();
 
     </script>
-    <footer class="text-center text-secondary text-xs mt-12 py-6 border-t border-custom">
-        <p class="mb-1 text-xs space-x-4">
-            <a href="/items/" class="text-accent hover:opacity-80 no-underline text-xs">All Items</a>
-            <a href="/merchanting" class="text-accent hover:opacity-80 no-underline text-xs">Merchanting Guide</a>
-        </p>
-        <p class="mb-1 text-xs mt-2">Data provided by <a href="https://prices.runescape.wiki/"
-                class="text-accent hover:underline">RuneScape Wiki</a></p>
-        <p class="mb-1 text-xs">
-            <a href="/acknowledgements" class="hover:opacity-80 no-underline text-xs"
-                style="color: #4b4745;">Acknowledgements</a>
-        </p>
-        <p class="mt-1 text-xs" style="color: #4b4745;">© OSRS.LOL • Fan site - Not affiliated with Jagex Ltd. or its
-            registered trademarks "Runescape" or "OSRS" in any way.</p>
-    </footer>
 </body>
+
+</html>
 
 </html>
