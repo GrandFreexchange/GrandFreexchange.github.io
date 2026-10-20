@@ -225,7 +225,7 @@ ${related.map(other => `                <li><a href="/items/${nameToSlug(other.n
     const browse = `
             <nav aria-label="Browse items" class="flex flex-wrap justify-between gap-2 mt-6 text-sm">
                 ${previous ? `<a href="/items/${nameToSlug(previous.name)}" rel="prev" class="text-accent hover:underline">← ${escapeHtml(previous.name)}</a>` : '<span></span>'}
-                <a href="/all_items" class="text-accent hover:underline">All items</a>
+                <a href="/items/" class="text-accent hover:underline">All items</a>
                 ${next ? `<a href="/items/${nameToSlug(next.name)}" rel="next" class="text-accent hover:underline">${escapeHtml(next.name)} →</a>` : '<span></span>'}
             </nav>`;
 
@@ -282,7 +282,7 @@ function generateItemHTML(item, latestPrice, volume, context) {
         "@type": "BreadcrumbList",
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://osrs.lol/" },
-            { "@type": "ListItem", "position": 2, "name": "All Items", "item": "https://osrs.lol/all_items" },
+            { "@type": "ListItem", "position": 2, "name": "All Items", "item": "https://osrs.lol/items/" },
             { "@type": "ListItem", "position": 3, "name": item.name, "item": pageUrl }
         ]
     };
@@ -324,7 +324,7 @@ function generateItemHTML(item, latestPrice, volume, context) {
             <ol class="flex flex-wrap items-center gap-2">
                 <li><a href="/" class="text-accent hover:underline">Home</a></li>
                 <li aria-hidden="true">›</li>
-                <li><a href="/all_items" class="text-accent hover:underline">All Items</a></li>
+                <li><a href="/items/" class="text-accent hover:underline">All Items</a></li>
                 <li aria-hidden="true">›</li>
                 <li aria-current="page">${escapeHtml(item.name)}</li>
             </ol>
@@ -343,6 +343,25 @@ function generateItemHTML(item, latestPrice, volume, context) {
     html = replaceOnce(html, '<!-- item-page:details -->', details, 'details marker');
 
     return html;
+}
+
+// Page left at a URL that moved. GitHub Pages can't send a 301, so it uses an instant meta
+// refresh (which Google treats as a permanent redirect) plus a canonical to the new URL
+function generateMovedPageHTML(newPath, title) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${escapeHtml(title)}</title>
+    <link rel="canonical" href="https://osrs.lol${newPath}">
+    <meta http-equiv="refresh" content="0; url=${newPath}">
+    <script>window.location.replace('${newPath}' + window.location.search);</script>
+</head>
+<body>
+    <p>This page has moved to <a href="${newPath}">${escapeHtml(title)}</a>.</p>
+</body>
+</html>
+`;
 }
 
 // Page left at a renamed item's old URL. GitHub Pages can't send a 301, so it uses an instant
@@ -438,7 +457,7 @@ async function build() {
         // from the GE are deleted so they return 404 instead of a dashboard that can't find its item
         const expectedFiles = new Set(mapping.map(item => `${nameToSlug(item.name)}.html`));
         const itemsById = new Map(mapping.map(item => [item.id, item]));
-        const staleFiles = fs.readdirSync(OUTPUT_DIR).filter(file => file.endsWith('.html') && !expectedFiles.has(file));
+        const staleFiles = fs.readdirSync(OUTPUT_DIR).filter(file => file.endsWith('.html') && file !== 'index.html' && !expectedFiles.has(file));
         for (const file of staleFiles) {
             const filePath = path.join(OUTPUT_DIR, file);
             const oldHtml = fs.readFileSync(filePath, 'utf8');
@@ -462,8 +481,8 @@ async function build() {
             if (errors.length > 10) console.warn(`  ... and ${errors.length - 10} more`);
         }
 
-        // Generate all_items.html
-        console.log('📑 Generating all_items.html directory...');
+        // Generate the item directory at /items/ (and the redirect left at its old /all_items URL)
+        console.log('📑 Generating items/index.html directory...');
         generateAllItemsPage(mapping);
 
         // Generate updated sitemap
@@ -493,7 +512,7 @@ function generateSitemap(items) {
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>${baseUrl}/all_items</loc>
+        <loc>${baseUrl}/items/</loc>
         <lastmod>${today}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -536,7 +555,8 @@ function generateSitemap(items) {
     }
 }
 
-// Automatically regenerate the all_items.html directory
+// Automatically regenerate the item directory. It lives at items/index.html so it is served at
+// /items/ (GitHub Pages redirects /items to /items/); all_items.html redirects there
 function generateAllItemsPage(items) {
     const itemsList = items
         .sort((a, b) => a.name.localeCompare(b.name))
@@ -550,7 +570,7 @@ function generateAllItemsPage(items) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All OSRS Grand Exchange Items - osrs.lol</title>
     <meta name="description" content="A comprehensive list of all Old School RuneScape Grand Exchange items with links to their live price analysis.">
-    <link rel="canonical" href="https://osrs.lol/all_items">
+    <link rel="canonical" href="https://osrs.lol/items/">
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -595,7 +615,8 @@ ${itemsList}
 </body>
 </html>`;
 
-    fs.writeFileSync(path.join(__dirname, 'all_items.html'), html, 'utf8');
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html, 'utf8');
+    fs.writeFileSync(path.join(__dirname, 'all_items.html'), generateMovedPageHTML('/items/', 'All OSRS Grand Exchange Items'), 'utf8');
 }
 
 
