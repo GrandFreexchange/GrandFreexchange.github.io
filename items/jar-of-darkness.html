@@ -75,10 +75,6 @@
     <script src="/assets/theme.js"></script>
     <style>
         /* Dashboard-only styles. Colours, buttons, header and footer come from /assets/site.css */
-        .hero {
-            margin: 28px 0 24px;
-        }
-
         /* Search box */
         html .search-input {
             padding: 14px 52px 14px 16px;
@@ -432,7 +428,7 @@
         window.PRELOAD_ITEM_NAME = "Jar of Darkness";
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"All Items","item":"https://osrs.lol/items/"},{"@type":"ListItem","position":3,"name":"Jar of Darkness","item":"https://osrs.lol/items/jar-of-darkness"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebPage","name":"Jar Of Darkness OSRS Price & Trends","url":"https://osrs.lol/items/jar-of-darkness","description":"Jar of Darkness price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit (4) and high alch value. It smells like it's been where the sun doesn't shine.","dateModified":"2026-10-20","primaryImageOfPage":"https://tiles.runescape.wiki/static/public/images/osrs/items/19701.png","isPartOf":{"@type":"WebSite","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebPage","name":"Jar Of Darkness OSRS Price & Trends","url":"https://osrs.lol/items/jar-of-darkness","description":"Jar of Darkness price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit (4) and high alch value. It smells like it's been where the sun doesn't shine.","dateModified":"2026-10-21","primaryImageOfPage":"https://tiles.runescape.wiki/static/public/images/osrs/items/19701.png","isPartOf":{"@type":"WebSite","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
     </head>
 
 <body>
@@ -440,17 +436,25 @@
     <div class="container mx-auto max-w-6xl p-4 md:p-8">
 
         <header class="site-header">
-            <a href="/" class="site-brand"><img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="28" height="28"><span>osrs.lol</span></a>
-            <nav class="site-nav" aria-label="Main">
-                <a href="/" class="nav-home">Prices</a>
-                <a href="/items/">All items</a>
-                <a href="/merchanting">Guide</a>
-            </nav>
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
             <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
                 <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                 <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
         </header>
+
 
         <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
             <ol class="flex flex-wrap items-center gap-2">
@@ -531,11 +535,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Jar of Darkness</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="318716" data-target="sell">318,716 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="224358" data-target="sell">224,358 GP</span></p>
                     <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="130000" data-target="buy">130,000 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">182,342 GP (140.26%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">182,342 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">89,871 GP (69.13%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">89,871 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -543,7 +547,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1zm4-2a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm4 2a1 1 0 00-1 1v10a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
                         24h Volume
                     </span>
-                    <span class="font-bold text-primary">5</span>
+                    <span class="font-bold text-primary">1</span>
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="flex items-center text-secondary">
@@ -779,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Jar of Darkness</h2>
             <p class="text-secondary italic mb-4">“It smells like it&#39;s been where the sun doesn&#39;t shine.”</p>
-            <p class="mb-4">On 2026-10-20 20:39 UTC, Jar of Darkness was trading on the Grand Exchange at 318,716 GP (high) and 130,000 GP (low), with 5 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 182,342 GP per item, or 729,368 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 318,855 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-21 00:12 UTC, Jar of Darkness was trading on the Grand Exchange at 224,358 GP (high) and 130,000 GP (low), with 1 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 89,871 GP per item, or 359,484 GP for a full buy limit of 4. Buying one at the high price and casting High Level Alchemy on it lost 224,480 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
