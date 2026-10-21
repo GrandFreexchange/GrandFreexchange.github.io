@@ -10,7 +10,7 @@ const path = require('path');
 
 const OUTPUT_DIR = path.join(__dirname, 'calculators');
 const dashboardTemplate = fs.readFileSync(path.join(__dirname, 'dev.html'), 'utf8');
-const CALC_ASSET_VERSION = 1;
+const CALC_ASSET_VERSION = 2;
 
 // ---------- Skill data ----------
 // Each action: name, level, xp, inputs/outputs as [itemId, quantity], optional coin fee.
@@ -133,8 +133,8 @@ const SKILLS = [
             'XP is for making the finished potion from the herb, including the unfinished potion step.'
         ],
         guide: [
-            ['Making money from Herblore', 'Sort by Profit each to see which potions are worth making today. Prayer potions, super restores and Saradomin brews sell fast because players use them for bossing.'],
-            ['Cheapest XP', 'Sort by GP/XP. A negative number is a loss per XP, a positive one means you make money while you train.'],
+            ['Making money from Herblore', 'Sort by Profit to see which potions are worth making today. Prayer potions, super restores and Saradomin brews sell fast because players use them for bossing.'],
+            ['Cheapest XP', 'Sort by GP/XP. A negative number is what each XP costs you, a positive one means you make money while you train.'],
             ['Buy limits', 'Herbs and secondaries have GE buy limits, so for big batches you may need to buy over several 4-hour windows. Check an ingredient on its osrs.lol price page for its limit.']
         ]
     },
@@ -172,7 +172,7 @@ const SKILLS = [
         ],
         guide: [
             ['Fastest Cooking XP', '1-tick karambwans from level 30 and wines from level 35 are the fastest methods. Wines are made from your bank, so you can train them anywhere.'],
-            ['Cooking for profit', 'Sort by Profit each. Raw fish that sell for less than the cooked fish make money, but the margin moves with the market, so check before you buy in bulk.'],
+            ['Cooking for profit', 'Sort by Profit. Raw fish that sell for less than the cooked fish make money, but the margin moves with the market, so check before you buy in bulk.'],
             ['Burning food', 'Every fish has a level where you stop burning it, lower with Cooking gauntlets or at the Hosidius kitchen. Until then budget some extra fish.']
         ]
     }
@@ -213,19 +213,23 @@ for (let level = 2, points = 0; level <= 99; level++) {
 const fmt = n => Math.round(n).toLocaleString('en-US');
 const iconUrl = id => `https://tiles.runescape.wiki/static/public/images/osrs/items/${id}.png`;
 
-// Item slugs come from the item pages, so links always match a real page
-const itemSlugById = new Map();
+// Item slugs and names come from the item pages, so links always match a real page
+const itemById = new Map();
 for (const file of fs.readdirSync(path.join(__dirname, 'items'))) {
     if (!file.endsWith('.html') || file === 'index.html') continue;
     const html = fs.readFileSync(path.join(__dirname, 'items', file), 'utf8');
-    const match = html.match(/images\/osrs\/items\/(\d+)\.png/);
-    if (match && !itemSlugById.has(Number(match[1]))) itemSlugById.set(Number(match[1]), file.replace(/\.html$/, ''));
+    const id = html.match(/images\/osrs\/items\/(\d+)\.png/);
+    const name = html.match(/"position":3,"name":"([^"]*)"/);
+    if (id && name && !itemById.has(Number(id[1]))) {
+        itemById.set(Number(id[1]), { slug: file.replace(/\.html$/, ''), name: JSON.parse(`"${name[1]}"`) });
+    }
 }
-function itemSlug(id) {
-    const slug = itemSlugById.get(id);
-    if (!slug) throw new Error(`No item page for item ${id}`);
-    return slug;
+function itemInfo(id) {
+    const item = itemById.get(id);
+    if (!item) throw new Error(`No item page for item ${id}`);
+    return item;
 }
+const itemSlug = id => itemInfo(id).slug;
 
 // ---------- Shared page parts (same as the dashboard) ----------
 
@@ -329,8 +333,11 @@ function levelForm(defaultCurrent, defaultTarget) {
 
 // ---------- Skill pages ----------
 
+// XP per item used up; on the Chaos altar a bone is only used half the time, so it counts double
+const xpPerAction = (action, method) => action.xp * method.mult / (1 - (method.save || 0));
+
 function actionCount(action, method, xpLeft) {
-    return Math.ceil(xpLeft / (action.xp * method.mult));
+    return Math.ceil(xpLeft / xpPerAction(action, method));
 }
 
 function skillPage(skill) {
@@ -342,12 +349,12 @@ function skillPage(skill) {
 
     const rows = visible.map(a => `
                         <tr data-level="${a.level}">
-                            <td class="calc-item"><img src="${iconUrl(a.icon)}" alt="" width="24" height="24" loading="lazy"><a href="/items/${a.slug}">${escapeHtml(a.name)}</a></td>
+                            <td><div class="calc-item"><img src="${iconUrl(a.icon)}" alt="" width="24" height="24" loading="lazy"><div><a href="/items/${a.slug}">${escapeHtml(a.name)}</a></div></div></td>
                             <td class="text-right">${a.level}</td>
-                            <td class="text-right">${(a.xp * defaultMethod.mult).toLocaleString('en-US')}</td>
+                            <td class="text-right">${xpPerAction(a, defaultMethod).toLocaleString('en-US')}</td>
                             <td class="text-right col-count">${fmt(actionCount(a, defaultMethod, xpTo99))}</td>
                             <td class="text-right">…</td>
-                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>${skill.sellToggle ? '\n                            <td class="text-right">…</td>' : ''}
                             <td class="text-right">…</td>
                         </tr>`).join('');
 
@@ -362,6 +369,8 @@ ${skill.methods.map(m => `                        <option value="${m.id}">${esca
                 <label class="calc-check"><input id="calc-bonus" type="checkbox" class="field"> ${escapeHtml(skill.bonus.label)}</label>` : '';
     const sell = skill.sellToggle ? `
                 <label class="calc-check"><input id="calc-sell" type="checkbox" class="field" checked> ${escapeHtml(skill.sellToggle)}</label>` : '';
+    const showAll = `
+                <label class="calc-check"><input id="calc-show-all" type="checkbox" class="field"> Show items above my current level</label>`;
 
     // A plain sentence Google can quote, with the real count for the skill's best-known method
     const example = visible.find(a => a.name === skill.example[0]);
@@ -379,10 +388,11 @@ ${skill.methods.map(m => `                        <option value="${m.id}">${esca
         <main>
             <section class="card p-4 md:p-6 mb-6" aria-label="${skill.name} calculator">
 ${levelForm(1, 99)}
-                <div class="calc-options">${methodSelect}${bonus}${sell}
+                <div class="calc-options">${methodSelect}${bonus}${sell}${showAll}
                 </div>
 
                 <div class="calc-status" id="calc-status" aria-live="polite">Loading live GE prices…</div>
+                <p class="calc-best" id="calc-best" aria-live="polite"></p>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm calc-table">
@@ -392,8 +402,9 @@ ${levelForm(1, 99)}
                                 <th scope="col" class="text-right" data-sort="level" tabindex="0">Level</th>
                                 <th scope="col" class="text-right" data-sort="xp" tabindex="0">XP each</th>
                                 <th scope="col" class="text-right" data-sort="count" tabindex="0">Needed</th>
-                                <th scope="col" class="text-right" data-sort="each" tabindex="0">Profit each</th>
-                                <th scope="col" class="text-right" data-sort="total" tabindex="0">Total profit</th>
+                                <th scope="col" class="text-right" data-sort="price" tabindex="0">Price each</th>
+                                <th scope="col" class="text-right" data-sort="total" tabindex="0">Total cost</th>${skill.sellToggle ? `
+                                <th scope="col" class="text-right" data-sort="net" tabindex="0">Profit</th>` : ''}
                                 <th scope="col" class="text-right" data-sort="gpxp" tabindex="0">GP/XP</th>
                             </tr>
                         </thead>
@@ -401,7 +412,7 @@ ${levelForm(1, 99)}
                         </tbody>
                     </table>
                 </div>
-                <p class="calc-legend">Green is a profit, red is a cost. Greyed-out rows need a higher level than your current one.</p>
+                <p class="calc-legend">Price each is what ${skill.slug === 'prayer' ? 'one bone or ash costs' : skill.slug === 'construction' ? 'the materials for one build cost' : 'the ingredients for one cost'} to buy right now (the latest instant-buy price). ${skill.sellToggle ? 'Profit (after selling and GE tax) is green when you make money and red when you lose it; GP/XP' : 'GP/XP'} is negative when training costs money. Click a column to sort.</p>
             </section>
 
             <section class="card p-6 md:p-10 prose-site">
@@ -423,7 +434,12 @@ ${skill.guide.map(([h, p]) => `                <h2>${escapeHtml(h)}</h2>\n      
         actions: actions.map(a => ({
             name: a.name, slug: a.slug, icon: a.icon, level: a.level, xp: a.xp, kind: a.kind || null,
             inputs: a.inputs || [], outputs: a.outputs || []
-        }))
+        })),
+        // Names and page links for every ingredient, including the logs the sawmill option swaps in
+        items: Object.fromEntries([...new Set([
+            ...actions.flatMap(a => [...(a.inputs || []), ...(a.outputs || [])].map(([id]) => id)),
+            ...methods.flatMap(m => Object.values(m.swap || {}).map(([id]) => id))
+        ])].map(id => [id, itemInfo(id)]))
     };
 
     return page({

@@ -88,7 +88,7 @@
 }
 
 .calc-table th {
-    padding: 12px 8px;
+    padding: 12px 6px;
     color: var(--text-secondary);
     font-weight: 500;
     white-space: nowrap;
@@ -104,7 +104,7 @@
 }
 
 .calc-table td {
-    padding: 8px;
+    padding: 8px 6px;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
@@ -125,13 +125,57 @@
 
 .calc-table tr.is-locked td { opacity: 0.45; }
 
+.calc-table td:first-child {
+    min-width: 180px;
+    white-space: normal;
+}
+
 .calc-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
 }
 
+/* Ingredients under the item name, each with its current GE price */
+.calc-mats {
+    margin-top: 2px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+.calc-mats a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.calc-mats a:hover {
+    color: var(--accent-gold);
+    text-decoration: underline;
+}
+
+.calc-mat-price { color: var(--accent-gold); }
+
+.calc-table .col-cost { color: var(--text-primary); font-weight: 600; }
+
+.calc-table tr.calc-empty td {
+    padding: 16px 8px;
+    color: var(--text-secondary);
+    white-space: normal;
+}
+
+.calc-best {
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+.calc-best:empty { display: none; }
+
+.calc-best strong { color: var(--accent-gold); font-weight: 600; }
+
 .calc-item img {
+    margin-top: -2px;
     width: 24px;
     height: 24px;
     object-fit: contain;

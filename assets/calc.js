@@ -113,6 +113,7 @@
     const methodSelect = $('calc-method');
     const bonusInput = $('calc-bonus');
     const sellInput = $('calc-sell');
+    const showAllInput = $('calc-show-all');
     const tbody = $('calc-body');
     let sortKey = 'level';
     let sortDir = 1;
@@ -122,22 +123,34 @@
         return config.methods.find(m => m.id === (methodSelect && methodSelect.value)) || config.methods[0];
     }
 
-    // Profit (positive) or cost (negative) of one action, or null while a price is missing
-    function profitEach(action, method) {
-        const keep = 1 - (method.save || 0);
-        let total = 0;
-        for (const [id, qty] of action.inputs) {
+    const selling = () => config.sell && (!sellInput || sellInput.checked);
+
+    // What one action needs from the GE: [{ id, qty, price, fee }], with the sawmill swap applied
+    function materials(action, method) {
+        return action.inputs.map(([id, qty]) => {
             const swap = method.swap && method.swap[id];
-            const price = swap ? buyPrice(swap[0]) : buyPrice(id);
-            if (price === null) return null;
-            total -= (price + (swap ? swap[1] : 0)) * qty * keep;
+            const itemId = swap ? swap[0] : id;
+            return { id: itemId, qty, price: buyPrice(itemId), fee: swap ? swap[1] : 0 };
+        });
+    }
+
+    // GE cost of one action's materials, or null while a price is missing
+    function priceEach(parts) {
+        let total = 0;
+        for (const part of parts) {
+            if (part.price === null) return null;
+            total += (part.price + part.fee) * part.qty;
         }
-        if (!config.sell || !sellInput || sellInput.checked) {
-            for (const [id, qty] of action.outputs) {
-                const price = sellPrice(id);
-                if (price === null) return null;
-                total += (price - geTax(price)) * qty;
-            }
+        return total;
+    }
+
+    // What the products of one action sell for after GE tax
+    function sellEach(action) {
+        let total = 0;
+        for (const [id, qty] of action.outputs) {
+            const price = sellPrice(id);
+            if (price === null) return null;
+            total += (price - geTax(price)) * qty;
         }
         return total;
     }
@@ -148,19 +161,28 @@
         return config.actions
             .filter(a => !method.kinds || method.kinds.includes(a.kind))
             .map(a => {
-                const xp = a.xp * mult;
+                // On the Chaos altar a bone is only used half the time, so each bone bought counts double
+                const xp = a.xp * mult / (1 - (method.save || 0));
                 const count = Math.ceil(s.xpLeft / xp);
-                const each = prices ? profitEach(a, method) : null;
+                const parts = materials(a, method);
+                const price = prices ? priceEach(parts) : null;
+                const sold = prices && selling() ? sellEach(a) : 0;
+                const net = price === null || sold === null ? null : sold - price;
                 return {
-                    ...a, xpEach: xp, count, each,
-                    total: each === null ? null : each * count,
-                    gpxp: each === null ? null : each / xp,
+                    ...a, parts, xpEach: xp, count, price,
+                    total: price === null ? null : price * count,
+                    net: net === null || !selling() ? null : net * count,
+                    gpxp: net === null ? null : net / xp,
                     locked: a.level > s.curLevel
                 };
             });
     }
 
-    function money(value, decimals) {
+    function gp(value) {
+        return value === null ? '<span class="text-muted">–</span>' : fmt(value);
+    }
+
+    function signed(value, decimals) {
         if (value === null) return '<span class="text-muted">–</span>';
         const cls = value >= 0 ? 'col-profit' : 'col-loss';
         const text = decimals
@@ -169,12 +191,58 @@
         return `<span class="${cls}">${value > 0 ? '+' : ''}${text.replace('-', '−')}</span>`;
     }
 
+    // Short form for the summary line: 1.2B, 34.5M, 120K
+    function short(value) {
+        const abs = Math.abs(value);
+        if (abs >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+        if (abs >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
+        if (abs >= 1e4) return `${Math.round(value / 1e3)}K`;
+        return fmt(value);
+    }
+
     function escapeHtml(text) {
         return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
+    // The ingredients under an item's name, each linked to its price page with its current price
+    function materialsLine(r) {
+        const single = r.parts.length === 1 && r.parts[0].qty === 1 && r.parts[0].fee === 0 && config.items[r.parts[0].id].slug === r.slug;
+        if (single) return '';
+        const parts = r.parts.map(part => {
+            const item = config.items[part.id];
+            const price = part.price === null ? '' : ` <span class="calc-mat-price">${fmt(part.price)}</span>`;
+            return `${part.qty > 1 ? `${part.qty} × ` : ''}<a href="/items/${item.slug}">${escapeHtml(item.name)}</a>${price}`;
+        });
+        const fee = r.parts.reduce((sum, part) => sum + part.fee * part.qty, 0);
+        if (fee) parts.push(`${fmt(fee)} sawmill fee`);
+        return `<div class="calc-mats">${parts.join(' · ')}</div>`;
+    }
+
+    function renderBest(list, s) {
+        const best = $('calc-best');
+        if (!best) return;
+        const usable = list.filter(r => !r.locked && r.gpxp !== null);
+        if (!s.xpLeft || !usable.length) { best.innerHTML = ''; return; }
+        const cheapest = usable.reduce((a, b) => (b.gpxp > a.gpxp ? b : a));
+        const fastest = usable.reduce((a, b) => (b.xpEach > a.xpEach ? b : a));
+        const cost = r => selling() ? (r.net >= 0 ? `a profit of ${short(r.net)}` : `a loss of ${short(-r.net)} after selling`) : `${short(r.total)} gp`;
+        let html = `At level ${s.curLevel}, the cheapest XP is <strong>${escapeHtml(cheapest.name)}</strong>: ${fmt(cheapest.count)} for ${cost(cheapest)}.`;
+        if (fastest !== cheapest) html += ` The most XP each is <strong>${escapeHtml(fastest.name)}</strong>: ${fmt(fastest.count)} for ${cost(fastest)}.`;
+        best.innerHTML = html;
+    }
+
     function renderTable(s) {
-        const list = rows(s);
+        const all = rows(s);
+        renderBest(all, s);
+        const showAll = showAllInput && showAllInput.checked;
+        let list = showAll ? all : all.filter(r => !r.locked);
+        // Nothing unlocked yet (e.g. level 1 Herblore): say so, and show what comes next greyed out
+        let notice = '';
+        if (!list.length) {
+            const next = [...all].sort((a, b) => a.level - b.level)[0];
+            notice = `<tr class="calc-empty"><td colspan="${config.sell ? 8 : 7}">Nothing unlocks at level ${s.curLevel} yet${next ? `. The first is ${escapeHtml(next.name)} at level ${next.level}` : ''}. Here is everything you can work towards:</td></tr>`;
+            list = all;
+        }
         const value = r => sortKey === 'xp' ? r.xpEach : r[sortKey];
         list.sort((a, b) => {
             const va = value(a), vb = value(b);
@@ -183,16 +251,17 @@
             if (vb === null) return -1;
             return (va - vb) * sortDir || a.level - b.level || a.xp - b.xp;
         });
-        tbody.innerHTML = list.map(r => `
-            <tr class="${r.locked ? 'is-locked' : ''}">
-                <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/${r.icon}.png" alt="" width="24" height="24" loading="lazy"><a href="/items/${r.slug}">${escapeHtml(r.name)}</a></td>
-                <td class="text-right">${r.level}</td>
-                <td class="text-right">${Number(r.xpEach.toFixed(2)).toLocaleString('en-US')}</td>
-                <td class="text-right col-count">${s.xpLeft ? fmt(r.count) : '0'}</td>
-                <td class="text-right">${money(r.each)}</td>
-                <td class="text-right">${money(r.total)}</td>
-                <td class="text-right">${money(r.gpxp, 2)}</td>
-            </tr>`).join('');
+        tbody.innerHTML = notice + list.map(r => `
+        <tr class="${r.locked ? 'is-locked' : ''}">
+            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/${r.icon}.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/${r.slug}">${escapeHtml(r.name)}</a>${materialsLine(r)}</div></div></td>
+            <td class="text-right">${r.level}</td>
+            <td class="text-right">${Number(r.xpEach.toFixed(2)).toLocaleString('en-US')}</td>
+            <td class="text-right col-count">${s.xpLeft ? fmt(r.count) : '0'}</td>
+            <td class="text-right">${gp(r.price)}</td>
+            <td class="text-right col-cost">${gp(r.total)}</td>${config.sell ? `
+            <td class="text-right">${selling() ? signed(r.net) : '<span class="text-muted">–</span>'}</td>` : ''}
+            <td class="text-right">${signed(r.gpxp, 2)}</td>
+        </tr>`).join('');
 
         document.querySelectorAll('.calc-table th[data-sort]').forEach(th => {
             const active = th.dataset.sort === sortKey;
@@ -219,7 +288,7 @@
             if (th.dataset.sort === 'name') return;
             const sort = () => {
                 if (sortKey === th.dataset.sort) sortDir = -sortDir;
-                else { sortKey = th.dataset.sort; sortDir = th.dataset.sort === 'level' ? 1 : -1; }
+                else { sortKey = th.dataset.sort; sortDir = ['gpxp', 'net', 'xp'].includes(th.dataset.sort) ? -1 : 1; }
                 update();
             };
             th.addEventListener('click', sort);
@@ -227,7 +296,7 @@
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sort(); }
             });
         });
-        [methodSelect, bonusInput, sellInput].forEach(el => el && el.addEventListener('change', update));
+        [methodSelect, bonusInput, sellInput, showAllInput].forEach(el => el && el.addEventListener('change', update));
 
         loadPrices();
         // Refresh prices every 5 minutes while the tab is visible

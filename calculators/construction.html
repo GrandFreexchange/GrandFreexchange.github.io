@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/site.css?v=2">
     <script src="/assets/theme.js"></script>
-    <link rel="stylesheet" href="/assets/calc.css?v=1">
+    <link rel="stylesheet" href="/assets/calc.css?v=2">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Skill calculators","item":"https://osrs.lol/calculators/"},{"@type":"ListItem","position":3,"name":"Construction calculator","item":"https://osrs.lol/calculators/construction"}]}</script>
 </head>
 
@@ -101,9 +101,11 @@
                     </select>
                 </div>
                 <label class="calc-check"><input id="calc-bonus" type="checkbox" class="field"> Full carpenter&#39;s outfit (+2.5% XP)</label>
+                <label class="calc-check"><input id="calc-show-all" type="checkbox" class="field"> Show items above my current level</label>
                 </div>
 
                 <div class="calc-status" id="calc-status" aria-live="polite">Loading live GE prices…</div>
+                <p class="calc-best" id="calc-best" aria-live="polite"></p>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm calc-table">
@@ -113,14 +115,14 @@
                                 <th scope="col" class="text-right" data-sort="level" tabindex="0">Level</th>
                                 <th scope="col" class="text-right" data-sort="xp" tabindex="0">XP each</th>
                                 <th scope="col" class="text-right" data-sort="count" tabindex="0">Needed</th>
-                                <th scope="col" class="text-right" data-sort="each" tabindex="0">Profit each</th>
-                                <th scope="col" class="text-right" data-sort="total" tabindex="0">Total profit</th>
+                                <th scope="col" class="text-right" data-sort="price" tabindex="0">Price each</th>
+                                <th scope="col" class="text-right" data-sort="total" tabindex="0">Total cost</th>
                                 <th scope="col" class="text-right" data-sort="gpxp" tabindex="0">GP/XP</th>
                             </tr>
                         </thead>
                         <tbody id="calc-body">
                         <tr data-level="4">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/960.png" alt="" width="24" height="24" loading="lazy"><a href="/items/plank">Wooden bookcase</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/960.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/plank">Wooden bookcase</a></div></div></td>
                             <td class="text-right">4</td>
                             <td class="text-right">115</td>
                             <td class="text-right col-count">113,343</td>
@@ -129,7 +131,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="19">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><a href="/items/oak-plank">Oak chair</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/oak-plank">Oak chair</a></div></div></td>
                             <td class="text-right">19</td>
                             <td class="text-right">120</td>
                             <td class="text-right col-count">108,621</td>
@@ -138,7 +140,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="33">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><a href="/items/oak-plank">Oak larder</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/oak-plank">Oak larder</a></div></div></td>
                             <td class="text-right">33</td>
                             <td class="text-right">480</td>
                             <td class="text-right col-count">27,156</td>
@@ -147,7 +149,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="47">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8780.png" alt="" width="24" height="24" loading="lazy"><a href="/items/teak-plank">Mythical cape (mounted)</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8780.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/teak-plank">Mythical cape (mounted)</a></div></div></td>
                             <td class="text-right">47</td>
                             <td class="text-right">370</td>
                             <td class="text-right col-count">35,229</td>
@@ -156,7 +158,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="52">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8782.png" alt="" width="24" height="24" loading="lazy"><a href="/items/mahogany-plank">Mahogany table</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8782.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/mahogany-plank">Mahogany table</a></div></div></td>
                             <td class="text-right">52</td>
                             <td class="text-right">840</td>
                             <td class="text-right col-count">15,518</td>
@@ -165,7 +167,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="74">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><a href="/items/oak-plank">Oak dungeon door</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8778.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/oak-plank">Oak dungeon door</a></div></div></td>
                             <td class="text-right">74</td>
                             <td class="text-right">600</td>
                             <td class="text-right col-count">21,725</td>
@@ -174,7 +176,7 @@
                             <td class="text-right">…</td>
                         </tr>
                         <tr data-level="77">
-                            <td class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8782.png" alt="" width="24" height="24" loading="lazy"><a href="/items/mahogany-plank">Gnome bench</a></td>
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/8782.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/mahogany-plank">Gnome bench</a></div></div></td>
                             <td class="text-right">77</td>
                             <td class="text-right">840</td>
                             <td class="text-right col-count">15,518</td>
@@ -185,7 +187,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="calc-legend">Green is a profit, red is a cost. Greyed-out rows need a higher level than your current one.</p>
+                <p class="calc-legend">Price each is what the materials for one build cost to buy right now (the latest instant-buy price). GP/XP is negative when training costs money. Click a column to sort.</p>
             </section>
 
             <section class="card p-6 md:p-10 prose-site">
@@ -217,8 +219,8 @@
             <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
         </footer>
     </div>
-    <script type="application/json" id="calc-data">{"skill":"Construction","methods":[{"id":"planks","label":"Buy planks on the GE","mult":1},{"id":"sawmill","label":"Buy logs and pay the sawmill","mult":1,"swap":{"960":[1511,100],"8778":[1521,250],"8780":[6333,500],"8782":[6332,1500]}}],"bonus":{"label":"Full carpenter's outfit (+2.5% XP)","mult":1.025},"sell":false,"actions":[{"name":"Wooden bookcase","slug":"plank","icon":960,"level":4,"xp":115,"kind":null,"inputs":[[960,4],[1539,4]],"outputs":[]},{"name":"Oak chair","slug":"oak-plank","icon":8778,"level":19,"xp":120,"kind":null,"inputs":[[8778,2]],"outputs":[]},{"name":"Oak larder","slug":"oak-plank","icon":8778,"level":33,"xp":480,"kind":null,"inputs":[[8778,8]],"outputs":[]},{"name":"Mythical cape (mounted)","slug":"teak-plank","icon":8780,"level":47,"xp":370,"kind":null,"inputs":[[8780,3]],"outputs":[]},{"name":"Mahogany table","slug":"mahogany-plank","icon":8782,"level":52,"xp":840,"kind":null,"inputs":[[8782,6]],"outputs":[]},{"name":"Oak dungeon door","slug":"oak-plank","icon":8778,"level":74,"xp":600,"kind":null,"inputs":[[8778,10]],"outputs":[]},{"name":"Gnome bench","slug":"mahogany-plank","icon":8782,"level":77,"xp":840,"kind":null,"inputs":[[8782,6]],"outputs":[]}]}</script>
-    <script src="/assets/calc.js?v=1"></script>
+    <script type="application/json" id="calc-data">{"skill":"Construction","methods":[{"id":"planks","label":"Buy planks on the GE","mult":1},{"id":"sawmill","label":"Buy logs and pay the sawmill","mult":1,"swap":{"960":[1511,100],"8778":[1521,250],"8780":[6333,500],"8782":[6332,1500]}}],"bonus":{"label":"Full carpenter's outfit (+2.5% XP)","mult":1.025},"sell":false,"actions":[{"name":"Wooden bookcase","slug":"plank","icon":960,"level":4,"xp":115,"kind":null,"inputs":[[960,4],[1539,4]],"outputs":[]},{"name":"Oak chair","slug":"oak-plank","icon":8778,"level":19,"xp":120,"kind":null,"inputs":[[8778,2]],"outputs":[]},{"name":"Oak larder","slug":"oak-plank","icon":8778,"level":33,"xp":480,"kind":null,"inputs":[[8778,8]],"outputs":[]},{"name":"Mythical cape (mounted)","slug":"teak-plank","icon":8780,"level":47,"xp":370,"kind":null,"inputs":[[8780,3]],"outputs":[]},{"name":"Mahogany table","slug":"mahogany-plank","icon":8782,"level":52,"xp":840,"kind":null,"inputs":[[8782,6]],"outputs":[]},{"name":"Oak dungeon door","slug":"oak-plank","icon":8778,"level":74,"xp":600,"kind":null,"inputs":[[8778,10]],"outputs":[]},{"name":"Gnome bench","slug":"mahogany-plank","icon":8782,"level":77,"xp":840,"kind":null,"inputs":[[8782,6]],"outputs":[]}],"items":{"960":{"slug":"plank","name":"Plank"},"1511":{"slug":"logs","name":"Logs"},"1521":{"slug":"oak-logs","name":"Oak logs"},"1539":{"slug":"steel-nails","name":"Steel nails"},"6332":{"slug":"mahogany-logs","name":"Mahogany logs"},"6333":{"slug":"teak-logs","name":"Teak logs"},"8778":{"slug":"oak-plank","name":"Oak plank"},"8780":{"slug":"teak-plank","name":"Teak plank"},"8782":{"slug":"mahogany-plank","name":"Mahogany plank"}}}</script>
+    <script src="/assets/calc.js?v=2"></script>
 </body>
 
 </html>
