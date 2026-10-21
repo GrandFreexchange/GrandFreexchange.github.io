@@ -620,6 +620,21 @@ ${GUIDES.map(guide => `    <url>
     </url>
 `;
 
+    // Skill calculators (built by build-calculators.js): the hub first, then one page per skill
+    const calculatorDir = path.join(__dirname, 'calculators');
+    const calculatorPages = fs.existsSync(calculatorDir)
+        ? fs.readdirSync(calculatorDir).filter(f => f.endsWith('.html')).sort((a, b) => (a === 'index.html' ? -1 : b === 'index.html' ? 1 : a.localeCompare(b)))
+        : [];
+    for (const file of calculatorPages) {
+        sitemap += `    <url>
+        <loc>${baseUrl}/calculators/${file === 'index.html' ? '' : file.replace(/\.html$/, '')}</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>${file === 'index.html' ? '0.9' : '0.8'}</priority>
+    </url>
+`;
+    }
+
     for (const item of items) {
         const slug = nameToSlug(item.name);
         const iconUrl = `https://tiles.runescape.wiki/static/public/images/osrs/items/${item.id}.png`;

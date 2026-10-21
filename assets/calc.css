@@ -1,0 +1,228 @@
+/* Skill calculator pages (calculators/*.html). Colours come from site.css; the table copies the
+   dashboard's market table look (darker rows, green profit, red cost). */
+
+.calc-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.calc-title img {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.calc-h2 {
+    margin-bottom: 16px;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.calc-form {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 16px;
+}
+
+@media (max-width: 639px) {
+    .calc-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.calc-field label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.calc-field .field {
+    font-variant-numeric: tabular-nums;
+}
+
+.calc-summary {
+    margin-top: 16px;
+    color: var(--text-primary);
+}
+
+.calc-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px 24px;
+    margin-top: 16px;
+}
+
+.calc-options:empty { display: none; }
+
+.calc-field-wide {
+    flex: 1 1 280px;
+    max-width: 420px;
+}
+
+.calc-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.calc-status {
+    margin: 20px 0 8px;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+}
+
+.calc-status.is-error { color: var(--accent-red); }
+
+/* ---------- Tables ---------- */
+.calc-table thead {
+    background-color: var(--bg-dark);
+    border-top: 1px solid var(--border-color);
+}
+
+.calc-table th {
+    padding: 12px 8px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.calc-table th[data-sort]:not([data-sort="name"]) {
+    cursor: pointer;
+    user-select: none;
+}
+
+.calc-table th[data-sort]:not([data-sort="name"]):hover {
+    color: var(--text-primary);
+}
+
+.calc-table td {
+    padding: 8px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.calc-table tbody tr {
+    background-color: var(--bg-contrast);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s;
+}
+
+.calc-table tbody tr:hover {
+    background-color: var(--bg-dark);
+}
+
+.calc-table .col-profit { color: var(--accent-green); }
+.calc-table .col-loss { color: var(--chart-red); }
+.calc-table .col-count { color: var(--accent-gold); font-weight: 600; }
+
+.calc-table tr.is-locked td { opacity: 0.45; }
+
+.calc-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-item img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.calc-item a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.calc-item a:hover {
+    color: var(--accent-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.sort-icon {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 0.75em;
+    color: var(--accent-gold);
+}
+
+.calc-legend {
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+}
+
+/* ---------- Hub page ---------- */
+.calc-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+@media (max-width: 639px) {
+    .calc-cards { grid-template-columns: 1fr; }
+}
+
+.calc-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    height: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-contrast);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.calc-card:hover {
+    border-color: var(--accent-gold);
+    background-color: var(--bg-dark);
+}
+
+.calc-card img {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.calc-card strong {
+    display: block;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.calc-card span span {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.xp-table-wrap {
+    max-height: 520px;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.xp-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-dark);
+}
+
+.xp-table td:first-child { color: var(--accent-gold); font-weight: 600; }
