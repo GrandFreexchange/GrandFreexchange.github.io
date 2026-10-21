@@ -21,6 +21,24 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://osrs.lol/trackers</loc>
+        <lastmod>2026-10-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://osrs.lol/farming-timers</loc>
+        <lastmod>2026-10-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://osrs.lol/daily-reset</loc>
+        <lastmod>2026-10-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://osrs.lol/acknowledgements</loc>
         <lastmod>2026-10-21</lastmod>
         <changefreq>monthly</changefreq>

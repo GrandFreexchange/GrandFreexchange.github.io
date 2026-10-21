@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRS Daily Reset Timer &amp; Dailies Checklist</title>
+    <meta name="description"
+        content="Countdown to the OSRS daily reset (00:00 UTC) and weekly reset, with a checklist of free daily rewards: battlestaves, sand, essence, herb boxes and more.">
+    <link rel="canonical" href="https://osrs.lol/daily-reset">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://osrs.lol/daily-reset">
+    <meta property="og:title" content="OSRS Daily Reset Timer &amp; Dailies Checklist">
+    <meta property="og:description" content="Countdown to the OSRS daily reset (00:00 UTC) and weekly reset, with a checklist of free daily rewards: battlestaves, sand, essence, herb boxes and more.">
+    <meta property="og:image" content="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css?v=2">
+    <script src="/assets/theme.js"></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Trackers","item":"https://osrs.lol/trackers"},{"@type":"ListItem","position":3,"name":"Daily reset","item":"https://osrs.lol/daily-reset"}]}</script>
+    <style>
+        .section-heading {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .reset-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .reset-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .reset-label {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+        }
+
+        .reset-count {
+            margin-top: 4px;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.25rem);
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
+            color: var(--accent-gold);
+        }
+
+        .reset-local {
+            margin-top: 4px;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        .list-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .task-list {
+            margin-top: 12px;
+        }
+
+        .task-list li + li {
+            margin-top: 8px;
+        }
+
+        .task-list label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background-color: var(--bg-contrast);
+            cursor: pointer;
+        }
+
+        .task-list input[type="checkbox"].field {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            margin-top: 3px;
+        }
+
+        .task-text {
+            color: var(--text-primary);
+        }
+
+        .task-req {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .task-list input:checked + .task-text {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .task-list input:checked + .task-text strong {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+
+        <header class="site-header">
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="/trackers" class="text-accent hover:underline">Trackers</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Daily reset</li>
+            </ol>
+        </nav>
+
+        <div class="mb-6">
+            <h1 class="page-title">OSRS daily reset timer</h1>
+            <p class="page-lead">Countdowns to the daily and weekly reset in your own time zone, and a checklist of the free daily rewards that are easy to forget.</p>
+        </div>
+
+        <main>
+            <section class="reset-grid" aria-label="Reset countdowns">
+                <div class="card p-5 md:p-6 reset-card">
+                    <h2 class="reset-label">Daily reset</h2>
+                    <p class="reset-count" id="daily-count">--</p>
+                    <p class="reset-local" id="daily-local">Every day at 00:00 UTC.</p>
+                </div>
+                <div class="card p-5 md:p-6 reset-card">
+                    <h2 class="reset-label">Weekly reset</h2>
+                    <p class="reset-count" id="weekly-count">--</p>
+                    <p class="reset-local" id="weekly-local">Every Wednesday at 00:00 UTC.</p>
+                </div>
+            </section>
+
+            <section class="card p-5 md:p-6 mt-6" aria-labelledby="dailies-heading">
+                <div class="list-head">
+                    <h2 id="dailies-heading" class="section-heading">Dailies checklist</h2>
+                    <span class="text-sm text-secondary" id="daily-progress"></span>
+                </div>
+                <p class="text-sm text-secondary mt-1">Tick things off as you collect them. The list clears itself at the daily reset.</p>
+                <ul class="task-list" data-period="daily">
+                    <li><label><input type="checkbox" class="field" data-task="zaff"><span class="task-text"><strong>Battlestaves from Zaff</strong> in Varrock. Up to 120 a day, depending on your Varrock Diary.<span class="task-req">Needs the easy Varrock Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="bert"><span class="task-text"><strong>84 buckets of sand from Bert</strong> in Yanille, delivered to your bank.<span class="task-req">Needs The Hand in the Sand</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="cromperty"><span class="task-text"><strong>Pure essence from Wizard Cromperty</strong> in East Ardougne. 100 to 250 a day.<span class="task-req">Needs the medium Ardougne Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="robin"><span class="task-text"><strong>Bonemeal and slime from Robin</strong> at Port Phasmatys. 13 of each per diary tier.<span class="task-req">Needs the medium Morytania Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="thirus"><span class="task-text"><strong>Dynamite from Thirus</strong> at the Lovakengj blast mine.<span class="task-req">Needs the medium Kourend &amp; Kebos Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="flax"><span class="task-text"><strong>Flax to bowstrings</strong> with the Flax keeper in Seers' Village.<span class="task-req">Needs the easy Kandarin Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="lundail"><span class="task-text"><strong>Random runes from Lundail</strong> at the Mage Arena bank.<span class="task-req">Needs the easy Wilderness Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="rantz"><span class="task-text"><strong>Ogre arrows from Rantz</strong> near Feldip Hills.<span class="task-req">Needs the easy Western Provinces Diary</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="herbboxes"><span class="task-text"><strong>Herb boxes from Nightmare Zone.</strong> Up to 15 a day for 9,500 points each.<span class="task-req">Not available to Ironmen</span></span></label></li>
+                </ul>
+            </section>
+
+            <section class="card p-5 md:p-6 mt-6" aria-labelledby="weeklies-heading">
+                <div class="list-head">
+                    <h2 id="weeklies-heading" class="section-heading">Weekly checklist</h2>
+                    <span class="text-sm text-secondary" id="weekly-progress"></span>
+                </div>
+                <p class="text-sm text-secondary mt-1">Clears itself at the weekly reset.</p>
+                <ul class="task-list" data-period="weekly">
+                    <li><label><input type="checkbox" class="field" data-task="penguins"><span class="task-text"><strong>Penguin Hide and Seek.</strong> The spy penguins move every week, for Agility and Thieving experience.<span class="task-req">Needs Cold War</span></span></label></li>
+                    <li><label><input type="checkbox" class="field" data-task="tog"><span class="task-text"><strong>Tears of Guthix</strong> in the Lumbridge Swamp Caves. Once a week, counted from your own last visit rather than the reset.<span class="task-req">Needs Tears of Guthix</span></span></label></li>
+                </ul>
+            </section>
+
+            <section class="card p-6 md:p-10 mt-6 prose-site" aria-labelledby="faq-heading">
+                <h2 id="faq-heading">When is the OSRS daily reset?</h2>
+                <p>
+                    Old School RuneScape resets its daily rewards at <strong>00:00 UTC</strong> every day. The countdown
+                    above shows how long is left and what time that is where you are, so you don't have to work out your
+                    time zone or daylight saving.
+                </p>
+                <h2>What resets each day?</h2>
+                <p>
+                    Mostly free resources unlocked by Achievement Diaries: battlestaves, pure essence, sand, bonemeal and
+                    slime, dynamite, bowstrings, runes and ogre arrows, plus the Nightmare Zone herb boxes. Collecting them
+                    every day adds up to a lot of free GP and saves time on supplies.
+                </p>
+                <h2>Worth it?</h2>
+                <p>
+                    Battlestaves and herb boxes are the best known. Battlestaves bought from Zaff can be sold on the Grand
+                    Exchange or turned into elemental battlestaves for profit. Check the live
+                    <a href="/items/battlestaff">battlestaff price</a> before you sell.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="/farming-timers" class="btn" style="text-decoration: none;">Farming timers</a>
+                    <a href="/" class="btn" style="text-decoration: none;">Price dashboard</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/trackers">Trackers</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Reset countdowns and checklists. OSRS resets dailies at 00:00 UTC and weeklies on Wednesday 00:00 UTC.
+        // Ticks are saved per reset period, so the lists clear themselves when a new day or week starts.
+        (function () {
+            var STORE_KEY = 'osrslol.resetChecklist';
+            var DAY = 86400000;
+            var WEDNESDAY = 3;
+
+            function lastDailyReset(now) {
+                return Math.floor(now / DAY) * DAY;
+            }
+
+            function lastWeeklyReset(now) {
+                var dayStart = lastDailyReset(now);
+                var back = (new Date(dayStart).getUTCDay() - WEDNESDAY + 7) % 7;
+                return dayStart - back * DAY;
+            }
+
+            function countdown(ms) {
+                var s = Math.max(0, Math.floor(ms / 1000));
+                var d = Math.floor(s / 86400);
+                var h = Math.floor((s % 86400) / 3600);
+                var m = Math.floor((s % 3600) / 60);
+                var sec = s % 60;
+                var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+                return (d ? d + 'd ' : '') + h + 'h ' + pad(m) + 'm ' + pad(sec) + 's';
+            }
+
+            function localTime(ms, withDay) {
+                var date = new Date(ms);
+                var time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                return withDay ? date.toLocaleDateString([], { weekday: 'long' }) + ' at ' + time : time;
+            }
+
+            var dailyCount = document.getElementById('daily-count');
+            var dailyLocal = document.getElementById('daily-local');
+            var weeklyCount = document.getElementById('weekly-count');
+            var weeklyLocal = document.getElementById('weekly-local');
+
+            function load() {
+                try {
+                    return JSON.parse(localStorage.getItem(STORE_KEY)) || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function save(state) {
+                try {
+                    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+                } catch (e) { }
+            }
+
+            function periodStart(period, now) {
+                return period === 'weekly' ? lastWeeklyReset(now) : lastDailyReset(now);
+            }
+
+            // state = { daily: { period: <reset ms>, done: [ids] }, weekly: {...} }
+            function applyChecklists() {
+                var now = Date.now();
+                var state = load();
+                document.querySelectorAll('.task-list').forEach(function (list) {
+                    var period = list.dataset.period;
+                    var entry = state[period];
+                    var done = entry && entry.period === periodStart(period, now) ? entry.done : [];
+                    var boxes = list.querySelectorAll('input[data-task]');
+                    boxes.forEach(function (box) {
+                        box.checked = done.indexOf(box.dataset.task) !== -1;
+                    });
+                    showProgress(list);
+                });
+            }
+
+            function showProgress(list) {
+                var boxes = list.querySelectorAll('input[data-task]');
+                var ticked = list.querySelectorAll('input[data-task]:checked').length;
+                var out = document.getElementById(list.dataset.period + '-progress');
+                if (out) out.textContent = ticked + ' of ' + boxes.length + ' done';
+            }
+
+            document.querySelectorAll('.task-list').forEach(function (list) {
+                list.addEventListener('change', function () {
+                    var state = load();
+                    var done = [];
+                    list.querySelectorAll('input[data-task]:checked').forEach(function (box) {
+                        done.push(box.dataset.task);
+                    });
+                    state[list.dataset.period] = { period: periodStart(list.dataset.period, Date.now()), done: done };
+                    save(state);
+                    showProgress(list);
+                });
+            });
+
+            var shownDaily = null;
+
+            function tick() {
+                var now = Date.now();
+                var nextDaily = lastDailyReset(now) + DAY;
+                var nextWeekly = lastWeeklyReset(now) + 7 * DAY;
+                dailyCount.textContent = countdown(nextDaily - now);
+                weeklyCount.textContent = countdown(nextWeekly - now);
+                dailyLocal.textContent = 'At ' + localTime(nextDaily) + ' your time (00:00 UTC).';
+                weeklyLocal.textContent = localTime(nextWeekly, true) + ' your time (Wednesday 00:00 UTC).';
+                // A reset passed while the page was open: clear the ticks
+                if (shownDaily !== null && shownDaily !== nextDaily) applyChecklists();
+                shownDaily = nextDaily;
+            }
+
+            window.addEventListener('storage', function (event) {
+                if (event.key === STORE_KEY) applyChecklists();
+            });
+
+            applyChecklists();
+            tick();
+            setInterval(tick, 1000);
+        })();
+    </script>
+</body>
+
+</html>

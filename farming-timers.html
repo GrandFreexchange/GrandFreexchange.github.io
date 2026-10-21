@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRS Farming Timers - Herb Run, Tree &amp; Birdhouse Timer</title>
+    <meta name="description"
+        content="Free OSRS farming timers for herb runs, trees, fruit trees and birdhouses. See when every crop is ready, get an alert, and check the full growth time table.">
+    <link rel="canonical" href="https://osrs.lol/farming-timers">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://osrs.lol/farming-timers">
+    <meta property="og:title" content="OSRS Farming Timers - Herb Run, Tree &amp; Birdhouse Timer">
+    <meta property="og:description" content="Free OSRS farming timers for herb runs, trees, fruit trees and birdhouses. See when every crop is ready, get an alert, and check the full growth time table.">
+    <meta property="og:image" content="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css?v=2">
+    <script src="/assets/theme.js"></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Trackers","item":"https://osrs.lol/trackers"},{"@type":"ListItem","position":3,"name":"Farming timers","item":"https://osrs.lol/farming-timers"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OSRS farming timers","url":"https://osrs.lol/farming-timers","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
+    <style>
+        .section-heading {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .timer-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .timer-form {
+                grid-template-columns: 1.3fr 1.3fr 0.9fr auto;
+                align-items: end;
+            }
+        }
+
+        .form-submit .btn {
+            width: 100%;
+            min-height: 42px;
+        }
+
+        .quick-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .timers-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .timers-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .timer-list {
+            margin-top: 12px;
+        }
+
+        .timer {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4px 12px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background-color: var(--bg-contrast);
+        }
+
+        .timer + .timer {
+            margin-top: 8px;
+        }
+
+        .timer-name {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .timer-note {
+            margin-left: 6px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .timer-left {
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--accent-gold);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .timer.is-ready .timer-left {
+            color: var(--accent-green);
+        }
+
+        .timer-sub {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .timer-bar {
+            grid-column: 1 / -1;
+            height: 6px;
+            margin-top: 4px;
+            border-radius: 3px;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .timer-bar span {
+            display: block;
+            height: 100%;
+            background-color: var(--accent-gold);
+        }
+
+        .timer.is-ready .timer-bar span {
+            background-color: var(--accent-green);
+        }
+
+        .timer-remove {
+            justify-self: end;
+            font-size: 0.875rem;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .growth-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+        }
+
+        .growth-table th,
+        .growth-table td {
+            padding: 6px 12px;
+            text-align: left;
+        }
+
+        .growth-table thead th {
+            background-color: var(--bg-contrast);
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .growth-table tbody td {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .growth-table .group-row th {
+            padding-top: 14px;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .growth-table td:nth-child(2) {
+            font-variant-numeric: tabular-nums;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .growth-table td:nth-child(3) {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+
+        <header class="site-header">
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="/trackers" class="text-accent hover:underline">Trackers</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Farming timers</li>
+            </ol>
+        </nav>
+
+        <div class="mb-6">
+            <h1 class="page-title">OSRS farming timers</h1>
+            <p class="page-lead">Start a timer when you plant, and see when your herbs, trees and birdhouses are ready. Timers are saved in this browser, so you can close the tab and come back.</p>
+        </div>
+
+        <main>
+            <section class="card p-5 md:p-6" aria-labelledby="start-heading">
+                <h2 id="start-heading" class="section-heading">Start a timer</h2>
+                <form id="timer-form" class="timer-form">
+                    <div class="form-cell form-crop">
+                        <label for="crop" class="form-label">Crop</label>
+                        <select id="crop" class="field">
+                            <optgroup label="Herbs">
+                                <option value="Guam" data-cycle="20" data-ticks="4">Guam (1h 20m)</option>
+                                <option value="Marrentill" data-cycle="20" data-ticks="4">Marrentill (1h 20m)</option>
+                                <option value="Tarromin" data-cycle="20" data-ticks="4">Tarromin (1h 20m)</option>
+                                <option value="Harralander" data-cycle="20" data-ticks="4">Harralander (1h 20m)</option>
+                                <option value="Ranarr" data-cycle="20" data-ticks="4" selected>Ranarr (1h 20m)</option>
+                                <option value="Toadflax" data-cycle="20" data-ticks="4">Toadflax (1h 20m)</option>
+                                <option value="Irit" data-cycle="20" data-ticks="4">Irit (1h 20m)</option>
+                                <option value="Avantoe" data-cycle="20" data-ticks="4">Avantoe (1h 20m)</option>
+                                <option value="Kwuarm" data-cycle="20" data-ticks="4">Kwuarm (1h 20m)</option>
+                                <option value="Huasca" data-cycle="20" data-ticks="4">Huasca (1h 20m)</option>
+                                <option value="Snapdragon" data-cycle="20" data-ticks="4">Snapdragon (1h 20m)</option>
+                                <option value="Cadantine" data-cycle="20" data-ticks="4">Cadantine (1h 20m)</option>
+                                <option value="Lantadyme" data-cycle="20" data-ticks="4">Lantadyme (1h 20m)</option>
+                                <option value="Dwarf weed" data-cycle="20" data-ticks="4">Dwarf weed (1h 20m)</option>
+                                <option value="Torstol" data-cycle="20" data-ticks="4">Torstol (1h 20m)</option>
+                                <option value="Goutweed" data-cycle="20" data-ticks="4">Goutweed (1h 20m)</option>
+                            </optgroup>
+                            <optgroup label="Allotments">
+                                <option value="Potato" data-cycle="10" data-ticks="4">Potato (40m)</option>
+                                <option value="Onion" data-cycle="10" data-ticks="4">Onion (40m)</option>
+                                <option value="Cabbage" data-cycle="10" data-ticks="4">Cabbage (40m)</option>
+                                <option value="Tomato" data-cycle="10" data-ticks="4">Tomato (40m)</option>
+                                <option value="Sweetcorn" data-cycle="10" data-ticks="6">Sweetcorn (1h)</option>
+                                <option value="Strawberry" data-cycle="10" data-ticks="6">Strawberry (1h)</option>
+                                <option value="Watermelon" data-cycle="10" data-ticks="8">Watermelon (1h 20m)</option>
+                                <option value="Snape grass" data-cycle="10" data-ticks="7">Snape grass (1h 10m)</option>
+                            </optgroup>
+                            <optgroup label="Flowers">
+                                <option value="Marigold" data-cycle="5" data-ticks="4">Marigold (20m)</option>
+                                <option value="Rosemary" data-cycle="5" data-ticks="4">Rosemary (20m)</option>
+                                <option value="Nasturtium" data-cycle="5" data-ticks="4">Nasturtium (20m)</option>
+                                <option value="Woad" data-cycle="5" data-ticks="4">Woad (20m)</option>
+                                <option value="Limpwurt" data-cycle="5" data-ticks="4">Limpwurt (20m)</option>
+                                <option value="White lily" data-cycle="5" data-ticks="4">White lily (20m)</option>
+                            </optgroup>
+                            <optgroup label="Hops">
+                                <option value="Barley" data-cycle="10" data-ticks="4">Barley (40m)</option>
+                                <option value="Hammerstone" data-cycle="10" data-ticks="4">Hammerstone (40m)</option>
+                                <option value="Asgarnian" data-cycle="10" data-ticks="5">Asgarnian (50m)</option>
+                                <option value="Jute" data-cycle="10" data-ticks="5">Jute (50m)</option>
+                                <option value="Yanillian" data-cycle="10" data-ticks="6">Yanillian (1h)</option>
+                                <option value="Krandorian" data-cycle="10" data-ticks="7">Krandorian (1h 10m)</option>
+                                <option value="Wildblood" data-cycle="10" data-ticks="8">Wildblood (1h 20m)</option>
+                                <option value="Flax" data-cycle="20" data-ticks="3">Flax (1h)</option>
+                                <option value="Hemp" data-cycle="20" data-ticks="4">Hemp (1h 20m)</option>
+                                <option value="Cotton" data-cycle="20" data-ticks="5">Cotton (1h 40m)</option>
+                            </optgroup>
+                            <optgroup label="Bushes">
+                                <option value="Redberry" data-cycle="20" data-ticks="5">Redberry (1h 40m)</option>
+                                <option value="Cadavaberry" data-cycle="20" data-ticks="6">Cadavaberry (2h)</option>
+                                <option value="Dwellberry" data-cycle="20" data-ticks="7">Dwellberry (2h 20m)</option>
+                                <option value="Jangerberry" data-cycle="20" data-ticks="8">Jangerberry (2h 40m)</option>
+                                <option value="Whiteberry" data-cycle="20" data-ticks="8">Whiteberry (2h 40m)</option>
+                                <option value="Poison ivy" data-cycle="20" data-ticks="8">Poison ivy (2h 40m)</option>
+                            </optgroup>
+                            <optgroup label="Trees">
+                                <option value="Oak tree" data-cycle="40" data-ticks="4">Oak tree (2h 40m)</option>
+                                <option value="Willow tree" data-cycle="40" data-ticks="6">Willow tree (4h)</option>
+                                <option value="Maple tree" data-cycle="40" data-ticks="8">Maple tree (5h 20m)</option>
+                                <option value="Yew tree" data-cycle="40" data-ticks="10">Yew tree (6h 40m)</option>
+                                <option value="Magic tree" data-cycle="40" data-ticks="12">Magic tree (8h)</option>
+                            </optgroup>
+                            <optgroup label="Fruit trees">
+                                <option value="Apple tree" data-cycle="160" data-ticks="6">Apple tree (16h)</option>
+                                <option value="Banana tree" data-cycle="160" data-ticks="6">Banana tree (16h)</option>
+                                <option value="Orange tree" data-cycle="160" data-ticks="6">Orange tree (16h)</option>
+                                <option value="Curry tree" data-cycle="160" data-ticks="6">Curry tree (16h)</option>
+                                <option value="Pineapple tree" data-cycle="160" data-ticks="6">Pineapple tree (16h)</option>
+                                <option value="Papaya tree" data-cycle="160" data-ticks="6">Papaya tree (16h)</option>
+                                <option value="Palm tree" data-cycle="160" data-ticks="6">Palm tree (16h)</option>
+                                <option value="Dragonfruit tree" data-cycle="160" data-ticks="6">Dragonfruit tree (16h)</option>
+                            </optgroup>
+                            <optgroup label="Hardwood trees">
+                                <option value="Teak tree" data-cycle="640" data-ticks="7">Teak tree (3d 2h 40m)</option>
+                                <option value="Mahogany tree" data-cycle="640" data-ticks="8">Mahogany tree (3d 13h 20m)</option>
+                                <option value="Camphor tree" data-cycle="640" data-ticks="8">Camphor tree (3d 13h 20m)</option>
+                                <option value="Ironwood tree" data-cycle="640" data-ticks="8">Ironwood tree (3d 13h 20m)</option>
+                                <option value="Rosewood tree" data-cycle="640" data-ticks="9">Rosewood tree (4d)</option>
+                            </optgroup>
+                            <optgroup label="Special patches">
+                                <option value="Cactus" data-cycle="80" data-ticks="7">Cactus (9h 20m)</option>
+                                <option value="Potato cactus" data-cycle="10" data-ticks="7">Potato cactus (1h 10m)</option>
+                                <option value="Seaweed" data-cycle="10" data-ticks="4">Seaweed (40m)</option>
+                                <option value="Grapes" data-cycle="5" data-ticks="7">Grapes (35m)</option>
+                                <option value="Mushroom" data-cycle="40" data-ticks="6">Mushroom (4h)</option>
+                                <option value="Belladonna" data-cycle="80" data-ticks="4">Belladonna (5h 20m)</option>
+                                <option value="Calquat" data-cycle="160" data-ticks="8">Calquat (21h 20m)</option>
+                                <option value="Celastrus" data-cycle="160" data-ticks="5">Celastrus (13h 20m)</option>
+                                <option value="Crystal tree" data-cycle="80" data-ticks="6">Crystal tree (8h)</option>
+                                <option value="Spirit tree" data-cycle="320" data-ticks="12">Spirit tree (2d 16h)</option>
+                                <option value="Redwood" data-cycle="640" data-ticks="10">Redwood (4d 10h 40m)</option>
+                                <option value="Hespori" data-cycle="640" data-ticks="3">Hespori (1d 8h)</option>
+                                <option value="Attas" data-cycle="640" data-ticks="8">Attas (3d 13h 20m)</option>
+                                <option value="Iasor" data-cycle="640" data-ticks="8">Iasor (3d 13h 20m)</option>
+                                <option value="Kronos" data-cycle="640" data-ticks="8">Kronos (3d 13h 20m)</option>
+                                <option value="Elkhorn coral" data-cycle="40" data-ticks="4">Elkhorn coral (2h 40m)</option>
+                                <option value="Pillar coral" data-cycle="40" data-ticks="4">Pillar coral (2h 40m)</option>
+                                <option value="Umbral coral" data-cycle="40" data-ticks="4">Umbral coral (2h 40m)</option>
+                            </optgroup>
+                            <optgroup label="Hunter">
+                                <option value="Bird houses" data-fixed="50">Bird houses (50m)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-cell form-note">
+                        <label for="note" class="form-label">Note <span class="text-muted">(optional)</span></label>
+                        <input id="note" type="text" class="field" maxlength="40" placeholder="e.g. Catherby, 5 patches" autocomplete="off">
+                    </div>
+                    <div class="form-cell form-ago">
+                        <label for="ago" class="form-label">Planted</label>
+                        <select id="ago" class="field">
+                            <option value="0" selected>Just now</option>
+                            <option value="5">5 min ago</option>
+                            <option value="10">10 min ago</option>
+                            <option value="15">15 min ago</option>
+                            <option value="30">30 min ago</option>
+                            <option value="60">1 hour ago</option>
+                        </select>
+                    </div>
+                    <div class="form-cell form-submit">
+                        <button type="submit" class="btn btn-primary">Start timer</button>
+                    </div>
+                </form>
+                <div class="quick-row">
+                    <span class="text-sm text-secondary">Quick start:</span>
+                    <button type="button" class="btn btn-sm" data-quick="Ranarr" data-note="Herb run">Herb run</button>
+                    <button type="button" class="btn btn-sm" data-quick="Bird houses" data-note="Bird house run">Bird houses</button>
+                    <button type="button" class="btn btn-sm" data-quick="Magic tree" data-note="Tree run">Tree run</button>
+                    <button type="button" class="btn btn-sm" data-quick="Dragonfruit tree" data-note="Fruit tree run">Fruit tree run</button>
+                </div>
+            </section>
+
+            <section class="card p-5 md:p-6 mt-6" aria-labelledby="timers-heading">
+                <div class="timers-head">
+                    <h2 id="timers-heading" class="section-heading">Your timers</h2>
+                    <div class="timers-actions">
+                        <button type="button" id="alerts-btn" class="btn btn-sm hidden" aria-pressed="false">Turn on alerts</button>
+                        <button type="button" id="clear-btn" class="btn btn-sm hidden">Clear finished</button>
+                    </div>
+                </div>
+                <p id="alerts-note" class="text-sm text-secondary mt-1 hidden"></p>
+                <ul id="timer-list" class="timer-list" aria-live="polite"></ul>
+                <p id="empty-note" class="text-secondary">No timers yet. Pick a crop above and press Start timer when you plant.</p>
+            </section>
+
+            <section class="card p-6 md:p-10 mt-6 prose-site" aria-labelledby="how-heading">
+                <h2 id="how-heading">How farming timers work in OSRS</h2>
+                <p>
+                    Crops in Old School RuneScape don't grow on a stopwatch from the moment you plant them. They grow in
+                    stages, and each stage only moves on at a <strong>growth tick</strong>. Herbs tick every 20 minutes,
+                    trees every 40, fruit trees every 160 and hardwoods every 640. Every player's ticks are shifted by a
+                    small personal offset, so two friends planting at the same time can see their crops finish a few
+                    minutes apart.
+                </p>
+                <p>
+                    That's why each timer shows a <strong>ready by</strong> time: by then the crop is certainly grown.
+                    It is often ready a little sooner, by up to one growth tick (20 minutes for herbs). Bird houses are
+                    different: they fill 50 minutes after you set them, so their timer is exact.
+                </p>
+                <p>
+                    Your crops keep growing while you are logged out. Timers here keep counting when you close the tab,
+                    and alerts pop up while the page is open in any tab.
+                </p>
+
+                <h2 id="growth-times">OSRS farming growth times</h2>
+                <p>Total time from planting until the crop is fully grown, and how it breaks down into growth ticks.</p>
+                <div class="table-wrap">
+                    <table class="growth-table">
+                        <thead>
+                            <tr><th scope="col">Crop</th><th scope="col">Growth time</th><th scope="col">Growth ticks</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Herbs</th></tr>
+                        <tr><td>Guam</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Marrentill</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Tarromin</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Harralander</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Ranarr</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Toadflax</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Irit</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Avantoe</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Kwuarm</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Huasca</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Snapdragon</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Cadantine</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Lantadyme</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Dwarf weed</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Torstol</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Goutweed</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Allotments</th></tr>
+                        <tr><td>Potato</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Onion</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Cabbage</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Tomato</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Sweetcorn</td><td>1h</td><td>6 × 10m</td></tr>
+                        <tr><td>Strawberry</td><td>1h</td><td>6 × 10m</td></tr>
+                        <tr><td>Watermelon</td><td>1h 20m</td><td>8 × 10m</td></tr>
+                        <tr><td>Snape grass</td><td>1h 10m</td><td>7 × 10m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Flowers</th></tr>
+                        <tr><td>Marigold</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr><td>Rosemary</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr><td>Nasturtium</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr><td>Woad</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr><td>Limpwurt</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr><td>White lily</td><td>20m</td><td>4 × 5m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Hops</th></tr>
+                        <tr><td>Barley</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Hammerstone</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Asgarnian</td><td>50m</td><td>5 × 10m</td></tr>
+                        <tr><td>Jute</td><td>50m</td><td>5 × 10m</td></tr>
+                        <tr><td>Yanillian</td><td>1h</td><td>6 × 10m</td></tr>
+                        <tr><td>Krandorian</td><td>1h 10m</td><td>7 × 10m</td></tr>
+                        <tr><td>Wildblood</td><td>1h 20m</td><td>8 × 10m</td></tr>
+                        <tr><td>Flax</td><td>1h</td><td>3 × 20m</td></tr>
+                        <tr><td>Hemp</td><td>1h 20m</td><td>4 × 20m</td></tr>
+                        <tr><td>Cotton</td><td>1h 40m</td><td>5 × 20m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Bushes</th></tr>
+                        <tr><td>Redberry</td><td>1h 40m</td><td>5 × 20m</td></tr>
+                        <tr><td>Cadavaberry</td><td>2h</td><td>6 × 20m</td></tr>
+                        <tr><td>Dwellberry</td><td>2h 20m</td><td>7 × 20m</td></tr>
+                        <tr><td>Jangerberry</td><td>2h 40m</td><td>8 × 20m</td></tr>
+                        <tr><td>Whiteberry</td><td>2h 40m</td><td>8 × 20m</td></tr>
+                        <tr><td>Poison ivy</td><td>2h 40m</td><td>8 × 20m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Trees</th></tr>
+                        <tr><td>Oak tree</td><td>2h 40m</td><td>4 × 40m</td></tr>
+                        <tr><td>Willow tree</td><td>4h</td><td>6 × 40m</td></tr>
+                        <tr><td>Maple tree</td><td>5h 20m</td><td>8 × 40m</td></tr>
+                        <tr><td>Yew tree</td><td>6h 40m</td><td>10 × 40m</td></tr>
+                        <tr><td>Magic tree</td><td>8h</td><td>12 × 40m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Fruit trees</th></tr>
+                        <tr><td>Apple tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Banana tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Orange tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Curry tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Pineapple tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Papaya tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Palm tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr><td>Dragonfruit tree</td><td>16h</td><td>6 × 2h 40m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Hardwood trees</th></tr>
+                        <tr><td>Teak tree</td><td>3d 2h 40m</td><td>7 × 10h 40m</td></tr>
+                        <tr><td>Mahogany tree</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Camphor tree</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Ironwood tree</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Rosewood tree</td><td>4d</td><td>9 × 10h 40m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Special patches</th></tr>
+                        <tr><td>Cactus</td><td>9h 20m</td><td>7 × 1h 20m</td></tr>
+                        <tr><td>Potato cactus</td><td>1h 10m</td><td>7 × 10m</td></tr>
+                        <tr><td>Seaweed</td><td>40m</td><td>4 × 10m</td></tr>
+                        <tr><td>Grapes</td><td>35m</td><td>7 × 5m</td></tr>
+                        <tr><td>Mushroom</td><td>4h</td><td>6 × 40m</td></tr>
+                        <tr><td>Belladonna</td><td>5h 20m</td><td>4 × 1h 20m</td></tr>
+                        <tr><td>Calquat</td><td>21h 20m</td><td>8 × 2h 40m</td></tr>
+                        <tr><td>Celastrus</td><td>13h 20m</td><td>5 × 2h 40m</td></tr>
+                        <tr><td>Crystal tree</td><td>8h</td><td>6 × 1h 20m</td></tr>
+                        <tr><td>Spirit tree</td><td>2d 16h</td><td>12 × 5h 20m</td></tr>
+                        <tr><td>Redwood</td><td>4d 10h 40m</td><td>10 × 10h 40m</td></tr>
+                        <tr><td>Hespori</td><td>1d 8h</td><td>3 × 10h 40m</td></tr>
+                        <tr><td>Attas</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Iasor</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Kronos</td><td>3d 13h 20m</td><td>8 × 10h 40m</td></tr>
+                        <tr><td>Elkhorn coral</td><td>2h 40m</td><td>4 × 40m</td></tr>
+                        <tr><td>Pillar coral</td><td>2h 40m</td><td>4 × 40m</td></tr>
+                        <tr><td>Umbral coral</td><td>2h 40m</td><td>4 × 40m</td></tr>
+                        <tr class="group-row"><th colspan="3" scope="colgroup">Hunter</th></tr>
+                        <tr><td>Bird houses</td><td>50m</td><td>Fixed, from when you set them</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-secondary mt-4">
+                    Growth times match the <a href="https://github.com/runelite/runelite">RuneLite</a> farming tracker
+                    and the OSRS Wiki. Diseased or dead patches stop growing until you cure or clear them.
+                </p>
+
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="/daily-reset" class="btn" style="text-decoration: none;">Daily reset timer</a>
+                    <a href="/" class="btn" style="text-decoration: none;">Seed and herb prices</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/trackers">Trackers</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Farming timers. Timers live in localStorage so they survive closing the tab. A crop finishes at its
+        // last growth tick: ticks fall on the clock every `cycle` minutes, shifted by a per-player offset we
+        // can't see, so "ready by" is planting time + ticks x cycle and it may finish up to one cycle sooner.
+        (function () {
+            var STORE_KEY = 'osrslol.farmingTimers';
+            var ALERTS_KEY = 'osrslol.farmingAlerts';
+            var MINUTE = 60000;
+
+            var form = document.getElementById('timer-form');
+            var cropSelect = document.getElementById('crop');
+            var noteInput = document.getElementById('note');
+            var agoSelect = document.getElementById('ago');
+            var list = document.getElementById('timer-list');
+            var emptyNote = document.getElementById('empty-note');
+            var alertsBtn = document.getElementById('alerts-btn');
+            var alertsNote = document.getElementById('alerts-note');
+            var clearBtn = document.getElementById('clear-btn');
+            var baseTitle = document.title;
+
+            function load() {
+                try {
+                    var saved = JSON.parse(localStorage.getItem(STORE_KEY));
+                    return Array.isArray(saved) ? saved : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function save() {
+                try {
+                    localStorage.setItem(STORE_KEY, JSON.stringify(timers));
+                } catch (e) { }
+            }
+
+            var timers = load();
+
+            function cropInfo(name) {
+                for (var i = 0; i < cropSelect.options.length; i++) {
+                    var opt = cropSelect.options[i];
+                    if (opt.value === name) {
+                        return {
+                            fixed: Number(opt.dataset.fixed) || 0,
+                            cycle: Number(opt.dataset.cycle) || 0,
+                            ticks: Number(opt.dataset.ticks) || 0
+                        };
+                    }
+                }
+                return null;
+            }
+
+            // Times are worked out from the crop name each time, so a corrected growth time fixes old timers too
+            function readyTimes(timer) {
+                var info = cropInfo(timer.crop);
+                if (!info) return null;
+                if (info.fixed) {
+                    var at = timer.planted + info.fixed * MINUTE;
+                    return { start: timer.planted, earliest: at, latest: at };
+                }
+                var latest = timer.planted + info.cycle * info.ticks * MINUTE;
+                return { start: timer.planted, earliest: latest - info.cycle * MINUTE, latest: latest };
+            }
+
+            function duration(ms) {
+                var totalMin = Math.ceil(ms / MINUTE);
+                var d = Math.floor(totalMin / 1440);
+                var h = Math.floor((totalMin % 1440) / 60);
+                var m = totalMin % 60;
+                if (d) return d + 'd ' + h + 'h';
+                if (h) return h + 'h ' + (m < 10 ? '0' : '') + m + 'm';
+                return m + 'm';
+            }
+
+            function clock(ms) {
+                var date = new Date(ms);
+                var sameDay = date.toDateString() === new Date().toDateString();
+                var time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                return sameDay ? time : date.toLocaleDateString([], { weekday: 'short' }) + ' ' + time;
+            }
+
+            function el(tag, className, text) {
+                var node = document.createElement(tag);
+                if (className) node.className = className;
+                if (text !== undefined) node.textContent = text;
+                return node;
+            }
+
+            function render() {
+                var now = Date.now();
+                list.textContent = '';
+                var soonest = null;
+                var anyReady = false;
+
+                timers.sort(function (a, b) {
+                    var ra = readyTimes(a), rb = readyTimes(b);
+                    return (ra ? ra.latest : 0) - (rb ? rb.latest : 0);
+                });
+
+                timers.forEach(function (timer) {
+                    var times = readyTimes(timer);
+                    if (!times) return;
+                    var ready = now >= times.latest;
+                    var mayBeReady = !ready && now >= times.earliest;
+                    if (ready) anyReady = true;
+                    else if (soonest === null || times.latest < soonest) soonest = times.latest;
+
+                    var item = el('li', 'timer' + (ready ? ' is-ready' : ''));
+                    var name = el('div', 'timer-name', timer.crop);
+                    if (timer.note) name.appendChild(el('span', 'timer-note', timer.note));
+                    item.appendChild(name);
+                    item.appendChild(el('div', 'timer-left', ready ? 'Ready' : duration(times.latest - now)));
+
+                    var sub;
+                    if (ready) sub = 'Ready since ' + clock(times.latest) + '.';
+                    else if (times.earliest === times.latest) sub = 'Ready at ' + clock(times.latest) + '.';
+                    else if (mayBeReady) sub = 'May be ready now. Certainly by ' + clock(times.latest) + '.';
+                    else sub = 'Ready by ' + clock(times.latest) + ', possibly from ' + clock(times.earliest) + '.';
+                    item.appendChild(el('div', 'timer-sub', sub));
+
+                    var remove = el('button', 'icon-btn timer-remove', ready ? 'Done' : 'Remove');
+                    remove.type = 'button';
+                    remove.setAttribute('aria-label', (ready ? 'Done with ' : 'Remove ') + timer.crop + ' timer');
+                    remove.addEventListener('click', function () {
+                        timers = timers.filter(function (t) { return t.id !== timer.id; });
+                        save();
+                        render();
+                    });
+                    item.appendChild(remove);
+
+                    var bar = el('div', 'timer-bar');
+                    var fill = el('span');
+                    var progress = Math.min(1, (now - times.start) / (times.latest - times.start));
+                    fill.style.width = (progress * 100).toFixed(1) + '%';
+                    bar.appendChild(fill);
+                    bar.setAttribute('aria-hidden', 'true');
+                    item.appendChild(bar);
+
+                    list.appendChild(item);
+                });
+
+                emptyNote.classList.toggle('hidden', timers.length > 0);
+                clearBtn.classList.toggle('hidden', !anyReady);
+                alertsBtn.classList.toggle('hidden', timers.length === 0 || !('Notification' in window));
+                document.title = anyReady ? 'Ready! ' + baseTitle
+                    : soonest !== null ? '(' + duration(soonest - now) + ') ' + baseTitle : baseTitle;
+            }
+
+            // ---------- Alerts: a browser notification when a timer reaches its "ready by" time ----------
+            function alertsOn() {
+                try {
+                    return 'Notification' in window && Notification.permission === 'granted' && localStorage.getItem(ALERTS_KEY) === 'on';
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function showAlertsState() {
+                var on = alertsOn();
+                alertsBtn.textContent = on ? 'Alerts on' : 'Turn on alerts';
+                alertsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                if ('Notification' in window && Notification.permission === 'denied') {
+                    alertsNote.textContent = 'Alerts are blocked for this site. Allow notifications in your browser settings to use them.';
+                    alertsNote.classList.remove('hidden');
+                } else if (on) {
+                    alertsNote.textContent = 'You\'ll get an alert while this page is open in any tab.';
+                    alertsNote.classList.remove('hidden');
+                } else {
+                    alertsNote.classList.add('hidden');
+                }
+            }
+
+            alertsBtn.addEventListener('click', function () {
+                if (alertsOn()) {
+                    try { localStorage.setItem(ALERTS_KEY, 'off'); } catch (e) { }
+                    showAlertsState();
+                    return;
+                }
+                var done = function () {
+                    if (Notification.permission === 'granted') {
+                        try { localStorage.setItem(ALERTS_KEY, 'on'); } catch (e) { }
+                    }
+                    showAlertsState();
+                };
+                var request = Notification.requestPermission(done);
+                if (request && request.then) request.then(done);
+            });
+
+            function checkAlerts() {
+                var now = Date.now();
+                var changed = false;
+                timers.forEach(function (timer) {
+                    var times = readyTimes(timer);
+                    if (!times || timer.alerted || now < times.latest) return;
+                    timer.alerted = true;
+                    changed = true;
+                    if (alertsOn() && now - times.latest < 10 * MINUTE) {
+                        try {
+                            new Notification(timer.crop + ' ready', {
+                                body: (timer.note ? timer.note + ': ' : '') + 'your ' + timer.crop.toLowerCase() +
+                                    (times.earliest === times.latest ? ' should be full.' : ' should be fully grown.'),
+                                icon: 'https://oldschool.runescape.wiki/images/Coins_10000.png',
+                                tag: 'osrslol-' + timer.id
+                            });
+                        } catch (e) { }
+                    }
+                });
+                if (changed) save();
+            }
+
+            // ---------- Adding timers ----------
+            function addTimer(crop, note, minutesAgo) {
+                timers.push({
+                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                    crop: crop,
+                    note: note,
+                    planted: Date.now() - minutesAgo * MINUTE
+                });
+                save();
+                render();
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                addTimer(cropSelect.value, noteInput.value.trim(), Number(agoSelect.value) || 0);
+                noteInput.value = '';
+            });
+
+            document.querySelectorAll('[data-quick]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    addTimer(button.dataset.quick, button.dataset.note, 0);
+                });
+            });
+
+            clearBtn.addEventListener('click', function () {
+                var now = Date.now();
+                timers = timers.filter(function (timer) {
+                    var times = readyTimes(timer);
+                    return times && now < times.latest;
+                });
+                save();
+                render();
+            });
+
+            // Other tabs on this page stay in step
+            window.addEventListener('storage', function (event) {
+                if (event.key === STORE_KEY) {
+                    timers = load();
+                    render();
+                }
+            });
+
+            showAlertsState();
+            checkAlerts();
+            render();
+            setInterval(function () {
+                checkAlerts();
+                render();
+            }, 10000);
+        })();
+    </script>
+</body>
+
+</html>

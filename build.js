@@ -531,6 +531,24 @@ function generateSitemap(items) {
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>${baseUrl}/trackers</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>${baseUrl}/farming-timers</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>${baseUrl}/daily-reset</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>${baseUrl}/acknowledgements</loc>
         <lastmod>${today}</lastmod>
         <changefreq>monthly</changefreq>
