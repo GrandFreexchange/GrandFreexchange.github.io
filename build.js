@@ -322,10 +322,8 @@ function generateItemHTML(item, latestPrice, volume, context) {
     `;
     html = replaceOnce(html, '</head>', `${headScripts}</head>`, '</head>');
 
-    // 4. One H1 per page: the item name. Item pages drop the homepage's intro (and its H1), and the
-    //    header's "Prices" link no longer marks the current page
-    html = replaceOnce(html, /\s*<!-- item-page:hero -->[\s\S]*?<!-- \/item-page:hero -->/, '', 'homepage intro');
-    html = replaceOnce(html, 'class="nav-home" aria-current="page"', 'class="nav-home"', 'header Prices link');
+    // 4. One H1 per page: the item name. The site banner becomes a plain paragraph on item pages
+    html = replaceOnce(html, '<h1 class="site-title">Quick and FREE OSRS GE Flipping Tool</h1>', '<p class="site-title">Quick and FREE OSRS GE Flipping Tool</p>', 'site banner <h1>');
     html = replaceOnce(html, '<h2 id="item-name-title" class="text-2xl font-bold text-primary"></h2>', `<h1 id="item-name-title" class="text-2xl font-bold text-primary">${escapeHtml(item.name)}</h1>`, 'item title');
 
     // 5. Visible breadcrumb under the header
@@ -579,8 +577,7 @@ function generateAllItemsPage(items) {
     // looks like the rest of the site and keeps the visitor's light/dark choice
     const siteHead = sharedTemplatePart(/<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">[\s\S]*?<script src="\/assets\/theme\.js"><\/script>/, 'shared <head> assets');
     const siteHeader = sharedTemplatePart(/<header class="site-header">[\s\S]*?<\/header>/, 'site header')
-        .replace('class="nav-home" aria-current="page"', 'class="nav-home"')
-        .replace('<a href="/items/">', '<a href="/items/" aria-current="page">');
+        .replace('<h1 class="site-title">Quick and FREE OSRS GE Flipping Tool</h1>', '<p class="site-title">Quick and FREE OSRS GE Flipping Tool</p>');
     const siteFooter = sharedTemplatePart(/<footer class="site-footer">[\s\S]*?<\/footer>/, 'site footer');
 
     const html = `<!DOCTYPE html>
