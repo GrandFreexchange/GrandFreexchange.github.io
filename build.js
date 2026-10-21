@@ -10,7 +10,7 @@ const dashboardTemplate = fs.readFileSync(dashboardTemplatePath, 'utf8');
 
 // Configuration
 const OUTPUT_DIR = path.join(__dirname, 'items');
-const API_HEADERS = { 'User-Agent': 'osrs.lol bot' };
+const API_HEADERS = { 'User-Agent': 'osrs.lol bot (GrandFreexchange.github.io) - Contact @DOPEY on Discord' };
 const BATCH_SIZE = 50;
 const RATE_LIMIT_MS = 100;
 
