@@ -3,6 +3,8 @@ Disallow: /admin/
 Disallow: /private/
 # The dashboard template build.js copies; visitors and crawlers should use the homepage
 Disallow: /dev.html
+# Test copy of the dashboard for trying changes against the live Wiki API
+Disallow: /chart-test.html
 Allow: /
 
 Sitemap: https://osrs.lol/sitemap.xml
