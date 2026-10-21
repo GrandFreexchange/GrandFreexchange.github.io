@@ -536,10 +536,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="44649" data-target="sell">44,649 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="41000" data-target="buy">41,000 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="33500" data-target="buy">33,500 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">2,757 GP (6.72%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">2,757 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">10,257 GP (30.62%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">10,257 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Shattered relics mystic ornament kit</h2>
             <p class="text-secondary italic mb-4">“A kit that can be used to apply a Leagues III - Shattered Relics theme to a blue Mystic robe piece.”</p>
-            <p class="mb-4">On 2026-10-21 02:12 UTC, Shattered relics mystic ornament kit was trading on the Grand Exchange at 44,649 GP (high) and 41,000 GP (low). After the 2% GE tax, buying at the low price and selling at the high price made about 2,757 GP per item, or 13,785 GP for a full buy limit of 5. Buying one at the high price and casting High Level Alchemy on it lost 29,769 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-21 02:18 UTC, Shattered relics mystic ornament kit was trading on the Grand Exchange at 44,649 GP (high) and 33,500 GP (low). After the 2% GE tax, buying at the low price and selling at the high price made about 10,257 GP per item, or 51,285 GP for a full buy limit of 5. Buying one at the high price and casting High Level Alchemy on it lost 29,769 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -902,6 +902,7 @@
         let currentItem = null;
         let lastSuggestedItem = null;
         let timeSeriesData = {}; // Store all timeframe data here
+        let latestTrade = null; // The item's most recent instant buy and sell, from /latest
         let masterFlippableItems = []; // Holds the full sorted list of items
         let latestPriceData = {}; // Holds the latest price for ALL items
         let allVolumesData = {}; // Holds the volume for ALL traded items
@@ -993,9 +994,9 @@
             priceChart.options.scales.y.grid.color = colors.grid;
 
             const [high, low, volume] = priceChart.data.datasets;
-            high.borderColor = colors.green;
+            high.borderColor = high.pointBackgroundColor = high.pointBorderColor = colors.green;
             high.backgroundColor = areaFill(ctx, colors.green, colors.light);
-            low.borderColor = colors.red;
+            low.borderColor = low.pointBackgroundColor = low.pointBorderColor = colors.red;
             low.backgroundColor = areaFill(ctx, colors.red, colors.light);
             volume.backgroundColor = withAlpha(colors.blue, 0.3);
             volume.borderColor = withAlpha(colors.blue, 0.5);
@@ -1211,34 +1212,34 @@
             currentItem = item;
 
             const latestUrl = 'https://prices.runescape.wiki/api/v1/osrs/latest';
-            const oneHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=1h&id=${item.id}`;
+            const fiveMinUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=5m&id=${item.id}`;
             const sixHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=6h&id=${item.id}`;
 
             try {
                 const fetchOptions = { headers: WIKI_API_HEADERS, signal };
-                const [latestRes, oneHourRes, sixHourRes] = await Promise.all([
+                const [latestRes, fiveMinRes, sixHourRes] = await Promise.all([
                     fetch(latestUrl, fetchOptions),
-                    fetch(oneHourUrl, fetchOptions),
+                    fetch(fiveMinUrl, fetchOptions),
                     fetch(sixHourUrl, fetchOptions)
                 ]);
 
-                if (!latestRes.ok || !oneHourRes.ok || !sixHourRes.ok) throw new Error('Failed to fetch price data.');
+                if (!latestRes.ok || !fiveMinRes.ok || !sixHourRes.ok) throw new Error('Failed to fetch price data.');
 
                 const latestData = await latestRes.json();
-                const oneHourData = await oneHourRes.json();
+                const fiveMinData = await fiveMinRes.json();
                 const sixHourData = await sixHourRes.json();
 
-                timeSeriesData['1d'] = oneHourData.data.slice(-24);
+                // 288 five-minute averages = the last 24 hours
+                timeSeriesData['1d'] = fiveMinData.data.slice(-288);
                 timeSeriesData['5d'] = sixHourData.data.slice(-20);
                 // The API returns ~90 days (365 points) for 6h timesteps. 
                 // We enforce a hard slice to -120 (4 points/day * 30 days) for true 30-day view.
                 timeSeriesData['30d'] = sixHourData.data.slice(-120);
 
-                const dailyVolume = timeSeriesData['1d'].reduce((acc, p) => acc + (p.highPriceVolume || 0) + (p.lowPriceVolume || 0), 0);
-
-                displayItemInfo(item, latestData.data[item.id], dailyVolume);
-                calculateAndDisplayTrend(timeSeriesData['1d'], dailyVolume);
+                latestTrade = latestData.data[item.id] || null;
+                showLivePrices(item);
                 updateDynamicContent('5d');
+                scheduleLiveRefresh();
 
 
 
@@ -1394,6 +1395,85 @@
             profitCalculator.classList.remove('hidden');
         }
 
+        function dailyVolumeOf(dailyData) {
+            return dailyData.reduce((acc, p) => acc + (p.highPriceVolume || 0) + (p.lowPriceVolume || 0), 0);
+        }
+
+        // Item card prices, 24h volume and trend, from latestTrade and the Daily data
+        function showLivePrices(item) {
+            const dailyVolume = dailyVolumeOf(timeSeriesData['1d']);
+            displayItemInfo(item, latestTrade, dailyVolume);
+            calculateAndDisplayTrend(timeSeriesData['1d'], dailyVolume);
+        }
+
+        // --- Live refresh ---
+        // While an item is open: the latest trade every minute (a tiny one-item request) and the
+        // Daily line every 5 minutes, which is how often the Wiki adds a 5-minute point.
+        // Paused while the tab is hidden and after 30 minutes without the user doing anything.
+        const LATEST_REFRESH_MS = 60 * 1000;
+        const SERIES_REFRESH_MS = 5 * 60 * 1000;
+        const IDLE_AFTER_MS = 30 * 60 * 1000;
+        let liveRefreshTimer = null;
+        let liveRefreshBusy = false;
+        let lastSeriesFetch = 0;
+        let lastUserActivity = Date.now();
+
+        function scheduleLiveRefresh() {
+            clearTimeout(liveRefreshTimer);
+            lastSeriesFetch = Date.now();
+            liveRefreshTimer = setTimeout(liveRefresh, LATEST_REFRESH_MS);
+        }
+
+        function liveRefreshPaused() {
+            return document.hidden || Date.now() - lastUserActivity > IDLE_AFTER_MS;
+        }
+
+        async function liveRefresh() {
+            clearTimeout(liveRefreshTimer);
+            const item = currentItem;
+            // While paused nothing is scheduled; the listeners below start it again
+            if (!item || liveRefreshBusy || liveRefreshPaused()) return;
+
+            liveRefreshBusy = true;
+            const fetchOptions = { headers: WIKI_API_HEADERS, signal: fetchController ? fetchController.signal : undefined };
+            const wantSeries = Date.now() - lastSeriesFetch >= SERIES_REFRESH_MS;
+            try {
+                const [latestRes, seriesRes] = await Promise.all([
+                    fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${item.id}`, fetchOptions),
+                    wantSeries ? fetch(`https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=5m&id=${item.id}`, fetchOptions) : null
+                ]);
+                const latest = latestRes.ok ? (await latestRes.json()).data[item.id] : null;
+                const series = seriesRes && seriesRes.ok ? (await seriesRes.json()).data : null;
+                if (currentItem === item) { // Another item may have been picked meanwhile
+                    if (latest) latestTrade = latest;
+                    if (series) {
+                        timeSeriesData['1d'] = series.slice(-288);
+                        lastSeriesFetch = Date.now();
+                    }
+                    showLivePrices(item);
+                    const active = timeframeControls.querySelector('.active');
+                    if (priceChart && active && active.dataset.timeframe === '1d') refreshDailyChart();
+                }
+            } catch (error) {
+                // Network blips just wait for the next round
+            } finally {
+                liveRefreshBusy = false;
+            }
+            if (currentItem === item) liveRefreshTimer = setTimeout(liveRefresh, LATEST_REFRESH_MS);
+        }
+
+        // Catch up straight away when the user comes back to the tab or after being idle
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) liveRefresh();
+        });
+        ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart', 'wheel'].forEach(type => {
+            window.addEventListener(type, () => {
+                const wasIdle = Date.now() - lastUserActivity > IDLE_AFTER_MS;
+                lastUserActivity = Date.now();
+                if (wasIdle) liveRefresh();
+            }, { passive: true });
+        });
+
         function calculateAndDisplayTrend(dailyData, dailyVolume) {
             const trendDiv = document.getElementById('trend-analysis');
             if (!dailyData || dailyData.length < 2) {
@@ -1401,10 +1481,10 @@
                 return;
             }
 
-            // 1. Prepare data for linear regression (hours where only one side traded use that side's price,
-            // hours with no trades are skipped, and each point keeps its hour so gaps don't distort the slope)
+            // 1. Prepare data for linear regression (intervals where only one side traded use that side's price,
+            // intervals with no trades are skipped, and x is the time in hours so gaps don't distort the slope)
             const points = dailyData
-                .map((p, i) => ({ x: i, y: (p.avgHighPrice && p.avgLowPrice) ? (p.avgHighPrice + p.avgLowPrice) / 2 : (p.avgHighPrice || p.avgLowPrice) }))
+                .map(p => ({ x: p.timestamp / 3600, y: (p.avgHighPrice && p.avgLowPrice) ? (p.avgHighPrice + p.avgLowPrice) / 2 : (p.avgHighPrice || p.avgLowPrice) }))
                 .filter(p => p.y);
             const n = points.length;
             if (n < 2) {
@@ -1424,8 +1504,8 @@
             const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
             const avgPrice = sumY / n;
 
-            // The slope is now per 1-hour interval due to the optimized daily view.
-            const hourlySlopeEquivalent = slope; // No need to multiply
+            // x is in hours, so the slope is per hour
+            const hourlySlopeEquivalent = slope;
             const relativeSlope = (hourlySlopeEquivalent / avgPrice) * 100; // Trend as a percentage change per hour (equivalent)
 
             // 3. Determine trend text and color with a tolerance for "Stable"
@@ -1497,6 +1577,63 @@
             return ticks.length > 1 ? Math.abs(ticks[1].value - ticks[0].value) : 0;
         }
 
+        // Chart arrays for a timeframe. Daily ends with the latest instant buy and sell as an extra
+        // dot, for each side that traded within the chart's 24 hours.
+        function chartSeries(dataPoints, timeframe) {
+            const series = {
+                labels: dataPoints.map(p => new Date(p.timestamp * 1000)),
+                highPrices: dataPoints.map(p => p.avgHighPrice),
+                lowPrices: dataPoints.map(p => p.avgLowPrice),
+                volumes: dataPoints.map(p => (p.highPriceVolume || 0) + (p.lowPriceVolume || 0)),
+                latestIndex: -1
+            };
+            if (timeframe !== '1d' || !latestTrade || dataPoints.length === 0) return series;
+            const from = dataPoints[0].timestamp;
+            const high = latestTrade.highTime >= from ? latestTrade.high : null;
+            const low = latestTrade.lowTime >= from ? latestTrade.low : null;
+            const time = Math.max(high ? latestTrade.highTime : 0, low ? latestTrade.lowTime : 0);
+            if (time > dataPoints[dataPoints.length - 1].timestamp) {
+                series.labels.push(new Date(time * 1000));
+                series.highPrices.push(high);
+                series.lowPrices.push(low);
+                series.volumes.push(null);
+                series.latestIndex = series.labels.length - 1;
+            }
+            return series;
+        }
+
+        // Last time on the x axis, with a little room after the latest-trade dot so it isn't cut in half
+        function seriesEnd(series) {
+            const last = series.labels[series.labels.length - 1].getTime();
+            return series.latestIndex >= 0 ? last + 10 * 60 * 1000 : last;
+        }
+
+        function latestDotRadius(series) {
+            return series.labels.map((_, i) => i === series.latestIndex ? 4 : 0);
+        }
+
+        // Live refresh of the Daily chart without rebuilding it, so zoom and hover survive
+        function refreshDailyChart() {
+            const series = chartSeries(timeSeriesData['1d'], '1d');
+            if (series.labels.length === 0) return;
+            const [high, low, volume] = priceChart.data.datasets;
+            priceChart.data.labels = series.labels;
+            high.data = series.highPrices;
+            low.data = series.lowPrices;
+            volume.data = series.volumes;
+            high.pointRadius = low.pointRadius = latestDotRadius(series);
+            priceChart.$latestIndex = series.latestIndex;
+            const minDate = series.labels[0].getTime();
+            const maxDate = seriesEnd(series);
+            priceChart.options.plugins.zoom.limits.x.min = minDate;
+            priceChart.options.plugins.zoom.limits.x.max = maxDate;
+            if (resetZoomBtn.classList.contains('hidden')) { // Not zoomed in
+                priceChart.options.scales.x.min = minDate;
+                priceChart.options.scales.x.max = maxDate;
+            }
+            priceChart.update('none');
+        }
+
         function updateChart(itemName, dataPoints, timeframe) {
             if (priceChart) priceChart.destroy();
 
@@ -1509,13 +1646,11 @@
             const greenGradient = areaFill(ctx, colors.green, colors.light);
             const redGradient = areaFill(ctx, colors.red, colors.light);
 
-            const labels = dataPoints.map(p => new Date(p.timestamp * 1000));
-            const highPrices = dataPoints.map(p => p.avgHighPrice);
-            const lowPrices = dataPoints.map(p => p.avgLowPrice);
-            const volumes = dataPoints.map(p => (p.highPriceVolume || 0) + (p.lowPriceVolume || 0));
+            const series = chartSeries(dataPoints, timeframe);
+            const { labels, highPrices, lowPrices, volumes } = series;
 
             const minDate = labels.length > 0 ? labels[0].getTime() : null;
-            const maxDate = labels.length > 0 ? labels[labels.length - 1].getTime() : null;
+            const maxDate = labels.length > 0 ? seriesEnd(series) : null;
 
             const timeUnit = (timeframe === '1d') ? 'hour' : 'day';
 
@@ -1568,7 +1703,9 @@
                             fill: true,
                             tension: 0,
                             borderWidth: 2.5,
-                            pointRadius: 0,
+                            pointRadius: latestDotRadius(series),
+                            pointBackgroundColor: colors.green,
+                            pointBorderColor: colors.green,
                             pointHoverRadius: 5,
                             yAxisID: 'y',
                             order: 1,
@@ -1583,7 +1720,9 @@
                             fill: true,
                             tension: 0,
                             borderWidth: 2.5,
-                            pointRadius: 0,
+                            pointRadius: latestDotRadius(series),
+                            pointBackgroundColor: colors.red,
+                            pointBorderColor: colors.red,
                             pointHoverRadius: 5,
                             yAxisID: 'y',
                             order: 1,
@@ -1627,6 +1766,7 @@
                             callbacks: {
                                 label: function (context) {
                                     let label = context.dataset.label || '';
+                                    if (context.dataIndex === context.chart.$latestIndex) label = label.replace('Avg', 'Latest');
                                     if (label) label += ': ';
                                     if (context.parsed.y !== null) {
                                         label += context.parsed.y.toLocaleString();
@@ -1691,6 +1831,7 @@
                     }
                 }
             });
+            priceChart.$latestIndex = series.latestIndex;
         }
 
         function showError(message) {
