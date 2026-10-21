@@ -180,6 +180,69 @@ function renderPriceSnapshot(item, latestPrice, volume) {
     return { priceInfo, additionalInfo };
 }
 
+// Guide pages under /guides/ with a table of live prices. Each build rewrites the table between the
+// guide-prices markers with the same daily snapshot the item pages get; the page's own script then
+// updates it live. Item pages listed in a guide link back to it.
+const GUIDES_DIR = path.join(__dirname, 'guides');
+const GUIDES = [
+    {
+        file: 'fractured-archive-raid-4-items.html',
+        url: '/guides/fractured-archive-raid-4-items',
+        linkText: 'Fractured Archive (Raids 4) items and prices',
+        // Obligator, Zorya's tome, Ascension crossbows, Rondache, Horn of Bran, Ascension shards and bolts
+        tableIds: [34717, 34727, 34681, 34719, 34679, 34669, 34684, 34702, 34708, 34690, 34696],
+        // Onyx and diamond bolt tips, for the bolt-making calculator
+        extraIds: [9194, 9192]
+    }
+];
+
+function guideForItem(itemId) {
+    return GUIDES.find(guide => guide.tableIds.includes(itemId));
+}
+
+function renderGuidePriceRows(guide, itemsById, latest, volumes) {
+    return guide.tableIds.map(id => {
+        const item = itemsById.get(id);
+        if (!item) return '';
+        const price = latest[id] || {};
+        const volume = volumes[id] || 0;
+        // Plain numbers, like the dashboard's market table, so the five columns fit on a phone
+        const cell = value => value ? Math.round(value).toLocaleString('en-US') : '–';
+        let margin = '<td class="col-margin" data-field="margin">–</td>';
+        if (price.high && price.low) {
+            const net = (price.high - price.low) - geTaxPerItem(id, price.high);
+            margin = `<td class="${net < 0 ? 'col-loss' : 'col-margin'}" data-field="margin">${net.toLocaleString('en-US')}</td>`;
+        }
+        return `                        <tr data-id="${id}">
+                            <th scope="row"><a href="/items/${nameToSlug(item.name)}">${escapeHtml(item.name)}</a></th>
+                            <td class="col-low" data-field="low">${cell(price.low)}</td>
+                            <td class="col-high" data-field="high">${cell(price.high)}</td>
+                            ${margin}
+                            <td class="col-volume" data-field="volume">${volume ? volume.toLocaleString('en-US') : '–'}</td>
+                        </tr>`;
+    }).filter(Boolean).join('\n');
+}
+
+function refreshGuidePages(mapping, latest, volumes, context) {
+    const itemsById = new Map(mapping.map(item => [item.id, item]));
+    for (const guide of GUIDES) {
+        const filePath = path.join(GUIDES_DIR, guide.file);
+        if (!fs.existsSync(filePath)) continue;
+        let html = fs.readFileSync(filePath, 'utf8');
+        const rows = renderGuidePriceRows(guide, itemsById, latest, volumes);
+        html = html.replace(/(<!-- guide-prices:start -->)[\s\S]*?(\s*<!-- guide-prices:end -->)/, (m, start, end) => `${start}\n${rows}${end}`);
+        html = html.replace(/(<time data-guide-snapshot datetime=")[^"]*(">)[^<]*(<\/time>)/, `$1${context.snapshotTime.replace(' ', 'T')}Z$2${context.snapshotTime} UTC$3`);
+        const snapshot = {};
+        for (const id of [...guide.tableIds, ...guide.extraIds]) {
+            const price = latest[id] || {};
+            snapshot[id] = { high: price.high || null, low: price.low || null };
+        }
+        html = html.replace(/(<script type="application\/json" id="guide-snapshot">)[\s\S]*?(<\/script>)/, `$1${inlineJSON(snapshot)}$2`);
+        fs.writeFileSync(filePath, html, 'utf8');
+        console.log(`📰 Refreshed prices in guides/${guide.file}`);
+    }
+}
+
 // Visible "About" section: the item's facts, a dated price summary and links to related items
 function renderItemDetails(item, latestPrice, volume, context) {
     const name = escapeHtml(item.name);
@@ -219,6 +282,10 @@ function renderItemDetails(item, latestPrice, volume, context) {
                     <dd class="font-bold text-primary">${value}</dd>
                 </div>`).join('');
 
+    const guide = guideForItem(item.id);
+    const guideLink = guide ? `
+            <p class="mt-6">Guide: <a href="${guide.url}" class="text-accent hover:underline">${guide.linkText}</a></p>` : '';
+
     const related = relatedItems(item, context.index);
     const relatedList = related.length === 0 ? '' : `
             <h3 class="text-lg font-bold section-title mt-8 mb-3">Related items</h3>
@@ -242,7 +309,7 @@ ${related.map(other => `                <li><a href="/items/${nameToSlug(other.n
             ${item.examine ? `<p class="text-secondary italic mb-4">“${escapeHtml(item.examine)}”</p>` : ''}
             <p class="mb-4">${summary}</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">${facts}
-            </dl>${relatedList}${browse}
+            </dl>${guideLink}${relatedList}${browse}
         </section>
 `;
 }
@@ -492,6 +559,9 @@ async function build() {
         console.log('📑 Generating items/index.html directory...');
         generateAllItemsPage(mapping);
 
+        // Refresh the price tables in guide pages
+        refreshGuidePages(mapping, latest, volumes, context);
+
         // Generate updated sitemap
         console.log('🗺️ Generating sitemap...');
         generateSitemap(mapping);
@@ -531,6 +601,18 @@ function generateSitemap(items) {
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>${baseUrl}/guides/</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+${GUIDES.map(guide => `    <url>
+        <loc>${baseUrl}${guide.url}</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+`).join('')}    <url>
         <loc>${baseUrl}/acknowledgements</loc>
         <lastmod>${today}</lastmod>
         <changefreq>monthly</changefreq>
@@ -757,4 +839,8 @@ ${itemsList}
 
 
 // Run build
-build();
+if (require.main === module) {
+    build();
+}
+
+module.exports = { refreshGuidePages };

@@ -21,6 +21,18 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://osrs.lol/guides/</loc>
+        <lastmod>2026-10-21</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://osrs.lol/guides/fractured-archive-raid-4-items</loc>
+        <lastmod>2026-10-21</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://osrs.lol/acknowledgements</loc>
         <lastmod>2026-10-21</lastmod>
         <changefreq>monthly</changefreq>

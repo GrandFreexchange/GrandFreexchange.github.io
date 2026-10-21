@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raid 4 Items: Fractured Archive Rewards &amp; GE Prices (OSRS)</title>
+    <meta name="description"
+        content="Every new item from The Fractured Archive, OSRS Raids 4: the Obligator, Zorya's tome, Ascension crossbows, Rondache and Horn of Bran, with live Grand Exchange prices, requirements and Ascension bolt profits.">
+    <link rel="canonical" href="https://osrs.lol/guides/fractured-archive-raid-4-items">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Raid 4 Items: Fractured Archive Rewards & GE Prices">
+    <meta property="og:description" content="The new OSRS Raids 4 items with live Grand Exchange prices, requirements and what each one does.">
+    <meta property="og:url" content="https://osrs.lol/guides/fractured-archive-raid-4-items">
+    <meta property="og:image" content="https://tiles.runescape.wiki/static/public/images/osrs/items/34717.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css?v=2">
+    <script src="/assets/theme.js"></script>
+    <style>
+        .prose-site h3 {
+            margin-top: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .guide-meta {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Quick facts: label above value, like the item pages' details block */
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 1.5rem;
+            padding: 16px;
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+
+        .facts dt {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .facts dd {
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* Price table: the dashboard's original market table colours */
+        .table-wrap {
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .market-table {
+            width: 100%;
+            font-size: 0.9375rem;
+            line-height: 1.4;
+            border-collapse: collapse;
+        }
+
+        .market-table thead {
+            background-color: var(--bg-dark);
+        }
+
+        .market-table th,
+        .market-table td {
+            padding: 10px 12px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .market-table thead th {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .market-table th:first-child {
+            text-align: left;
+        }
+
+        .market-table tbody tr {
+            background-color: var(--bg-contrast);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .market-table tbody th {
+            font-weight: 500;
+        }
+
+        .prose-site .market-table tbody th a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .prose-site .market-table tbody th a:hover {
+            color: var(--accent-gold);
+            text-decoration: underline;
+        }
+
+        .market-table td { font-variant-numeric: tabular-nums; }
+        .market-table .col-low,
+        .market-table .col-loss { color: var(--chart-red); }
+        .market-table .col-high,
+        .market-table .col-profit { color: var(--accent-green); }
+        .market-table .col-margin { color: var(--accent-gold); }
+        .market-table .col-volume { color: var(--chart-blue); }
+
+        .table-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Bolt calculator rows */
+        .calc {
+            margin: 1rem 0 1.5rem;
+            padding: 16px;
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 6px 0;
+        }
+
+        .calc-row + .calc-row {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .calc-row span:last-child {
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+    </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://osrs.lol/guides/"},{"@type":"ListItem","position":3,"name":"Fractured Archive items","item":"https://osrs.lol/guides/fractured-archive-raid-4-items"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Raid 4 items: Fractured Archive rewards and GE prices","description":"Every new tradeable item from The Fractured Archive (OSRS Raids 4) with live Grand Exchange prices, requirements and Ascension bolt profits.","url":"https://osrs.lol/guides/fractured-archive-raid-4-items","image":"https://tiles.runescape.wiki/static/public/images/osrs/items/34717.png","datePublished":"2026-10-21","dateModified":"2026-10-21","author":{"@type":"Organization","name":"osrs.lol","url":"https://osrs.lol/"},"publisher":{"@type":"Organization","name":"osrs.lol","url":"https://osrs.lol/"},"about":{"@type":"VideoGame","name":"Old School RuneScape"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are the Raid 4 items in OSRS?","acceptedAnswer":{"@type":"Answer","text":"The Fractured Archive (Raids 4) adds five tradeable uniques: the Obligator, Zorya's tome, the Ascension crossbows, the Rondache and the Horn of Bran, which unlocks the Zeal prayer. It also adds Ascension shards and Ascension bolts, plus untradeable Elemental fragments and the Archivist's folio."}},{"@type":"Question","name":"Which Fractured Archive rewards are tradeable?","acceptedAnswer":{"@type":"Answer","text":"The Obligator, Zorya's tome, Ascension crossbows, Rondache, Horn of Bran, Ascension shards and all Ascension bolts can be traded on the Grand Exchange. Elemental fragments and the Archivist's folio cannot."}},{"@type":"Question","name":"How do you unlock the Zeal prayer?","acceptedAnswer":{"@type":"Answer","text":"Zeal is unlocked with the Horn of Bran, a tradeable drop from The Fractured Archive. It needs 84 Prayer and replaces Piety, raising Attack by 25%, Strength by 28% and Defence by 25%."}},{"@type":"Question","name":"What do you need to enter The Fractured Archive?","acceptedAnswer":{"@type":"Answer","text":"The confirmed requirement is completing the quest While Guthix Sleeps. Teams can be up to eight players; solo is allowed and scales like a two-player raid."}}]}</script>
+</head>
+
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+
+        <header class="site-header">
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="/guides/" class="text-accent hover:underline">Guides</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Fractured Archive items</li>
+            </ol>
+        </nav>
+
+        <div class="mt-5 mb-6">
+            <h1 class="page-title">Raid 4 items: Fractured Archive rewards and prices</h1>
+            <p class="page-lead">Every new item from The Fractured Archive, with live Grand Exchange prices, what each one does, and whether Ascension bolts are worth making.</p>
+            <p class="guide-meta mt-3">Updated 21 October 2026</p>
+        </div>
+
+        <main class="card p-6 md:p-10 prose-site">
+
+            <p>
+                The Fractured Archive is Old School RuneScape's fourth raid. It opened on 20 October 2026, and its
+                rewards hit the Grand Exchange the same day. Five of them are tradeable uniques, and the rarest
+                sell for billions of GP while supply is still tiny.
+            </p>
+
+            <dl class="facts">
+                <div>
+                    <dt>Released</dt>
+                    <dd>20 October 2026</dd>
+                </div>
+                <div>
+                    <dt>Requirement</dt>
+                    <dd>While Guthix Sleeps</dd>
+                </div>
+                <div>
+                    <dt>Team size</dt>
+                    <dd>Solo to 8 players</dd>
+                </div>
+                <div>
+                    <dt>Bosses per run</dt>
+                    <dd>5 of 8</dd>
+                </div>
+            </dl>
+
+            <h2 id="prices">Raid 4 item prices</h2>
+            <p>
+                Low is the latest instant-sell price and High the latest instant-buy price. Margin is what a flip
+                at those prices makes after the 2% GE tax. All prices are in GP; click an item for its price chart.
+            </p>
+            <div class="table-wrap">
+                <table class="market-table" id="guide-prices">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Low</th>
+                            <th scope="col">High</th>
+                            <th scope="col">Margin</th>
+                            <th scope="col">24h volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- guide-prices:start -->
+                        <tr data-id="34717">
+                            <th scope="row"><a href="/items/obligator-uncharged">Obligator (uncharged)</a></th>
+                            <td class="col-low" data-field="low">3,245,000,000</td>
+                            <td class="col-high" data-field="high">3,400,000,000</td>
+                            <td class="col-margin" data-field="margin">150,000,000</td>
+                            <td class="col-volume" data-field="volume">1</td>
+                        </tr>
+                        <tr data-id="34727">
+                            <th scope="row"><a href="/items/zorya-s-tome-uncharged">Zorya&#39;s tome (uncharged)</a></th>
+                            <td class="col-low" data-field="low">265,000,005</td>
+                            <td class="col-high" data-field="high">296,669,420</td>
+                            <td class="col-margin" data-field="margin">26,669,415</td>
+                            <td class="col-volume" data-field="volume">7</td>
+                        </tr>
+                        <tr data-id="34681">
+                            <th scope="row"><a href="/items/ascension-crossbows">Ascension crossbows</a></th>
+                            <td class="col-low" data-field="low">1,035,000,000</td>
+                            <td class="col-high" data-field="high">1,098,989,000</td>
+                            <td class="col-margin" data-field="margin">58,989,000</td>
+                            <td class="col-volume" data-field="volume">4</td>
+                        </tr>
+                        <tr data-id="34719">
+                            <th scope="row"><a href="/items/rondache">Rondache</a></th>
+                            <td class="col-low" data-field="low">250,000,000</td>
+                            <td class="col-high" data-field="high">312,999,990</td>
+                            <td class="col-margin" data-field="margin">57,999,990</td>
+                            <td class="col-volume" data-field="volume">10</td>
+                        </tr>
+                        <tr data-id="34679">
+                            <th scope="row"><a href="/items/horn-of-bran">Horn of Bran</a></th>
+                            <td class="col-low" data-field="low">1,326,127,012</td>
+                            <td class="col-high" data-field="high">1,500,000,000</td>
+                            <td class="col-margin" data-field="margin">168,872,988</td>
+                            <td class="col-volume" data-field="volume">1</td>
+                        </tr>
+                        <tr data-id="34669">
+                            <th scope="row"><a href="/items/ascension-shards">Ascension shards</a></th>
+                            <td class="col-low" data-field="low">1,101</td>
+                            <td class="col-high" data-field="high">1,210</td>
+                            <td class="col-margin" data-field="margin">85</td>
+                            <td class="col-volume" data-field="volume">46,831</td>
+                        </tr>
+                        <tr data-id="34684">
+                            <th scope="row"><a href="/items/ascension-bolts">Ascension bolts</a></th>
+                            <td class="col-low" data-field="low">205</td>
+                            <td class="col-high" data-field="high">204</td>
+                            <td class="col-loss" data-field="margin">-5</td>
+                            <td class="col-volume" data-field="volume">620,920</td>
+                        </tr>
+                        <tr data-id="34702">
+                            <th scope="row"><a href="/items/onyx-ascension-bolts">Onyx ascension bolts</a></th>
+                            <td class="col-low" data-field="low">8,512</td>
+                            <td class="col-high" data-field="high">8,550</td>
+                            <td class="col-loss" data-field="margin">-133</td>
+                            <td class="col-volume" data-field="volume">57,263</td>
+                        </tr>
+                        <tr data-id="34708">
+                            <th scope="row"><a href="/items/onyx-ascension-bolts-e">Onyx ascension bolts (e)</a></th>
+                            <td class="col-low" data-field="low">8,950</td>
+                            <td class="col-high" data-field="high">9,005</td>
+                            <td class="col-loss" data-field="margin">-125</td>
+                            <td class="col-volume" data-field="volume">49,401</td>
+                        </tr>
+                        <tr data-id="34690">
+                            <th scope="row"><a href="/items/diamond-ascension-bolts">Diamond ascension bolts</a></th>
+                            <td class="col-low" data-field="low">356</td>
+                            <td class="col-high" data-field="high">417</td>
+                            <td class="col-margin" data-field="margin">53</td>
+                            <td class="col-volume" data-field="volume">56,397</td>
+                        </tr>
+                        <tr data-id="34696">
+                            <th scope="row"><a href="/items/diamond-ascension-bolts-e">Diamond ascension bolts (e)</a></th>
+                            <td class="col-low" data-field="low">522</td>
+                            <td class="col-high" data-field="high">523</td>
+                            <td class="col-loss" data-field="margin">-9</td>
+                            <td class="col-volume" data-field="volume">83,321</td>
+                        </tr>
+                        <!-- guide-prices:end -->
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note mb-8" id="guide-price-status">
+                Prices from the <a href="https://prices.runescape.wiki/">OSRS Wiki</a>, as of
+                <time data-guide-snapshot datetime="2026-10-21T07:27Z">2026-10-21 07:27 UTC</time>.
+            </p>
+
+            <h2 id="uniques">The new uniques</h2>
+
+            <h3 id="obligator">Obligator</h3>
+            <p>
+                A two-handed crush weapon that needs 85 Attack, and the raid's megarare. It rolls its damage
+                several times based on how weak the target is to crush compared with stab and slash, and keeps the
+                best roll, so it hits hardest on monsters with low crush defence. It is charged with Ascension
+                shards and sells uncharged. It was called "The Breaker" in the reward poll before being renamed.
+                <a href="/items/obligator-uncharged">Obligator (uncharged) price chart</a>.
+            </p>
+
+            <h3 id="zoryas-tome">Zorya's tome</h3>
+            <p>
+                A two-handed powered tome for Magic, needing 85 Magic. It attacks every three ticks and has a
+                special attack with much higher accuracy and damage, which makes it the first Magic weapon with a
+                proper damage special. It was polled as the "Gatekeeper's cane".
+                <a href="/items/zorya-s-tome-uncharged">Zorya's tome (uncharged) price chart</a>.
+            </p>
+
+            <h3 id="ascension-crossbows">Ascension crossbows</h3>
+            <p>
+                A pair of dual-wielded crossbows that needs 80 Ranged. They fire faster than any other crossbow
+                and use the raid's own Ascension bolts, so expect bolt demand to grow as more pairs enter the game.
+                <a href="/items/ascension-crossbows">Ascension crossbows price chart</a>.
+            </p>
+
+            <h3 id="rondache">Rondache</h3>
+            <p>
+                A melee shield that needs 80 Defence. It gives Strength like an Avernic defender but no accuracy
+                bonuses, and has its own shield bash effect.
+                <a href="/items/rondache">Rondache price chart</a>.
+            </p>
+
+            <h3 id="horn-of-bran">Horn of Bran (Zeal prayer)</h3>
+            <p>
+                The Horn of Bran unlocks Zeal, a stronger version of Piety that needs 84 Prayer. Zeal raises
+                Attack by 25%, Strength by 28% and Defence by 25%, against Piety's 20%, 23% and 25%. Like the
+                Royal Titans' prayer scrolls, the horn is tradeable until it is used, so every account that wants
+                Zeal has to buy or get one.
+                <a href="/items/horn-of-bran">Horn of Bran price chart</a>.
+            </p>
+
+            <h2 id="ascension-bolts">Ascension shards and bolts</h2>
+            <p>
+                Ascension shards come from raid chests and from mining the Ascension rocks near the entrance. With
+                86 Fletching you can cut one shard into 10 Ascension bolts with a regular chisel (a jeweller's
+                chisel doesn't work), then add 10 onyx or diamond bolt tips to make 10 tipped bolts. Shards also
+                charge the Obligator and the Archivist's folio.
+            </p>
+            <p>Profit at current prices, buying everything at the low price and selling at the high price after tax:</p>
+            <div class="calc" id="bolt-calc">
+                <div class="calc-row">
+                    <span>1 <a href="/items/ascension-shards">Ascension shard</a> → 10 <a href="/items/ascension-bolts">Ascension bolts</a></span>
+                    <span data-calc="plain">–</span>
+                </div>
+                <div class="calc-row">
+                    <span>10 Ascension bolts + 10 <a href="/items/onyx-bolt-tips">onyx bolt tips</a> → 10 <a href="/items/onyx-ascension-bolts">onyx ascension bolts</a></span>
+                    <span data-calc="onyx">–</span>
+                </div>
+                <div class="calc-row">
+                    <span>10 Ascension bolts + 10 <a href="/items/diamond-bolt-tips">diamond bolt tips</a> → 10 <a href="/items/diamond-ascension-bolts">diamond ascension bolts</a></span>
+                    <span data-calc="diamond">–</span>
+                </div>
+            </div>
+            <p>
+                The enchanted versions, <a href="/items/onyx-ascension-bolts-e">onyx ascension bolts (e)</a> and
+                <a href="/items/diamond-ascension-bolts-e">diamond ascension bolts (e)</a>, cost runes to make, so
+                compare them with the unenchanted price in the table above before you enchant.
+            </p>
+
+            <h2 id="untradeable">Untradeable rewards</h2>
+            <ul>
+                <li><strong>Elemental fragments</strong> each add 2 to your base max hit with spells of their
+                    element. You won't get the same element twice.</li>
+                <li><strong>The Archivist's folio</strong> teleports you back to the raid and is charged with
+                    Ascension shards.</li>
+                <li>The first three teams to finish the raid earned gold, silver and bronze medals.</li>
+            </ul>
+
+            <h2 id="bosses">Bosses</h2>
+            <p>
+                Each run is five fights. The first and last are always the same, and for the middle three the team
+                picks one of two bosses:
+            </p>
+            <ul>
+                <li><strong>First:</strong> the Archive Guardian</li>
+                <li><strong>Second:</strong> Ezekiel or Bork and the Smorks</li>
+                <li><strong>Third:</strong> Moia or Dreadnoth the Jellied</li>
+                <li><strong>Fourth:</strong> Dagon'hai or Xarth</li>
+                <li><strong>Final:</strong> Ocellus</li>
+            </ul>
+
+            <h2 id="getting-there">Getting there</h2>
+            <p>
+                You need to have finished While Guthix Sleeps. After the quest a messenger finds you with a note
+                pointing to the entrance, a cliff face near the Ancient Guthixian Temple under Lumbridge. The raid
+                scales from 2 to 8 players and Jagex suggests 3 to 5. You can go in alone, but it scales as if you
+                were a team of two. There was no practice mode at launch.
+            </p>
+
+            <h2 id="trading">Buying or flipping raid 4 items</h2>
+            <p>
+                New raid uniques nearly always open at their highest price and fall as more teams finish the raid
+                and supply builds up. If you only want to use an item, waiting usually costs you less. If you
+                flip, the margins on billion-GP items are large but only a handful trade each day, so an offer can
+                sit for hours while the price moves under it. Ascension bolts and shards trade in the tens of
+                thousands a day and are much easier to flip. Our <a href="/merchanting">merchanting guide</a>
+                covers margins, the GE tax and buy limits, and the <a href="/">price dashboard</a> finds the best
+                flips for your budget.
+            </p>
+
+            <h2 id="faq">Questions</h2>
+
+            <h3>What are the Raid 4 items?</h3>
+            <p>
+                The five tradeable uniques are the Obligator, Zorya's tome, the Ascension crossbows, the Rondache
+                and the Horn of Bran. The raid also adds Ascension shards, Ascension bolts in plain, onyx and
+                diamond versions, Elemental fragments and the Archivist's folio.
+            </p>
+
+            <h3>Which Fractured Archive rewards are tradeable?</h3>
+            <p>
+                Everything in the price table above: the five uniques, the shards and every kind of Ascension bolt.
+                Elemental fragments and the Archivist's folio are untradeable.
+            </p>
+
+            <h3>How do you unlock the Zeal prayer?</h3>
+            <p>
+                Use a Horn of Bran from the raid. Zeal needs 84 Prayer and replaces Piety on your prayer book.
+            </p>
+
+            <h3>What do you need to enter The Fractured Archive?</h3>
+            <p>
+                Only the quest While Guthix Sleeps is confirmed. Some guides list a Sailing level too, but Jagex
+                hasn't announced one.
+            </p>
+
+            <p class="guide-meta mt-8">
+                Item details come from Jagex's update posts and the
+                <a href="https://oldschool.runescape.wiki/w/The_Fractured_Archive">OSRS Wiki</a>, which has full
+                stats for every reward.
+            </p>
+
+        </main>
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/guides/">Guides</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+
+    </div>
+
+    <!-- Today's snapshot from build.js; the script below swaps in live prices -->
+    <script type="application/json" id="guide-snapshot">{"9192":{"high":128,"low":121},"9194":{"high":8098,"low":8075},"34669":{"high":1210,"low":1101},"34679":{"high":1500000000,"low":1326127012},"34681":{"high":1098989000,"low":1035000000},"34684":{"high":204,"low":205},"34690":{"high":417,"low":356},"34696":{"high":523,"low":522},"34702":{"high":8550,"low":8512},"34708":{"high":9005,"low":8950},"34717":{"high":3400000000,"low":3245000000},"34719":{"high":312999990,"low":250000000},"34727":{"high":296669420,"low":265000005}}</script>
+    <script>
+        (function () {
+            const GE_TAX_RATE = 0.02;
+            const GE_TAX_CAP_PER_ITEM = 5000000;
+            const IDS = { shard: 34669, bolt: 34684, onyxTip: 9194, onyx: 34702, diamondTip: 9192, diamond: 34690 };
+
+            const tax = price => price ? Math.min(Math.floor(price * GE_TAX_RATE), GE_TAX_CAP_PER_ITEM) : 0;
+            const gp = value => `${Math.round(value).toLocaleString('en-US')} GP`;
+            const num = value => Math.round(value).toLocaleString('en-US');
+            const signedGp = value => `${value > 0 ? '+' : value < 0 ? '−' : ''}${gp(Math.abs(value))}`;
+
+            function renderCalc(prices) {
+                const p = id => prices[id] || {};
+                const setResult = (key, value) => {
+                    const cell = document.querySelector(`[data-calc="${key}"]`);
+                    if (value === null) {
+                        cell.textContent = '–';
+                        cell.className = '';
+                        return;
+                    }
+                    cell.textContent = signedGp(value);
+                    cell.className = value >= 0 ? 'text-profit' : 'text-loss';
+                };
+                const sellNet = id => p(id).high ? p(id).high - tax(p(id).high) : null;
+                const bolt = p(IDS.bolt);
+                // Shard into bolts: buy one shard, sell ten bolts
+                const plain = p(IDS.shard).low && sellNet(IDS.bolt) !== null ? 10 * sellNet(IDS.bolt) - p(IDS.shard).low : null;
+                setResult('plain', plain);
+                // Tipping: buy ten bolts and ten tips, sell ten tipped bolts
+                const tipped = (tipId, outId) => bolt.low && p(tipId).low && sellNet(outId) !== null
+                    ? 10 * (sellNet(outId) - bolt.low - p(tipId).low) : null;
+                setResult('onyx', tipped(IDS.onyxTip, IDS.onyx));
+                setResult('diamond', tipped(IDS.diamondTip, IDS.diamond));
+            }
+
+            function renderTable(prices) {
+                document.querySelectorAll('#guide-prices tbody tr[data-id]').forEach(row => {
+                    const price = prices[row.dataset.id];
+                    if (!price) return;
+                    const low = row.querySelector('[data-field="low"]');
+                    const high = row.querySelector('[data-field="high"]');
+                    const margin = row.querySelector('[data-field="margin"]');
+                    low.textContent = price.low ? num(price.low) : '–';
+                    high.textContent = price.high ? num(price.high) : '–';
+                    if (price.high && price.low) {
+                        const net = price.high - price.low - tax(price.high);
+                        margin.textContent = num(net);
+                        margin.className = net < 0 ? 'col-loss' : 'col-margin';
+                    } else {
+                        margin.textContent = '–';
+                        margin.className = 'col-margin';
+                    }
+                });
+            }
+
+            let snapshot = {};
+            try {
+                snapshot = JSON.parse(document.getElementById('guide-snapshot').textContent) || {};
+            } catch (err) {
+                snapshot = {};
+            }
+            renderCalc(snapshot);
+
+            // A plain GET with no custom headers, so Firefox doesn't send a CORS preflight the Wiki rejects
+            fetch('https://prices.runescape.wiki/api/v1/osrs/latest')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.json();
+                })
+                .then(json => {
+                    const data = json && json.data;
+                    if (!data) return;
+                    renderTable(data);
+                    renderCalc(data);
+                    const status = document.getElementById('guide-price-status');
+                    status.innerHTML = 'Live prices from the <a href="https://prices.runescape.wiki/">OSRS Wiki</a>, updated just now. 24h volume is from today\'s snapshot.';
+                })
+                .catch(() => {
+                    // Keep today's snapshot on screen if the live prices can't load
+                });
+        })();
+    </script>
+</body>
+
+</html>
