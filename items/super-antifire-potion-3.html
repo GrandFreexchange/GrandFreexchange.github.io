@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Super antifire potion(3)</h2>
             <p class="text-secondary italic mb-4">“3 doses of super anti-firebreath potion.”</p>
-            <p class="mb-4">On 2026-10-21 02:23 UTC, Super antifire potion(3) was trading on the Grand Exchange at 16,795 GP (high) and 12,764 GP (low), with 13 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 3,696 GP per item, or 7,392,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 16,459 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-21 03:15 UTC, Super antifire potion(3) was trading on the Grand Exchange at 16,795 GP (high) and 12,764 GP (low), with 13 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 3,696 GP per item, or 7,392,000 GP for a full buy limit of 2,000. Buying one at the high price and casting High Level Alchemy on it lost 16,464 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -892,9 +892,9 @@
         const budgetValue = document.getElementById('budget-value');
 
         // --- API Configuration ---
-        const WIKI_API_HEADERS = {
-            'User-Agent': 'GrandFreexchange.github.io - Contact @DOPEY on Discord'
-        };
+        // Wiki API requests from the browser must be plain GETs with no custom headers. A custom header
+        // (Firefox sends a User-Agent set here) makes the browser ask the Wiki for CORS permission first,
+        // and the Wiki refuses, so the request fails. The build (build.js) sends our User-Agent instead.
 
         let itemMapping = [];
         let priceChart = null;
@@ -1007,7 +1007,7 @@
 
         async function loadItemMapping() {
             try {
-                const response = await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping', { headers: WIKI_API_HEADERS });
+                const response = await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping');
                 if (!response.ok) throw new Error('Network response was not ok');
 
                 // The mapping only lists items tradeable on the main-game Grand Exchange, so use all of it
@@ -1042,8 +1042,8 @@
 
             try {
                 const [volumesRes, latestRes] = await Promise.all([
-                    fetch('https://prices.runescape.wiki/api/v1/osrs/volumes', { headers: WIKI_API_HEADERS }),
-                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest', { headers: WIKI_API_HEADERS })
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/volumes'),
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest')
                 ]);
                 if (!volumesRes.ok || !latestRes.ok) throw new Error('Failed to fetch market data.');
 
@@ -1215,7 +1215,7 @@
             const sixHourUrl = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=6h&id=${item.id}`;
 
             try {
-                const fetchOptions = { headers: WIKI_API_HEADERS, signal };
+                const fetchOptions = { signal };
                 const [latestRes, oneHourRes, sixHourRes] = await Promise.all([
                     fetch(latestUrl, fetchOptions),
                     fetch(oneHourUrl, fetchOptions),
