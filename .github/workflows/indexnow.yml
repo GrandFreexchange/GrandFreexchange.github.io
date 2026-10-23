@@ -1,0 +1,41 @@
+name: IndexNow
+
+# Tells Bing (IndexNow) about pages changed by pushes to main. The daily item build submits its own
+# changes, since pushes made by workflows don't start other workflows.
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: 'Submit every URL in sitemap.xml'
+        type: boolean
+        default: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Submit to IndexNow
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          # Give GitHub Pages time to publish the new version first
+          sleep 90
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.all }}" = "true" ]; then node indexnow.js --all; else node indexnow.js HEAD~1 HEAD; fi
+          else
+            node indexnow.js "${{ github.event.before }}" "${{ github.sha }}"
+          fi

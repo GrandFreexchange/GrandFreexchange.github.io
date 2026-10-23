@@ -53,3 +53,12 @@ jobs:
           git add -A items/ guides/ sitemap.xml all_items.html
           git commit -m "chore: regenerate OSRS item pages [skip ci]"
           git push
+
+      # Tell Bing (IndexNow) which pages this run changed. Waits for GitHub Pages to publish them first.
+      - name: Submit changed pages to IndexNow
+        if: steps.check_changes.outputs.changes == 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          sleep 90
+          node indexnow.js HEAD~1 HEAD
