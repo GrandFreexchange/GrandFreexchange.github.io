@@ -536,10 +536,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="27478" data-target="sell">27,478 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="26923" data-target="buy">26,923 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="26110" data-target="buy">26,110 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">6 GP (0.02%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">6 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">819 GP (3.14%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">819 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Granite helm</h2>
             <p class="text-secondary italic mb-4">“A stone helmet.”</p>
-            <p class="mb-4">On 2026-10-23 14:39 UTC, Granite helm was trading on the Grand Exchange at 27,478 GP (high) and 26,923 GP (low), with 7 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 6 GP per item, or 420 GP for a full buy limit of 70. Buying one at the high price and casting High Level Alchemy on it lost 16 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-23 15:51 UTC, Granite helm was trading on the Grand Exchange at 27,478 GP (high) and 26,110 GP (low), with 7 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 819 GP per item, or 57,330 GP for a full buy limit of 70. Buying one at the high price and casting High Level Alchemy on it lost 14 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -908,6 +908,7 @@
         let latestPriceData = {}; // Holds the latest price for ALL items
         let allVolumesData = {}; // Holds the volume for ALL traded items
         let flippableItems = []; // Holds the current budget-filtered list
+        let marketLoadedAt = 0; // When the suggestion list was last built from live prices
         let isApiThrottled = false; // Flag to prevent API spam
         let isAdvancedMode = false; // Flag to track current view mode
         let advancedSortState = { column: 'profit_volume', direction: 'desc' };
@@ -921,6 +922,13 @@
             100000000, 250000000,
             Number.MAX_SAFE_INTEGER // High Roller Tier
         ];
+
+        // Suggestions only use prices that are recent and agree with the last hour's average trades, so a
+        // stale high price on a falling item can't make a losing flip look profitable
+        const MAX_PRICE_AGE_SECONDS = 2 * 60 * 60; // Both the latest buy and sell must be this recent
+        const MIN_NET_MARGIN_PERCENT = 0.5; // After tax, as a share of the buy price
+        const MIN_DAILY_VOLUME = 24; // At least one trade an hour on average
+        const MARKET_REFRESH_MS = 5 * 60 * 1000; // Rebuild the list before suggesting if it's older than this
 
         // GE tax: 2% of each item's sale price, rounded down and capped at 5m per item.
         const GE_TAX_RATE = 0.02;
@@ -1043,16 +1051,22 @@
             suggestItemBtn.textContent = 'Loading market…';
 
             try {
-                const [volumesRes, latestRes] = await Promise.all([
+                const [volumesRes, latestRes, hourRes] = await Promise.all([
                     fetch('https://prices.runescape.wiki/api/v1/osrs/volumes'),
-                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest')
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/latest'),
+                    fetch('https://prices.runescape.wiki/api/v1/osrs/1h').catch(() => null) // Optional extra check
                 ]);
                 if (!volumesRes.ok || !latestRes.ok) throw new Error('Failed to fetch market data.');
 
                 const volumesData = await volumesRes.json();
                 const latestData = await latestRes.json();
+                const hourData = hourRes && hourRes.ok ? (await hourRes.json().catch(() => ({}))).data || {} : {};
                 latestPriceData = latestData.data;
                 allVolumesData = volumesData.data;
+
+                // Measure price age against the newest trade in the data rather than the user's clock
+                const newestTrade = Math.max(0, ...Object.values(latestPriceData).map(p => Math.max(p.highTime || 0, p.lowTime || 0)));
+                const now = newestTrade || Math.floor(Date.now() / 1000);
 
                 const allTradedItems = Object.keys(volumesData.data);
 
@@ -1065,9 +1079,25 @@
                         return null;
                     }
 
+                    // Skip items whose latest buy or sell is old: comparing a fresh price with a stale one
+                    // shows a margin that isn't really there
+                    if (!priceInfo.highTime || !priceInfo.lowTime ||
+                        now - priceInfo.highTime > MAX_PRICE_AGE_SECONDS || now - priceInfo.lowTime > MAX_PRICE_AGE_SECONDS) {
+                        return null;
+                    }
+
+                    if (dailyVolume < MIN_DAILY_VOLUME) return null;
+
                     const netProfit = (priceInfo.high - priceInfo.low) - geTaxPerItem(itemInfo.id, priceInfo.high);
 
-                    if (netProfit <= 0) return null;
+                    if (netProfit <= 0 || (netProfit / priceInfo.low) * 100 < MIN_NET_MARGIN_PERCENT) return null;
+
+                    // The last hour's average prices must show a profit after tax too
+                    const hour = hourData[id];
+                    if (hour && hour.avgHighPrice && hour.avgLowPrice &&
+                        (hour.avgHighPrice - hour.avgLowPrice) - geTaxPerItem(itemInfo.id, hour.avgHighPrice) <= 0) {
+                        return null;
+                    }
 
                     // NEW FORMULA: Prioritizes total profit potential
                     const flipScore = netProfit * dailyVolume;
@@ -1078,6 +1108,7 @@
                 scoredItems.sort((a, b) => b.flipScore - a.flipScore);
 
                 masterFlippableItems = scoredItems;
+                marketLoadedAt = Date.now();
 
             } catch (error) {
                 console.error("Could not load flippable items:", error);
@@ -1268,6 +1299,12 @@
 
         // Now uses the dynamic flippableItems list
         async function suggestItem() {
+            // Prices move quickly, so rebuild the list from fresh prices if the page has been open a while
+            if (Date.now() - marketLoadedAt > MARKET_REFRESH_MS) {
+                await loadFlippableItems();
+                filterItemsByBudget();
+            }
+
             if (flippableItems.length === 0) {
                 showError("No items found for your current budget. Try increasing it.");
                 return;
