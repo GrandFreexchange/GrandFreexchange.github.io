@@ -13,6 +13,11 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:
 
+# A newer push rebuilds everything anyway, so an older run still going would only fail its push
+concurrency:
+  group: generate-items
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
