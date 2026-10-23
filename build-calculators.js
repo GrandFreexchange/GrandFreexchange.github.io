@@ -24,7 +24,7 @@ const SKILLS = [
         name: 'Prayer',
         icon: 'https://oldschool.runescape.wiki/images/Prayer_icon.png',
         title: 'OSRS Prayer Calculator - Bones Needed & Cost to 99 (Live GE Prices)',
-        description: 'Free OSRS Prayer calculator: how many bones or ashes you need for any level, and what it costs at live Grand Exchange prices on the Gilded altar, Chaos altar, Ectofuntus or burying.',
+        description: 'OSRS Prayer calculator: bones or ashes needed for any level and the cost at live GE prices, for the Gilded altar, Chaos altar, Ectofuntus or burying.',
         lead: 'How many bones or ashes you need for your target level, and what they cost at live Grand Exchange prices.',
         methods: [
             { id: 'gilded', label: 'Gilded altar (350%)', mult: 3.5, kinds: ['bone'] },
@@ -71,7 +71,7 @@ const SKILLS = [
         name: 'Construction',
         icon: 'https://oldschool.runescape.wiki/images/Construction_icon.png',
         title: 'OSRS Construction Calculator - Planks Needed & Cost to 99 (Live GE Prices)',
-        description: 'Free OSRS Construction calculator: how many oak larders, mahogany tables or other builds you need for any level, and the plank cost at live Grand Exchange prices.',
+        description: 'OSRS Construction calculator: oak larders, mahogany tables and other builds needed for any level, with the plank cost at live GE prices.',
         lead: 'How many builds and planks you need for your target level, and what the planks cost at live Grand Exchange prices.',
         methods: [
             { id: 'planks', label: 'Buy planks on the GE', mult: 1 },
@@ -107,7 +107,7 @@ const SKILLS = [
         name: 'Herblore',
         icon: 'https://oldschool.runescape.wiki/images/Herblore_icon.png',
         title: 'OSRS Herblore Calculator - Potions Needed & Profit per XP (Live GE Prices)',
-        description: 'Free OSRS Herblore calculator: how many potions you need for any level, and the profit or loss per XP for prayer potions, super restores, brews and more at live Grand Exchange prices.',
+        description: 'OSRS Herblore calculator: potions needed for any level, with the cost and profit per XP for prayer potions, super restores and brews at live GE prices.',
         lead: 'How many potions you need for your target level, and the profit or loss of each at live Grand Exchange prices.',
         sellToggle: 'Sell the finished potions (after the 2% GE tax)',
         actions: [
@@ -144,7 +144,7 @@ const SKILLS = [
         name: 'Cooking',
         icon: 'https://oldschool.runescape.wiki/images/Cooking_icon.png',
         title: 'OSRS Cooking Calculator - Fish Needed & Profit per XP (Live GE Prices)',
-        description: 'Free OSRS Cooking calculator: how many karambwans, sharks, wines or other food you need for any level, and the profit or loss at live Grand Exchange prices.',
+        description: 'OSRS Cooking calculator: karambwans, sharks, wines and other food needed for any level, with the cost and profit at live GE prices.',
         lead: 'How much food you need to cook for your target level, and the profit or loss at live Grand Exchange prices.',
         sellToggle: 'Sell the cooked food (after the 2% GE tax)',
         actions: [
@@ -504,7 +504,7 @@ ${levelForm(1, 99)}
 
     return page({
         title: 'OSRS Skill Calculators & XP Table - Cost to 99 at Live GE Prices',
-        description: 'Free OSRS skill calculators: XP to any level, the full XP table from 1 to 99, and Prayer, Construction, Herblore and Cooking calculators priced with live Grand Exchange data.',
+        description: 'Free OSRS skill calculators and XP table: XP to any level, plus Prayer, Construction, Herblore and Cooking costs at live Grand Exchange prices.',
         canonical: 'https://osrs.lol/calculators/',
         breadcrumb: [{ name: 'Skill calculators', url: 'https://osrs.lol/calculators/' }],
         body,

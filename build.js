@@ -321,8 +321,9 @@ function generateItemHTML(item, latestPrice, volume, context) {
     const titleName = item.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
     const iconUrl = `https://tiles.runescape.wiki/static/public/images/osrs/items/${item.id}.png`;
 
-    let description = `${item.name} price on the OSRS Grand Exchange: live high and low prices, flipping margin after tax, buy limit${item.limit ? ` (${item.limit.toLocaleString('en-US')})` : ''} and high alch value.`;
-    if (item.examine && (description + ' ' + item.examine).length <= 200) description += ` ${item.examine}`;
+    // Kept to 160 characters or less: Bing flags longer meta descriptions as an SEO error
+    let description = `${item.name} OSRS GE price: live high and low prices, margin after tax, buy limit${item.limit ? ` (${item.limit.toLocaleString('en-US')})` : ''} and high alch value.`;
+    if (item.examine && (description + ' ' + item.examine).length <= 160) description += ` ${item.examine}`;
 
     // Use the dashboard from dev.html as our base template
     let html = dashboardTemplate;
