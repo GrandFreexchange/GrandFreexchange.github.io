@@ -489,7 +489,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
                         <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
-                            GP</span></label>
+                            <span class="text-accent">GP</span></span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
@@ -535,11 +535,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Mithril keel parts</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="1297" data-target="sell">1,297 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="1285" data-target="buy">1,285 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="1233" data-target="sell">1,233 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="1250" data-target="buy">1,250 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">-13 GP (-1.01%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-13 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">-41 GP (-3.28%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-41 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Mithril keel parts</h2>
             <p class="text-secondary italic mb-4">“Parts for creating a mithril keel for a boat.”</p>
-            <p class="mb-4">On 2026-10-27 16:08 UTC, Mithril keel parts was trading on the Grand Exchange at 1,297 GP (high) and 1,285 GP (low), with 1,667 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 687 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:24 UTC, Mithril keel parts was trading on the Grand Exchange at 1,233 GP (high) and 1,250 GP (low), with 1,667 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 625 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2186,9 +2186,9 @@
 
                 // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} <span class="text-accent">GP</span>`;
                 } else {
-                    budgetValue.textContent = `${number}${unit} GP`;
+                    budgetValue.innerHTML = `${number}${unit} <span class="text-accent">GP</span>`;
                 }
             }
             filterItemsByBudget();

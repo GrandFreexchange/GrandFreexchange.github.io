@@ -489,7 +489,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
                         <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
-                            GP</span></label>
+                            <span class="text-accent">GP</span></span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
@@ -536,10 +536,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="1200" data-target="sell">1,200 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="1165" data-target="buy">1,165 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="1175" data-target="buy">1,175 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">11 GP (0.94%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">11 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">1 GP (0.09%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">1 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Dwarf weed</h2>
             <p class="text-secondary italic mb-4">“A powerful herb.”</p>
-            <p class="mb-4">On 2026-10-27 16:08 UTC, Dwarf weed was trading on the Grand Exchange at 1,200 GP (high) and 1,165 GP (low), with 32,799 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 11 GP per item, or 121,000 GP for a full buy limit of 11,000. Buying one at the high price and casting High Level Alchemy on it lost 1,298 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:24 UTC, Dwarf weed was trading on the Grand Exchange at 1,200 GP (high) and 1,175 GP (low), with 32,799 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 1 GP per item, or 11,000 GP for a full buy limit of 11,000. Buying one at the high price and casting High Level Alchemy on it lost 1,300 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2183,9 +2183,9 @@
 
                 // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} <span class="text-accent">GP</span>`;
                 } else {
-                    budgetValue.textContent = `${number}${unit} GP`;
+                    budgetValue.innerHTML = `${number}${unit} <span class="text-accent">GP</span>`;
                 }
             }
             filterItemsByBudget();

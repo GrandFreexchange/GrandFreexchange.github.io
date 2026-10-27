@@ -489,7 +489,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
                         <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
-                            GP</span></label>
+                            <span class="text-accent">GP</span></span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
@@ -535,11 +535,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Zamorak chaps</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="105607" data-target="sell">105,607 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="101036" data-target="buy">101,036 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="121123" data-target="sell">121,123 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="91028" data-target="buy">91,028 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">2,459 GP (2.43%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">2,459 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">27,673 GP (30.40%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-profit font-bold">27,673 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Zamorak chaps</h2>
             <p class="text-secondary italic mb-4">“Zamorak blessed dragonhide chaps.”</p>
-            <p class="mb-4">On 2026-10-27 16:08 UTC, Zamorak chaps was trading on the Grand Exchange at 105,607 GP (high) and 101,036 GP (low), with 32 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 2,459 GP per item, or 19,672 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 102,147 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:24 UTC, Zamorak chaps was trading on the Grand Exchange at 121,123 GP (high) and 91,028 GP (low), with 32 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 27,673 GP per item, or 221,384 GP for a full buy limit of 8. Buying one at the high price and casting High Level Alchemy on it lost 117,665 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2186,9 +2186,9 @@
 
                 // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} <span class="text-accent">GP</span>`;
                 } else {
-                    budgetValue.textContent = `${number}${unit} GP`;
+                    budgetValue.innerHTML = `${number}${unit} <span class="text-accent">GP</span>`;
                 }
             }
             filterItemsByBudget();

@@ -489,7 +489,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
                         <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
-                            GP</span></label>
+                            <span class="text-accent">GP</span></span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
@@ -536,10 +536,10 @@
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
                     <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="8697" data-target="sell">8,697 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="8688" data-target="buy">8,688 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="8675" data-target="buy">8,675 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">-164 GP (-1.89%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-164 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">-151 GP (-1.74%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-151 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Earth battlestaff</h2>
             <p class="text-secondary italic mb-4">“It&#39;s a slightly magical stick.”</p>
-            <p class="mb-4">On 2026-10-27 16:08 UTC, Earth battlestaff was trading on the Grand Exchange at 8,697 GP (high) and 8,688 GP (low), with 26,297 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it made 463 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:24 UTC, Earth battlestaff was trading on the Grand Exchange at 8,697 GP (high) and 8,675 GP (low), with 26,297 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it made 461 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2186,9 +2186,9 @@
 
                 // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} <span class="text-accent">GP</span>`;
                 } else {
-                    budgetValue.textContent = `${number}${unit} GP`;
+                    budgetValue.innerHTML = `${number}${unit} <span class="text-accent">GP</span>`;
                 }
             }
             filterItemsByBudget();

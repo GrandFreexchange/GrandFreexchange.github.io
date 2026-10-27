@@ -489,7 +489,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
                         <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
-                            GP</span></label>
+                            <span class="text-accent">GP</span></span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
                 </div>
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Lumbridge teleport (tablet)</h2>
             <p class="text-secondary italic mb-4">“A teleport to Lumbridge.”</p>
-            <p class="mb-4">On 2026-10-27 16:08 UTC, Lumbridge teleport (tablet) was trading on the Grand Exchange at 460 GP (high) and 458 GP (low), with 6,322 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 599 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:24 UTC, Lumbridge teleport (tablet) was trading on the Grand Exchange at 460 GP (high) and 458 GP (low), with 6,322 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 601 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2186,9 +2186,9 @@
 
                 // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} <span class="text-accent">GP</span>`;
                 } else {
-                    budgetValue.textContent = `${number}${unit} GP`;
+                    budgetValue.innerHTML = `${number}${unit} <span class="text-accent">GP</span>`;
                 }
             }
             filterItemsByBudget();
