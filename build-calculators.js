@@ -10,7 +10,7 @@ const path = require('path');
 
 const OUTPUT_DIR = path.join(__dirname, 'calculators');
 const dashboardTemplate = fs.readFileSync(path.join(__dirname, 'dev.html'), 'utf8');
-const CALC_ASSET_VERSION = 3;
+const CALC_ASSET_VERSION = 4;
 
 // ---------- Skill data ----------
 // Each action: name, level, xp, inputs/outputs as [itemId, quantity], optional coin fee.
@@ -211,7 +211,7 @@ for (let level = 2, points = 0; level <= 99; level++) {
 }
 
 const fmt = n => Math.round(n).toLocaleString('en-US');
-const iconUrl = id => `https://tiles.runescape.wiki/static/public/images/osrs/items/${id}.png`;
+const iconUrl = id => `https://static.runelite.net/cache/item/icon/${id}.png`;
 
 // Item slugs and names come from the item pages, so links always match a real page
 const itemById = new Map();
@@ -490,9 +490,9 @@ ${levelForm(1, 99)}
             <section class="card p-4 md:p-6 mb-6" aria-labelledby="money-calcs-title">
                 <h2 id="money-calcs-title" class="calc-h2">Money-making calculators</h2>
                 <ul class="calc-cards">
-                <li><a href="/calculators/barrows-repair" class="calc-card">
+                <li><a href="/calculators/armour-repair" class="calc-card">
                     <img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="28" height="28">
-                    <span><strong>Barrows repair calculator</strong><span>Profit from buying broken Barrows, Moons of Peril or Torva armour, repairing it and selling it.</span></span>
+                    <span><strong>Armour repair money making calculator</strong><span>Profit from buying broken Barrows, Moons of Peril or Torva armour, repairing it and selling it.</span></span>
                 </a></li>
                 </ul>
             </section>
@@ -514,7 +514,7 @@ ${levelForm(1, 99)}
 
     return page({
         title: 'OSRS Skill Calculators & XP Table - Cost to 99 at Live GE Prices',
-        description: 'Free OSRS skill calculators and XP table: XP to any level, Prayer, Construction, Herblore and Cooking costs, and Barrows repair profit at live GE prices.',
+        description: 'Free OSRS skill calculators and XP table: XP to any level, Prayer, Construction, Herblore and Cooking costs, and armour repair profit at live GE prices.',
         canonical: 'https://osrs.lol/calculators/',
         breadcrumb: [{ name: 'Skill calculators', url: 'https://osrs.lol/calculators/' }],
         body,
@@ -614,12 +614,12 @@ function repairPage() {
 
     const body = `
         <div class="mb-6">
-            <h1 class="page-title calc-title"><img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="32" height="32">OSRS Barrows repair calculator</h1>
+            <h1 class="page-title calc-title"><img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="32" height="32">OSRS armour repair money making calculator</h1>
             <p class="page-lead">Buy broken Barrows, Moons of Peril or Torva armour on the Grand Exchange, repair it, and sell it. The profit on every piece and set at live GE prices.</p>
         </div>
 
         <main>
-            <section class="card p-4 md:p-6 mb-6" aria-label="Barrows repair calculator">
+            <section class="card p-4 md:p-6 mb-6" aria-label="Armour repair calculator">
                 <div class="calc-form">
                     <div class="calc-field">
                         <label for="repair-level">Smithing level</label>
@@ -677,7 +677,7 @@ ${REPAIR_GROUPS.map(g => `                            <option value="${g.id}">${
             </section>
 
             <section class="card p-6 md:p-10 prose-site">
-                <h2>How Barrows repair flipping works</h2>
+                <h2>How armour repair flipping works</h2>
                 <p>Barrows equipment can only be traded when it is fully repaired or fully broken (the "0" versions). Broken pieces often sell for less than a repaired piece minus the repair fee, so you can buy them on the Grand Exchange, repair them, and sell them back. This calculator does that sum for every piece using the latest real trades from the <a href="https://prices.runescape.wiki/">OSRS Wiki price API</a>, the same data as the osrs.lol <a href="/">price dashboard</a>.</p>
                 <p>Bob in Lumbridge, Dunstan in Burthorpe and the other repair NPCs charge the full price. Repairing at an armour stand in your player-owned house (level 55 Construction in the workshop) takes 0.5% off for every Smithing level, so at level 99 it is just over half price. Boosted Smithing levels count.</p>
                 <div class="overflow-x-auto">
@@ -706,12 +706,12 @@ ${REPAIR_GROUPS.map(g => `                            <option value="${g.id}">${
     rows.forEach(r => { ids.add(r.fixed); (r.broken || []).forEach(([id]) => ids.add(id)); (r.parts || []).forEach(([id]) => ids.add(id)); });
 
     return page({
-        title: 'OSRS Barrows Repair Calculator - Repair Cost & Profit (Live GE Prices)',
-        description: 'OSRS Barrows repair calculator: buy broken Barrows, Blood moon, Blue moon, Eclipse moon or Torva armour, repair it at Bob or an armour stand, and see the profit at live GE prices.',
-        canonical: 'https://osrs.lol/calculators/barrows-repair',
+        title: 'OSRS Armour Repair Money Making Calculator - Barrows, Moon & Torva (Live GE Prices)',
+        description: 'OSRS armour repair money making calculator: buy broken Barrows, Blood moon, Blue moon, Eclipse moon or Torva armour, repair it at Bob or an armour stand, and see the profit at live GE prices.',
+        canonical: 'https://osrs.lol/calculators/armour-repair',
         breadcrumb: [
             { name: 'Skill calculators', url: 'https://osrs.lol/calculators/' },
-            { name: 'Barrows repair calculator', url: 'https://osrs.lol/calculators/barrows-repair' }
+            { name: 'Armour repair calculator', url: 'https://osrs.lol/calculators/armour-repair' }
         ],
         body,
         data: {
@@ -723,14 +723,33 @@ ${REPAIR_GROUPS.map(g => `                            <option value="${g.id}">${
     });
 }
 
+function redirectPage(url, title) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${escapeHtml(title)}</title>
+    <link rel="canonical" href="https://osrs.lol${url}">
+    <meta http-equiv="refresh" content="0; url=${url}">
+    <script>window.location.replace('${url}' + window.location.search);</script>
+</head>
+<body>
+    <p>This page has moved to <a href="${url}">${escapeHtml(title)}</a>.</p>
+</body>
+</html>
+`;
+}
+
 // ---------- Write ----------
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), hubPage());
-fs.writeFileSync(path.join(OUTPUT_DIR, 'barrows-repair.html'), repairPage());
+fs.writeFileSync(path.join(OUTPUT_DIR, 'armour-repair.html'), repairPage());
+// The calculator's first URL, kept as a redirect (build.js leaves redirects out of the sitemap)
+fs.writeFileSync(path.join(OUTPUT_DIR, 'barrows-repair.html'), redirectPage('/calculators/armour-repair', 'OSRS Armour Repair Money Making Calculator'));
 for (const skill of SKILLS) {
     fs.writeFileSync(path.join(OUTPUT_DIR, `${skill.slug}.html`), skillPage(skill));
 }
-console.log(`Wrote ${SKILLS.length + 2} calculator pages to ${OUTPUT_DIR}`);
+console.log(`Wrote ${SKILLS.length + 3} calculator pages to ${OUTPUT_DIR}`);
 
 module.exports = { SKILLS };

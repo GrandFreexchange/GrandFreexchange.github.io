@@ -319,7 +319,7 @@ function generateItemHTML(item, latestPrice, volume, context) {
     const slug = nameToSlug(item.name);
     const pageUrl = `https://osrs.lol/items/${slug}`;
     const titleName = item.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-    const iconUrl = `https://tiles.runescape.wiki/static/public/images/osrs/items/${item.id}.png`;
+    const iconUrl = `https://static.runelite.net/cache/item/icon/${item.id}.png`;
 
     // Kept to 160 characters or less: Bing flags longer meta descriptions as an SEO error
     let description = `${item.name} OSRS GE price: live high and low prices, margin after tax, buy limit${item.limit ? ` (${item.limit.toLocaleString('en-US')})` : ''} and high alch value.`;
@@ -624,7 +624,7 @@ ${GUIDES.map(guide => `    <url>
     // Skill calculators (built by build-calculators.js): the hub first, then one page per skill
     const calculatorDir = path.join(__dirname, 'calculators');
     const calculatorPages = fs.existsSync(calculatorDir)
-        ? fs.readdirSync(calculatorDir).filter(f => f.endsWith('.html')).sort((a, b) => (a === 'index.html' ? -1 : b === 'index.html' ? 1 : a.localeCompare(b)))
+        ? fs.readdirSync(calculatorDir).filter(f => f.endsWith('.html') && !fs.readFileSync(path.join(calculatorDir, f), 'utf8').includes('http-equiv="refresh"')).sort((a, b) => (a === 'index.html' ? -1 : b === 'index.html' ? 1 : a.localeCompare(b)))
         : [];
     for (const file of calculatorPages) {
         sitemap += `    <url>
@@ -638,7 +638,7 @@ ${GUIDES.map(guide => `    <url>
 
     for (const item of items) {
         const slug = nameToSlug(item.name);
-        const iconUrl = `https://tiles.runescape.wiki/static/public/images/osrs/items/${item.id}.png`;
+        const iconUrl = `https://static.runelite.net/cache/item/icon/${item.id}.png`;
 
         sitemap += `    <url>
         <loc>${baseUrl}/items/${slug}</loc>

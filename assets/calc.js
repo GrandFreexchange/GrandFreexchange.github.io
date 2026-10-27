@@ -253,7 +253,7 @@
         });
         tbody.innerHTML = notice + list.map(r => `
         <tr class="${r.locked ? 'is-locked' : ''}">
-            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/${r.icon}.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/${r.slug}">${escapeHtml(r.name)}</a>${materialsLine(r)}</div></div></td>
+            <td><div class="calc-item"><img src="https://static.runelite.net/cache/item/icon/${r.icon}.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/${r.slug}">${escapeHtml(r.name)}</a>${materialsLine(r)}</div></div></td>
             <td class="text-right">${r.level}</td>
             <td class="text-right">${Number(r.xpEach.toFixed(2)).toLocaleString('en-US')}</td>
             <td class="text-right col-count">${s.xpLeft ? fmt(r.count) : '0'}</td>
