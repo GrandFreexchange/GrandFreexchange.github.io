@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRS Barrows Repair Calculator - Repair Cost &amp; Profit (Live GE Prices)</title>
+    <meta name="description" content="OSRS Barrows repair calculator: buy broken Barrows, Blood moon, Blue moon, Eclipse moon or Torva armour, repair it at Bob or an armour stand, and see the profit at live GE prices.">
+    <link rel="canonical" href="https://osrs.lol/calculators/barrows-repair">
+    <meta property="og:title" content="OSRS Barrows Repair Calculator - Repair Cost &amp; Profit (Live GE Prices)">
+    <meta property="og:description" content="OSRS Barrows repair calculator: buy broken Barrows, Blood moon, Blue moon, Eclipse moon or Torva armour, repair it at Bob or an armour stand, and see the profit at live GE prices.">
+    <meta property="og:url" content="https://osrs.lol/calculators/barrows-repair">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css?v=2">
+    <script src="/assets/theme.js"></script>
+    <link rel="stylesheet" href="/assets/calc.css?v=3">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Skill calculators","item":"https://osrs.lol/calculators/"},{"@type":"ListItem","position":3,"name":"Barrows repair calculator","item":"https://osrs.lol/calculators/barrows-repair"}]}</script>
+</head>
+
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+
+        <header class="site-header">
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5 mb-4">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="/calculators/" class="text-accent hover:underline">Skill calculators</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Barrows repair calculator</li>
+            </ol>
+        </nav>
+
+        <div class="mb-6">
+            <h1 class="page-title calc-title"><img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="32" height="32">OSRS Barrows repair calculator</h1>
+            <p class="page-lead">Buy broken Barrows, Moons of Peril or Torva armour on the Grand Exchange, repair it, and sell it. The profit on every piece and set at live GE prices.</p>
+        </div>
+
+        <main>
+            <section class="card p-4 md:p-6 mb-6" aria-label="Barrows repair calculator">
+                <div class="calc-form">
+                    <div class="calc-field">
+                        <label for="repair-level">Smithing level</label>
+                        <input id="repair-level" class="field" type="number" inputmode="numeric" min="1" max="104" value="99">
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-where">Repair at</label>
+                        <select id="repair-where" class="field">
+                            <option value="stand">Armour stand</option>
+                            <option value="npc">NPC (Bob)</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-prices">Prices</label>
+                        <select id="repair-prices" class="field">
+                            <option value="instant">Instant</option>
+                            <option value="patient">Patient</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-group">Show</label>
+                        <select id="repair-group" class="field">
+                            <option value="all">All armour</option>
+                            <option value="barrows">Barrows</option>
+                            <option value="moons">Moons of Peril</option>
+                            <option value="torva">Torva</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="calc-summary" id="repair-summary" aria-live="polite">At Smithing 99, an armour stand repairs for <strong class="text-accent">50.5%</strong> less than Bob: a full Barrows set costs 166,650 instead of 330,000.</p>
+                <div class="calc-options">
+                    <label class="calc-check"><input id="repair-sets" type="checkbox" class="field" checked> Show full armour sets</label>
+                    <label class="calc-check"><input id="repair-profitable" type="checkbox" class="field"> Only show a profit</label>
+                </div>
+
+                <div class="calc-status" id="calc-status" aria-live="polite">Loading live GE prices…</div>
+                <p class="calc-best" id="calc-best" aria-live="polite"></p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm calc-table repair-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left" data-sort="name">Item</th>
+                                <th scope="col" class="text-right" data-sort="buy" tabindex="0">Buy broken</th>
+                                <th scope="col" class="text-right" data-sort="repair" tabindex="0">Repair</th>
+                                <th scope="col" class="text-right" data-sort="sell" tabindex="0">Sell repaired</th>
+                                <th scope="col" class="text-right" data-sort="profit" tabindex="0">Profit</th>
+                                <th scope="col" class="text-right" data-sort="roi" tabindex="0">ROI</th>
+                                <th scope="col" class="text-right" data-sort="volume" tabindex="0">Traded / day</th>
+                            </tr>
+                        </thead>
+                        <tbody id="repair-body">
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4708.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/ahrim-s-hood">Ahrim&#39;s hood</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4712.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/ahrim-s-robetop">Ahrim&#39;s robetop</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4714.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/ahrim-s-robeskirt">Ahrim&#39;s robeskirt</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4710.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/ahrim-s-staff">Ahrim&#39;s staff</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12881.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/ahrim-s-armour-set">Ahrim&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4716.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/dharok-s-helm">Dharok&#39;s helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4720.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/dharok-s-platebody">Dharok&#39;s platebody</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4722.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/dharok-s-platelegs">Dharok&#39;s platelegs</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4718.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/dharok-s-greataxe">Dharok&#39;s greataxe</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12877.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/dharok-s-armour-set">Dharok&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4724.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/guthan-s-helm">Guthan&#39;s helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4728.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/guthan-s-platebody">Guthan&#39;s platebody</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4730.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/guthan-s-chainskirt">Guthan&#39;s chainskirt</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4726.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/guthan-s-warspear">Guthan&#39;s warspear</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12873.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/guthan-s-armour-set">Guthan&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4732.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/karil-s-coif">Karil&#39;s coif</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4736.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/karil-s-leathertop">Karil&#39;s leathertop</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4738.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/karil-s-leatherskirt">Karil&#39;s leatherskirt</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4734.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/karil-s-crossbow">Karil&#39;s crossbow</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12883.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/karil-s-armour-set">Karil&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4745.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torag-s-helm">Torag&#39;s helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4749.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torag-s-platebody">Torag&#39;s platebody</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4751.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torag-s-platelegs">Torag&#39;s platelegs</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4747.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torag-s-hammers">Torag&#39;s hammers</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12879.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torag-s-armour-set">Torag&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4753.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/verac-s-helm">Verac&#39;s helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">30,300</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4757.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/verac-s-brassard">Verac&#39;s brassard</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">45,450</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4759.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/verac-s-plateskirt">Verac&#39;s plateskirt</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">40,400</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/4755.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/verac-s-flail">Verac&#39;s flail</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">50,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="barrows" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/12875.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/verac-s-armour-set">Verac&#39;s armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">166,650</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29028.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blood-moon-helm">Blood Moon helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29022.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blood-moon-chestplate">Blood Moon chestplate</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29025.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blood-moon-tassets">Blood Moon tassets</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29019.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blue-moon-helm">Blue Moon helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29013.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blue-moon-chestplate">Blue Moon chestplate</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29016.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/blue-moon-tassets">Blue Moon tassets</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29010.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/eclipse-moon-helm">Eclipse Moon helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29004.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/eclipse-moon-chestplate">Eclipse Moon chestplate</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="moons">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/29007.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/eclipse-moon-tassets">Eclipse Moon tassets</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">757,500</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="torva">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/26382.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torva-full-helm">Torva full helm</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">1 × components</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="torva">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/26384.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torva-platebody">Torva platebody</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">2 × components</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="torva">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/26386.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torva-platelegs">Torva platelegs</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">2 × components</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        <tr data-group="torva" class="is-set">
+                            <td><div class="calc-item"><img src="https://tiles.runescape.wiki/static/public/images/osrs/items/31145.png" alt="" width="24" height="24" loading="lazy"><div><a href="/items/torva-armour-set">Torva armour set</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">5 × components</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="calc-legend">Buy broken is what the broken pieces cost, Sell repaired is what the repaired item sells for after the 2% GE tax. Instant buys at the latest instant-buy price and sell at the instant-sell price; patient offers buy and sell at the other end of the margin, which is cheaper but slower. Traded / day is how many of the broken item changed hands on the GE in the last 24 hours. Click a column to sort.</p>
+            </section>
+
+            <section class="card p-6 md:p-10 prose-site">
+                <h2>How Barrows repair flipping works</h2>
+                <p>Barrows equipment can only be traded when it is fully repaired or fully broken (the "0" versions). Broken pieces often sell for less than a repaired piece minus the repair fee, so you can buy them on the Grand Exchange, repair them, and sell them back. This calculator does that sum for every piece using the latest real trades from the <a href="https://prices.runescape.wiki/">OSRS Wiki price API</a>, the same data as the osrs.lol <a href="/">price dashboard</a>.</p>
+                <p>Bob in Lumbridge, Dunstan in Burthorpe and the other repair NPCs charge the full price. Repairing at an armour stand in your player-owned house (level 55 Construction in the workshop) takes 0.5% off for every Smithing level, so at level 99 it is just over half price. Boosted Smithing levels count.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm calc-table">
+                        <thead><tr><th scope="col" class="text-left">Fully broken piece</th><th scope="col" class="text-right">NPC repair</th><th scope="col" class="text-right">Armour stand, 70 Smithing</th><th scope="col" class="text-right">Armour stand, 99 Smithing</th></tr></thead>
+                        <tbody>
+                        <tr><td>Barrows helm</td><td class="text-right">60,000</td><td class="text-right">39,000</td><td class="text-right">30,300</td></tr>
+                        <tr><td>Barrows body</td><td class="text-right">90,000</td><td class="text-right">58,500</td><td class="text-right">45,450</td></tr>
+                        <tr><td>Barrows legs</td><td class="text-right">80,000</td><td class="text-right">52,000</td><td class="text-right">40,400</td></tr>
+                        <tr><td>Barrows weapon</td><td class="text-right">100,000</td><td class="text-right">65,000</td><td class="text-right">50,500</td></tr>
+                        <tr><td>Moon helm, chestplate or tassets</td><td class="text-right">1,500,000</td><td class="text-right">975,000</td><td class="text-right">757,500</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>A full Barrows set (helm, body, legs and weapon) costs 330,000 to repair with an NPC and 166,650 at an armour stand with 99 Smithing.</p>
+                <h2>Blood moon, Blue moon and Eclipse moon armour</h2>
+                <p>The Moons of Peril armour from the Lunar Chest degrades like Barrows equipment and breaks after about 45 hours of combat. Repairing a broken helm, chestplate or tassets costs 1,500,000 with an NPC, or 757,500 at an armour stand with 99 Smithing. Broken moon pieces trade in small numbers, so check Traded / day before you buy.</p>
+                <h2>Torva armour</h2>
+                <p>Damaged Torva from Nex is repaired with Bandosian components at level 90 Smithing: one for the full helm and two each for the platebody and platelegs. The calculator prices the components at the live GE price, and greys out Torva below level 90.</p>
+                <h2>Buying pieces or whole sets</h2>
+                <p>The armour set rows buy all four broken pieces of one brother (or the three Torva pieces), repair them, and sell them as a set from the Grand Exchange clerk, which packs them for free. Sets sometimes sell for more than the pieces added up, sometimes for less, so compare the set row with its pieces.</p>
+                <h2>Tips</h2>
+                <p>Margins move quickly and many broken pieces trade only a few times a day, so a patient offer can take hours to fill. Buy limits apply to broken pieces too. The GE tax is 2% of the sell price, capped at 5m per item, and is already taken off.</p>
+                <h2>More calculators</h2>
+                <p>See the <a href="/calculators/">skill calculators</a> (<a href="/calculators/prayer">Prayer</a>, <a href="/calculators/construction">Construction</a>, <a href="/calculators/herblore">Herblore</a>, <a href="/calculators/cooking">Cooking</a>) or the <a href="/merchanting">merchanting guide</a>.</p>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/guides/">Guides</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/calculators/">Skill calculators</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+    </div>
+    <script type="application/json" id="calc-data">{"rows":[{"key":"4708","group":"barrows","name":"Ahrim's hood","fixed":4708,"broken":[[4860,1]],"coins":60000,"slug":"ahrim-s-hood"},{"key":"4712","group":"barrows","name":"Ahrim's robetop","fixed":4712,"broken":[[4872,1]],"coins":90000,"slug":"ahrim-s-robetop"},{"key":"4714","group":"barrows","name":"Ahrim's robeskirt","fixed":4714,"broken":[[4878,1]],"coins":80000,"slug":"ahrim-s-robeskirt"},{"key":"4710","group":"barrows","name":"Ahrim's staff","fixed":4710,"broken":[[4866,1]],"coins":100000,"slug":"ahrim-s-staff"},{"key":"12881","group":"barrows","name":"Ahrim's armour set","fixed":12881,"set":["4708","4712","4714","4710"],"slug":"ahrim-s-armour-set"},{"key":"4716","group":"barrows","name":"Dharok's helm","fixed":4716,"broken":[[4884,1]],"coins":60000,"slug":"dharok-s-helm"},{"key":"4720","group":"barrows","name":"Dharok's platebody","fixed":4720,"broken":[[4896,1]],"coins":90000,"slug":"dharok-s-platebody"},{"key":"4722","group":"barrows","name":"Dharok's platelegs","fixed":4722,"broken":[[4902,1]],"coins":80000,"slug":"dharok-s-platelegs"},{"key":"4718","group":"barrows","name":"Dharok's greataxe","fixed":4718,"broken":[[4890,1]],"coins":100000,"slug":"dharok-s-greataxe"},{"key":"12877","group":"barrows","name":"Dharok's armour set","fixed":12877,"set":["4716","4720","4722","4718"],"slug":"dharok-s-armour-set"},{"key":"4724","group":"barrows","name":"Guthan's helm","fixed":4724,"broken":[[4908,1]],"coins":60000,"slug":"guthan-s-helm"},{"key":"4728","group":"barrows","name":"Guthan's platebody","fixed":4728,"broken":[[4920,1]],"coins":90000,"slug":"guthan-s-platebody"},{"key":"4730","group":"barrows","name":"Guthan's chainskirt","fixed":4730,"broken":[[4926,1]],"coins":80000,"slug":"guthan-s-chainskirt"},{"key":"4726","group":"barrows","name":"Guthan's warspear","fixed":4726,"broken":[[4914,1]],"coins":100000,"slug":"guthan-s-warspear"},{"key":"12873","group":"barrows","name":"Guthan's armour set","fixed":12873,"set":["4724","4728","4730","4726"],"slug":"guthan-s-armour-set"},{"key":"4732","group":"barrows","name":"Karil's coif","fixed":4732,"broken":[[4932,1]],"coins":60000,"slug":"karil-s-coif"},{"key":"4736","group":"barrows","name":"Karil's leathertop","fixed":4736,"broken":[[4944,1]],"coins":90000,"slug":"karil-s-leathertop"},{"key":"4738","group":"barrows","name":"Karil's leatherskirt","fixed":4738,"broken":[[4950,1]],"coins":80000,"slug":"karil-s-leatherskirt"},{"key":"4734","group":"barrows","name":"Karil's crossbow","fixed":4734,"broken":[[4938,1]],"coins":100000,"slug":"karil-s-crossbow"},{"key":"12883","group":"barrows","name":"Karil's armour set","fixed":12883,"set":["4732","4736","4738","4734"],"slug":"karil-s-armour-set"},{"key":"4745","group":"barrows","name":"Torag's helm","fixed":4745,"broken":[[4956,1]],"coins":60000,"slug":"torag-s-helm"},{"key":"4749","group":"barrows","name":"Torag's platebody","fixed":4749,"broken":[[4968,1]],"coins":90000,"slug":"torag-s-platebody"},{"key":"4751","group":"barrows","name":"Torag's platelegs","fixed":4751,"broken":[[4974,1]],"coins":80000,"slug":"torag-s-platelegs"},{"key":"4747","group":"barrows","name":"Torag's hammers","fixed":4747,"broken":[[4962,1]],"coins":100000,"slug":"torag-s-hammers"},{"key":"12879","group":"barrows","name":"Torag's armour set","fixed":12879,"set":["4745","4749","4751","4747"],"slug":"torag-s-armour-set"},{"key":"4753","group":"barrows","name":"Verac's helm","fixed":4753,"broken":[[4980,1]],"coins":60000,"slug":"verac-s-helm"},{"key":"4757","group":"barrows","name":"Verac's brassard","fixed":4757,"broken":[[4992,1]],"coins":90000,"slug":"verac-s-brassard"},{"key":"4759","group":"barrows","name":"Verac's plateskirt","fixed":4759,"broken":[[4998,1]],"coins":80000,"slug":"verac-s-plateskirt"},{"key":"4755","group":"barrows","name":"Verac's flail","fixed":4755,"broken":[[4986,1]],"coins":100000,"slug":"verac-s-flail"},{"key":"12875","group":"barrows","name":"Verac's armour set","fixed":12875,"set":["4753","4757","4759","4755"],"slug":"verac-s-armour-set"},{"key":"29028","group":"moons","name":"Blood Moon helm","fixed":29028,"broken":[[29073,1]],"coins":1500000,"slug":"blood-moon-helm"},{"key":"29022","group":"moons","name":"Blood Moon chestplate","fixed":29022,"broken":[[29067,1]],"coins":1500000,"slug":"blood-moon-chestplate"},{"key":"29025","group":"moons","name":"Blood Moon tassets","fixed":29025,"broken":[[29070,1]],"coins":1500000,"slug":"blood-moon-tassets"},{"key":"29019","group":"moons","name":"Blue Moon helm","fixed":29019,"broken":[[29064,1]],"coins":1500000,"slug":"blue-moon-helm"},{"key":"29013","group":"moons","name":"Blue Moon chestplate","fixed":29013,"broken":[[29058,1]],"coins":1500000,"slug":"blue-moon-chestplate"},{"key":"29016","group":"moons","name":"Blue Moon tassets","fixed":29016,"broken":[[29061,1]],"coins":1500000,"slug":"blue-moon-tassets"},{"key":"29010","group":"moons","name":"Eclipse Moon helm","fixed":29010,"broken":[[29055,1]],"coins":1500000,"slug":"eclipse-moon-helm"},{"key":"29004","group":"moons","name":"Eclipse Moon chestplate","fixed":29004,"broken":[[29049,1]],"coins":1500000,"slug":"eclipse-moon-chestplate"},{"key":"29007","group":"moons","name":"Eclipse Moon tassets","fixed":29007,"broken":[[29052,1]],"coins":1500000,"slug":"eclipse-moon-tassets"},{"key":"26382","group":"torva","name":"Torva full helm","fixed":26382,"broken":[[26376,1]],"parts":[[26394,1]],"level":90,"slug":"torva-full-helm"},{"key":"26384","group":"torva","name":"Torva platebody","fixed":26384,"broken":[[26378,1]],"parts":[[26394,2]],"level":90,"slug":"torva-platebody"},{"key":"26386","group":"torva","name":"Torva platelegs","fixed":26386,"broken":[[26380,1]],"parts":[[26394,2]],"level":90,"slug":"torva-platelegs"},{"key":"31145","group":"torva","name":"Torva armour set","fixed":31145,"set":["26382","26384","26386"],"level":90,"slug":"torva-armour-set"}],"torvaLevel":90,"items":{"4708":{"slug":"ahrim-s-hood","name":"Ahrim's hood"},"4710":{"slug":"ahrim-s-staff","name":"Ahrim's staff"},"4712":{"slug":"ahrim-s-robetop","name":"Ahrim's robetop"},"4714":{"slug":"ahrim-s-robeskirt","name":"Ahrim's robeskirt"},"4716":{"slug":"dharok-s-helm","name":"Dharok's helm"},"4718":{"slug":"dharok-s-greataxe","name":"Dharok's greataxe"},"4720":{"slug":"dharok-s-platebody","name":"Dharok's platebody"},"4722":{"slug":"dharok-s-platelegs","name":"Dharok's platelegs"},"4724":{"slug":"guthan-s-helm","name":"Guthan's helm"},"4726":{"slug":"guthan-s-warspear","name":"Guthan's warspear"},"4728":{"slug":"guthan-s-platebody","name":"Guthan's platebody"},"4730":{"slug":"guthan-s-chainskirt","name":"Guthan's chainskirt"},"4732":{"slug":"karil-s-coif","name":"Karil's coif"},"4734":{"slug":"karil-s-crossbow","name":"Karil's crossbow"},"4736":{"slug":"karil-s-leathertop","name":"Karil's leathertop"},"4738":{"slug":"karil-s-leatherskirt","name":"Karil's leatherskirt"},"4745":{"slug":"torag-s-helm","name":"Torag's helm"},"4747":{"slug":"torag-s-hammers","name":"Torag's hammers"},"4749":{"slug":"torag-s-platebody","name":"Torag's platebody"},"4751":{"slug":"torag-s-platelegs","name":"Torag's platelegs"},"4753":{"slug":"verac-s-helm","name":"Verac's helm"},"4755":{"slug":"verac-s-flail","name":"Verac's flail"},"4757":{"slug":"verac-s-brassard","name":"Verac's brassard"},"4759":{"slug":"verac-s-plateskirt","name":"Verac's plateskirt"},"4860":{"slug":"ahrim-s-hood-0","name":"Ahrim's hood 0"},"4866":{"slug":"ahrim-s-staff-0","name":"Ahrim's staff 0"},"4872":{"slug":"ahrim-s-robetop-0","name":"Ahrim's robetop 0"},"4878":{"slug":"ahrim-s-robeskirt-0","name":"Ahrim's robeskirt 0"},"4884":{"slug":"dharok-s-helm-0","name":"Dharok's helm 0"},"4890":{"slug":"dharok-s-greataxe-0","name":"Dharok's greataxe 0"},"4896":{"slug":"dharok-s-platebody-0","name":"Dharok's platebody 0"},"4902":{"slug":"dharok-s-platelegs-0","name":"Dharok's platelegs 0"},"4908":{"slug":"guthan-s-helm-0","name":"Guthan's helm 0"},"4914":{"slug":"guthan-s-warspear-0","name":"Guthan's warspear 0"},"4920":{"slug":"guthan-s-platebody-0","name":"Guthan's platebody 0"},"4926":{"slug":"guthan-s-chainskirt-0","name":"Guthan's chainskirt 0"},"4932":{"slug":"karil-s-coif-0","name":"Karil's coif 0"},"4938":{"slug":"karil-s-crossbow-0","name":"Karil's crossbow 0"},"4944":{"slug":"karil-s-leathertop-0","name":"Karil's leathertop 0"},"4950":{"slug":"karil-s-leatherskirt-0","name":"Karil's leatherskirt 0"},"4956":{"slug":"torag-s-helm-0","name":"Torag's helm 0"},"4962":{"slug":"torag-s-hammers-0","name":"Torag's hammers 0"},"4968":{"slug":"torag-s-platebody-0","name":"Torag's platebody 0"},"4974":{"slug":"torag-s-platelegs-0","name":"Torag's platelegs 0"},"4980":{"slug":"verac-s-helm-0","name":"Verac's helm 0"},"4986":{"slug":"verac-s-flail-0","name":"Verac's flail 0"},"4992":{"slug":"verac-s-brassard-0","name":"Verac's brassard 0"},"4998":{"slug":"verac-s-plateskirt-0","name":"Verac's plateskirt 0"},"12873":{"slug":"guthan-s-armour-set","name":"Guthan's armour set"},"12875":{"slug":"verac-s-armour-set","name":"Verac's armour set"},"12877":{"slug":"dharok-s-armour-set","name":"Dharok's armour set"},"12879":{"slug":"torag-s-armour-set","name":"Torag's armour set"},"12881":{"slug":"ahrim-s-armour-set","name":"Ahrim's armour set"},"12883":{"slug":"karil-s-armour-set","name":"Karil's armour set"},"26376":{"slug":"torva-full-helm-damaged","name":"Torva full helm (damaged)"},"26378":{"slug":"torva-platebody-damaged","name":"Torva platebody (damaged)"},"26380":{"slug":"torva-platelegs-damaged","name":"Torva platelegs (damaged)"},"26382":{"slug":"torva-full-helm","name":"Torva full helm"},"26384":{"slug":"torva-platebody","name":"Torva platebody"},"26386":{"slug":"torva-platelegs","name":"Torva platelegs"},"26394":{"slug":"bandosian-components","name":"Bandosian components"},"29004":{"slug":"eclipse-moon-chestplate","name":"Eclipse Moon chestplate"},"29007":{"slug":"eclipse-moon-tassets","name":"Eclipse Moon tassets"},"29010":{"slug":"eclipse-moon-helm","name":"Eclipse Moon helm"},"29013":{"slug":"blue-moon-chestplate","name":"Blue Moon chestplate"},"29016":{"slug":"blue-moon-tassets","name":"Blue Moon tassets"},"29019":{"slug":"blue-moon-helm","name":"Blue Moon helm"},"29022":{"slug":"blood-moon-chestplate","name":"Blood Moon chestplate"},"29025":{"slug":"blood-moon-tassets","name":"Blood Moon tassets"},"29028":{"slug":"blood-moon-helm","name":"Blood Moon helm"},"29049":{"slug":"eclipse-moon-chestplate-broken","name":"Eclipse Moon chestplate (broken)"},"29052":{"slug":"eclipse-moon-tassets-broken","name":"Eclipse Moon tassets (broken)"},"29055":{"slug":"eclipse-moon-helm-broken","name":"Eclipse Moon helm (broken)"},"29058":{"slug":"blue-moon-chestplate-broken","name":"Blue Moon chestplate (broken)"},"29061":{"slug":"blue-moon-tassets-broken","name":"Blue Moon tassets (broken)"},"29064":{"slug":"blue-moon-helm-broken","name":"Blue Moon helm (broken)"},"29067":{"slug":"blood-moon-chestplate-broken","name":"Blood Moon chestplate (broken)"},"29070":{"slug":"blood-moon-tassets-broken","name":"Blood Moon tassets (broken)"},"29073":{"slug":"blood-moon-helm-broken","name":"Blood Moon helm (broken)"},"31145":{"slug":"torva-armour-set","name":"Torva armour set"}}}</script>
+    <script src="/assets/repair.js?v=3"></script>
+</body>
+
+</html>

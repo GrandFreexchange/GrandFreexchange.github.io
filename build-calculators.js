@@ -10,7 +10,7 @@ const path = require('path');
 
 const OUTPUT_DIR = path.join(__dirname, 'calculators');
 const dashboardTemplate = fs.readFileSync(path.join(__dirname, 'dev.html'), 'utf8');
-const CALC_ASSET_VERSION = 2;
+const CALC_ASSET_VERSION = 3;
 
 // ---------- Skill data ----------
 // Each action: name, level, xp, inputs/outputs as [itemId, quantity], optional coin fee.
@@ -244,7 +244,7 @@ const siteHeader = templatePart(/<header class="site-header">[\s\S]*?<\/header>/
     .replace(/<h1 class="site-title">(.*?)<\/h1>/, '<p class="site-title">$1</p>');
 const siteFooter = templatePart(/<footer class="site-footer">[\s\S]*?<\/footer>/, 'site footer');
 
-function page({ title, description, canonical, breadcrumb, body, data }) {
+function page({ title, description, canonical, breadcrumb, body, data, script = 'calc.js' }) {
     const crumbs = [{ name: 'Home', url: 'https://osrs.lol/' }, ...breadcrumb];
     const breadcrumbSchema = {
         '@context': 'https://schema.org',
@@ -300,7 +300,7 @@ ${body}
         ${siteFooter}
     </div>
     <script type="application/json" id="calc-data">${inlineJSON(data)}</script>
-    <script src="/assets/calc.js?v=${CALC_ASSET_VERSION}"></script>
+    <script src="/assets/${script}?v=${CALC_ASSET_VERSION}"></script>
 </body>
 
 </html>
@@ -487,6 +487,16 @@ ${levelForm(1, 99)}
                 </ul>
             </section>
 
+            <section class="card p-4 md:p-6 mb-6" aria-labelledby="money-calcs-title">
+                <h2 id="money-calcs-title" class="calc-h2">Money-making calculators</h2>
+                <ul class="calc-cards">
+                <li><a href="/calculators/barrows-repair" class="calc-card">
+                    <img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="28" height="28">
+                    <span><strong>Barrows repair calculator</strong><span>Profit from buying broken Barrows, Moons of Peril or Torva armour, repairing it and selling it.</span></span>
+                </a></li>
+                </ul>
+            </section>
+
             <section class="card p-4 md:p-6" aria-labelledby="xp-table">
                 <h2 id="xp-table" class="calc-h2">OSRS XP table</h2>
                 <p class="text-secondary mb-4">The total XP needed for every level from 1 to 99. Level 99 needs ${fmt(XP_TABLE[99])} XP, and level 92 (${fmt(XP_TABLE[92])} XP) is roughly half of that. A skill can keep earning XP up to 200,000,000.</p>
@@ -504,7 +514,7 @@ ${levelForm(1, 99)}
 
     return page({
         title: 'OSRS Skill Calculators & XP Table - Cost to 99 at Live GE Prices',
-        description: 'Free OSRS skill calculators and XP table: XP to any level, plus Prayer, Construction, Herblore and Cooking costs at live Grand Exchange prices.',
+        description: 'Free OSRS skill calculators and XP table: XP to any level, Prayer, Construction, Herblore and Cooking costs, and Barrows repair profit at live GE prices.',
         canonical: 'https://osrs.lol/calculators/',
         breadcrumb: [{ name: 'Skill calculators', url: 'https://osrs.lol/calculators/' }],
         body,
@@ -512,13 +522,215 @@ ${levelForm(1, 99)}
     });
 }
 
+// ---------- Repair calculator: buy broken armour, repair it, sell it ----------
+// Repair costs are for a fully broken piece. An armour stand in your house takes 0.5% off per
+// Smithing level (cost × (1 − level / 200)); Bob and the other NPCs charge the full price.
+// Torva is repaired with Bandosian components instead of coins, which needs 90 Smithing.
+
+const BARROWS_SLOTS = { helm: 60000, body: 90000, legs: 80000, weapon: 100000 };
+const BARROWS = [
+    // brother, set id, [name, slot, repaired id, broken id] (pieces in set order)
+    ["Ahrim's", 12881, [['hood', 'helm', 4708, 4860], ['robetop', 'body', 4712, 4872], ['robeskirt', 'legs', 4714, 4878], ['staff', 'weapon', 4710, 4866]]],
+    ["Dharok's", 12877, [['helm', 'helm', 4716, 4884], ['platebody', 'body', 4720, 4896], ['platelegs', 'legs', 4722, 4902], ['greataxe', 'weapon', 4718, 4890]]],
+    ["Guthan's", 12873, [['helm', 'helm', 4724, 4908], ['platebody', 'body', 4728, 4920], ['chainskirt', 'legs', 4730, 4926], ['warspear', 'weapon', 4726, 4914]]],
+    ["Karil's", 12883, [['coif', 'helm', 4732, 4932], ['leathertop', 'body', 4736, 4944], ['leatherskirt', 'legs', 4738, 4950], ['crossbow', 'weapon', 4734, 4938]]],
+    ["Torag's", 12879, [['helm', 'helm', 4745, 4956], ['platebody', 'body', 4749, 4968], ['platelegs', 'legs', 4751, 4974], ['hammers', 'weapon', 4747, 4962]]],
+    ["Verac's", 12875, [['helm', 'helm', 4753, 4980], ['brassard', 'body', 4757, 4992], ['plateskirt', 'legs', 4759, 4998], ['flail', 'weapon', 4755, 4986]]]
+];
+const MOON_COST = 1500000;
+const MOONS = [
+    // set, [piece, repaired id, broken id]
+    ['Blood moon', [['helm', 29028, 29073], ['chestplate', 29022, 29067], ['tassets', 29025, 29070]]],
+    ['Blue moon', [['helm', 29019, 29064], ['chestplate', 29013, 29058], ['tassets', 29016, 29061]]],
+    ['Eclipse moon', [['helm', 29010, 29055], ['chestplate', 29004, 29049], ['tassets', 29007, 29052]]]
+];
+const BANDOSIAN_COMPONENTS = 26394;
+const TORVA = { set: 31145, pieces: [['full helm', 26382, 26376, 1], ['platebody', 26384, 26378, 2], ['platelegs', 26386, 26380, 2]] };
+const TORVA_LEVEL = 90;
+
+const REPAIR_GROUPS = [
+    { id: 'barrows', label: 'Barrows' },
+    { id: 'moons', label: 'Moons of Peril' },
+    { id: 'torva', label: 'Torva' }
+];
+
+function repairRows() {
+    const rows = [];
+    for (const [brother, setId, pieces] of BARROWS) {
+        const keys = pieces.map(([piece, slot, fixed, broken]) => {
+            rows.push({ key: `${fixed}`, group: 'barrows', name: `${brother} ${piece}`, fixed, broken: [[broken, 1]], coins: BARROWS_SLOTS[slot] });
+            return `${fixed}`;
+        });
+        rows.push({ key: `${setId}`, group: 'barrows', name: `${brother} armour set`, fixed: setId, set: keys });
+    }
+    for (const [set, pieces] of MOONS) {
+        for (const [piece, fixed, broken] of pieces) {
+            rows.push({ key: `${fixed}`, group: 'moons', name: `${set} ${piece}`, fixed, broken: [[broken, 1]], coins: MOON_COST });
+        }
+    }
+    const torvaKeys = TORVA.pieces.map(([piece, fixed, broken, components]) => {
+        rows.push({ key: `${fixed}`, group: 'torva', name: `Torva ${piece}`, fixed, broken: [[broken, 1]], parts: [[BANDOSIAN_COMPONENTS, components]], level: TORVA_LEVEL });
+        return `${fixed}`;
+    });
+    rows.push({ key: `${TORVA.set}`, group: 'torva', name: 'Torva armour set', fixed: TORVA.set, set: torvaKeys, level: TORVA_LEVEL });
+    // Names come from the item pages so they match the GE (e.g. "Blood Moon helm")
+    return rows.map(r => ({ ...r, name: itemInfo(r.fixed).name, slug: itemSlug(r.fixed) }));
+}
+
+const standCost = (coins, level) => Math.round(coins * (1 - level / 200));
+
+function repairPage() {
+    const rows = repairRows();
+    const byKey = new Map(rows.map(r => [r.key, r]));
+    const defaultLevel = 99;
+    // Coins for one row at the default settings (armour stand, Smithing 99); Torva and sets of Torva cost components
+    const coinsFor = r => r.set ? r.set.reduce((sum, k) => sum + coinsFor(byKey.get(k)), 0) : r.coins ? standCost(r.coins, defaultLevel) : null;
+    const repairText = r => {
+        if (r.parts || (r.set && byKey.get(r.set[0]).parts)) {
+            const count = r.set ? r.set.reduce((sum, k) => sum + byKey.get(k).parts[0][1], 0) : r.parts[0][1];
+            return `${count} × components`;
+        }
+        return fmt(coinsFor(r));
+    };
+
+    const tableRows = rows.map(r => `
+                        <tr data-group="${r.group}"${r.set ? ' class="is-set"' : ''}>
+                            <td><div class="calc-item"><img src="${iconUrl(r.fixed)}" alt="" width="24" height="24" loading="lazy"><div><a href="/items/${r.slug}">${escapeHtml(r.name)}</a></div></div></td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">${repairText(r)}</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                            <td class="text-right">…</td>
+                        </tr>`).join('');
+
+    const costRows = Object.entries(BARROWS_SLOTS).map(([slot, coins]) => `
+                        <tr><td>Barrows ${slot}</td><td class="text-right">${fmt(coins)}</td><td class="text-right">${fmt(standCost(coins, 70))}</td><td class="text-right">${fmt(standCost(coins, 99))}</td></tr>`).join('')
+        + `
+                        <tr><td>Moon helm, chestplate or tassets</td><td class="text-right">${fmt(MOON_COST)}</td><td class="text-right">${fmt(standCost(MOON_COST, 70))}</td><td class="text-right">${fmt(standCost(MOON_COST, 99))}</td></tr>`;
+
+    const setCoins = Object.values(BARROWS_SLOTS).reduce((a, b) => a + b, 0);
+    const others = SKILLS.map(s => `<a href="/calculators/${s.slug}">${s.name}</a>`).join(', ');
+
+    const body = `
+        <div class="mb-6">
+            <h1 class="page-title calc-title"><img src="https://oldschool.runescape.wiki/images/Smithing_icon.png" alt="" width="32" height="32">OSRS Barrows repair calculator</h1>
+            <p class="page-lead">Buy broken Barrows, Moons of Peril or Torva armour on the Grand Exchange, repair it, and sell it. The profit on every piece and set at live GE prices.</p>
+        </div>
+
+        <main>
+            <section class="card p-4 md:p-6 mb-6" aria-label="Barrows repair calculator">
+                <div class="calc-form">
+                    <div class="calc-field">
+                        <label for="repair-level">Smithing level</label>
+                        <input id="repair-level" class="field" type="number" inputmode="numeric" min="1" max="104" value="${defaultLevel}">
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-where">Repair at</label>
+                        <select id="repair-where" class="field">
+                            <option value="stand">Armour stand</option>
+                            <option value="npc">NPC (Bob)</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-prices">Prices</label>
+                        <select id="repair-prices" class="field">
+                            <option value="instant">Instant</option>
+                            <option value="patient">Patient</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label for="repair-group">Show</label>
+                        <select id="repair-group" class="field">
+                            <option value="all">All armour</option>
+${REPAIR_GROUPS.map(g => `                            <option value="${g.id}">${g.label}</option>`).join('\n')}
+                        </select>
+                    </div>
+                </div>
+                <p class="calc-summary" id="repair-summary" aria-live="polite">At Smithing ${defaultLevel}, an armour stand repairs for <strong class="text-accent">${100 - defaultLevel / 2}%</strong> less than Bob: a full Barrows set costs ${fmt(standCost(setCoins, defaultLevel))} instead of ${fmt(setCoins)}.</p>
+                <div class="calc-options">
+                    <label class="calc-check"><input id="repair-sets" type="checkbox" class="field" checked> Show full armour sets</label>
+                    <label class="calc-check"><input id="repair-profitable" type="checkbox" class="field"> Only show a profit</label>
+                </div>
+
+                <div class="calc-status" id="calc-status" aria-live="polite">Loading live GE prices…</div>
+                <p class="calc-best" id="calc-best" aria-live="polite"></p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm calc-table repair-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left" data-sort="name">Item</th>
+                                <th scope="col" class="text-right" data-sort="buy" tabindex="0">Buy broken</th>
+                                <th scope="col" class="text-right" data-sort="repair" tabindex="0">Repair</th>
+                                <th scope="col" class="text-right" data-sort="sell" tabindex="0">Sell repaired</th>
+                                <th scope="col" class="text-right" data-sort="profit" tabindex="0">Profit</th>
+                                <th scope="col" class="text-right" data-sort="roi" tabindex="0">ROI</th>
+                                <th scope="col" class="text-right" data-sort="volume" tabindex="0">Traded / day</th>
+                            </tr>
+                        </thead>
+                        <tbody id="repair-body">${tableRows}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="calc-legend">Buy broken is what the broken pieces cost, Sell repaired is what the repaired item sells for after the 2% GE tax. Instant buys at the latest instant-buy price and sell at the instant-sell price; patient offers buy and sell at the other end of the margin, which is cheaper but slower. Traded / day is how many of the broken item changed hands on the GE in the last 24 hours. Click a column to sort.</p>
+            </section>
+
+            <section class="card p-6 md:p-10 prose-site">
+                <h2>How Barrows repair flipping works</h2>
+                <p>Barrows equipment can only be traded when it is fully repaired or fully broken (the "0" versions). Broken pieces often sell for less than a repaired piece minus the repair fee, so you can buy them on the Grand Exchange, repair them, and sell them back. This calculator does that sum for every piece using the latest real trades from the <a href="https://prices.runescape.wiki/">OSRS Wiki price API</a>, the same data as the osrs.lol <a href="/">price dashboard</a>.</p>
+                <p>Bob in Lumbridge, Dunstan in Burthorpe and the other repair NPCs charge the full price. Repairing at an armour stand in your player-owned house (level 55 Construction in the workshop) takes 0.5% off for every Smithing level, so at level 99 it is just over half price. Boosted Smithing levels count.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm calc-table">
+                        <thead><tr><th scope="col" class="text-left">Fully broken piece</th><th scope="col" class="text-right">NPC repair</th><th scope="col" class="text-right">Armour stand, 70 Smithing</th><th scope="col" class="text-right">Armour stand, 99 Smithing</th></tr></thead>
+                        <tbody>${costRows}
+                        </tbody>
+                    </table>
+                </div>
+                <p>A full Barrows set (helm, body, legs and weapon) costs ${fmt(setCoins)} to repair with an NPC and ${fmt(standCost(setCoins, 99))} at an armour stand with 99 Smithing.</p>
+                <h2>Blood moon, Blue moon and Eclipse moon armour</h2>
+                <p>The Moons of Peril armour from the Lunar Chest degrades like Barrows equipment and breaks after about 45 hours of combat. Repairing a broken helm, chestplate or tassets costs ${fmt(MOON_COST)} with an NPC, or ${fmt(standCost(MOON_COST, 99))} at an armour stand with 99 Smithing. Broken moon pieces trade in small numbers, so check Traded / day before you buy.</p>
+                <h2>Torva armour</h2>
+                <p>Damaged Torva from Nex is repaired with Bandosian components at level ${TORVA_LEVEL} Smithing: one for the full helm and two each for the platebody and platelegs. The calculator prices the components at the live GE price, and greys out Torva below level ${TORVA_LEVEL}.</p>
+                <h2>Buying pieces or whole sets</h2>
+                <p>The armour set rows buy all four broken pieces of one brother (or the three Torva pieces), repair them, and sell them as a set from the Grand Exchange clerk, which packs them for free. Sets sometimes sell for more than the pieces added up, sometimes for less, so compare the set row with its pieces.</p>
+                <h2>Tips</h2>
+                <p>Margins move quickly and many broken pieces trade only a few times a day, so a patient offer can take hours to fill. Buy limits apply to broken pieces too. The GE tax is 2% of the sell price, capped at 5m per item, and is already taken off.</p>
+                <h2>More calculators</h2>
+                <p>See the <a href="/calculators/">skill calculators</a> (${others}) or the <a href="/merchanting">merchanting guide</a>.</p>
+            </section>
+        </main>
+`;
+
+    const ids = new Set();
+    rows.forEach(r => { ids.add(r.fixed); (r.broken || []).forEach(([id]) => ids.add(id)); (r.parts || []).forEach(([id]) => ids.add(id)); });
+
+    return page({
+        title: 'OSRS Barrows Repair Calculator - Repair Cost & Profit (Live GE Prices)',
+        description: 'OSRS Barrows repair calculator: buy broken Barrows, Blood moon, Blue moon, Eclipse moon or Torva armour, repair it at Bob or an armour stand, and see the profit at live GE prices.',
+        canonical: 'https://osrs.lol/calculators/barrows-repair',
+        breadcrumb: [
+            { name: 'Skill calculators', url: 'https://osrs.lol/calculators/' },
+            { name: 'Barrows repair calculator', url: 'https://osrs.lol/calculators/barrows-repair' }
+        ],
+        body,
+        data: {
+            rows: rows.map(({ slug, ...r }) => ({ ...r, slug })),
+            torvaLevel: TORVA_LEVEL,
+            items: Object.fromEntries([...ids].map(id => [id, itemInfo(id)]))
+        },
+        script: 'repair.js'
+    });
+}
+
 // ---------- Write ----------
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), hubPage());
+fs.writeFileSync(path.join(OUTPUT_DIR, 'barrows-repair.html'), repairPage());
 for (const skill of SKILLS) {
     fs.writeFileSync(path.join(OUTPUT_DIR, `${skill.slug}.html`), skillPage(skill));
 }
-console.log(`Wrote ${SKILLS.length + 1} calculator pages to ${OUTPUT_DIR}`);
+console.log(`Wrote ${SKILLS.length + 2} calculator pages to ${OUTPUT_DIR}`);
 
 module.exports = { SKILLS };

@@ -270,3 +270,8 @@
 }
 
 .xp-table td:first-child { color: var(--accent-gold); font-weight: 600; }
+
+/* ---------- Barrows repair calculator ---------- */
+.repair-table tr.is-set .calc-item > div > a { font-weight: 600; }
+
+.repair-lock { color: var(--chart-red); }
