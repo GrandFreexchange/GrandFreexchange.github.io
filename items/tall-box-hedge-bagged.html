@@ -488,7 +488,7 @@
             <div class="flex flex-col md:flex-row justify-center items-center gap-4">
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
-                        <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10m</span>
+                        <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
                             GP</span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Tall box hedge (bagged)</h2>
             <p class="text-secondary italic mb-4">“You can plant this in your garden.”</p>
-            <p class="mb-4">On 2026-10-27 16:01 UTC, Tall box hedge (bagged) was trading on the Grand Exchange at 115,661 GP (high) and 110,154 GP (low), with 20 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 3,194 GP per item, or 31,940,000 GP for a full buy limit of 10,000. Buying one at the high price and casting High Level Alchemy on it lost 55,802 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:08 UTC, Tall box hedge (bagged) was trading on the Grand Exchange at 115,661 GP (high) and 110,154 GP (low), with 20 traded in the previous 24 hours. After the 2% GE tax, buying at the low price and selling at the high price made about 3,194 GP per item, or 31,940,000 GP for a full buy limit of 10,000. Buying one at the high price and casting High Level Alchemy on it lost 55,801 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2167,20 +2167,24 @@
                 budgetValue.innerHTML = `<span class="text-accent">High roller</span> (no limit)`;
             } else {
                 budgetValue.style.color = ''; // Reset color
-                let displayText = '';
+                let number = '';
+                let unit = '';
                 if (value >= 1000000000) {
-                    displayText = (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'b';
+                    number = (value / 1000000000).toFixed(1).replace(/\.0$/, '');
+                    unit = 'b';
                 } else if (value >= 1000000) {
-                    displayText = (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+                    number = (value / 1000000).toFixed(1).replace(/\.0$/, '');
+                    unit = 'm';
                 } else {
-                    displayText = (value / 1000).toFixed(0) + 'k';
+                    number = (value / 1000).toFixed(0);
+                    unit = 'k';
                 }
 
-                // 10m and up shows green, like the game's green cash stack
+                // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${displayText}</span> GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
                 } else {
-                    budgetValue.textContent = `${displayText} GP`;
+                    budgetValue.textContent = `${number}${unit} GP`;
                 }
             }
             filterItemsByBudget();

@@ -488,7 +488,7 @@
             <div class="flex flex-col md:flex-row justify-center items-center gap-4">
                 <div class="w-full md:w-1/2 lg:w-2/5">
                     <label for="budget-slider" class="block text-sm font-medium text-secondary text-center mb-1">Budget:
-                        <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10m</span>
+                        <span id="budget-value" class="text-primary font-bold"><span class="text-profit">10</span>m
                             GP</span></label>
                     <input id="budget-slider" type="range" min="0" max="18" value="7" step="1" autocomplete="off"
                         class="w-full h-2 rounded-lg appearance-none cursor-pointer">
@@ -535,11 +535,11 @@
                             <h1 id="item-name-title" class="text-2xl font-bold text-primary">Inquisitor&#39;s armour set</h1>
                         </div>
                         <div id="price-info" class="space-y-3 text-lg">
-                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="410000000" data-target="sell">410,000,000 GP</span></p>
-                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="408846724" data-target="buy">408,846,724 GP</span></p>
+                    <p><strong>High Price:</strong> <span class="text-profit clickable-price" data-price="415012228" data-target="sell">415,012,228 GP</span></p>
+                    <p><strong>Low Price:</strong> <span class="text-loss clickable-price" data-price="413000000" data-target="buy">413,000,000 GP</span></p>
                     <hr class="my-3 border-custom">
-                    <p><strong>Net Margin:</strong> <span class="text-accent">-3,846,724 GP (-0.94%)</span></p>
-                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-3,846,724 GP</span></p>
+                    <p><strong>Net Margin:</strong> <span class="text-accent">-2,987,772 GP (-0.72%)</span></p>
+                    <p><strong>Profit/Flip:</strong> <span class="text-loss font-bold">-2,987,772 GP</span></p>
                 </div>
                         <div id="additional-info" class="space-y-3 text-base pt-3 border-t border-custom">
                 <div class="flex items-center justify-between">
@@ -783,7 +783,7 @@
         <section id="item-details" class="mt-8 card p-6">
             <h2 class="text-2xl font-bold section-title mb-3">About Inquisitor&#39;s armour set</h2>
             <p class="text-secondary italic mb-4">“A set containing an Inquisitor&#39;s great helm, Inquisitor&#39;s hauberk and Inquisitor&#39;s plateskirt.”</p>
-            <p class="mb-4">On 2026-10-27 16:01 UTC, Inquisitor&#39;s armour set was trading on the Grand Exchange at 410,000,000 GP (high) and 408,846,724 GP (low), with 28 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 409,700,141 GP after paying for the nature rune.</p>
+            <p class="mb-4">On 2026-10-27 16:08 UTC, Inquisitor&#39;s armour set was trading on the Grand Exchange at 415,012,228 GP (high) and 413,000,000 GP (low), with 28 traded in the previous 24 hours. At those prices the margin did not cover the 2% GE tax, so it was not a profitable flip. Buying one at the high price and casting High Level Alchemy on it lost 414,712,368 GP after paying for the nature rune.</p>
             <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                     <dt class="text-sm text-secondary">Buy limit</dt>
@@ -2171,20 +2171,24 @@
                 budgetValue.innerHTML = `<span class="text-accent">High roller</span> (no limit)`;
             } else {
                 budgetValue.style.color = ''; // Reset color
-                let displayText = '';
+                let number = '';
+                let unit = '';
                 if (value >= 1000000000) {
-                    displayText = (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'b';
+                    number = (value / 1000000000).toFixed(1).replace(/\.0$/, '');
+                    unit = 'b';
                 } else if (value >= 1000000) {
-                    displayText = (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+                    number = (value / 1000000).toFixed(1).replace(/\.0$/, '');
+                    unit = 'm';
                 } else {
-                    displayText = (value / 1000).toFixed(0) + 'k';
+                    number = (value / 1000).toFixed(0);
+                    unit = 'k';
                 }
 
-                // 10m and up shows green, like the game's green cash stack
+                // 10m and up shows the number green, like the game's green cash stack; the unit stays white
                 if (value >= 10000000) {
-                    budgetValue.innerHTML = `<span class="text-profit">${displayText}</span> GP`;
+                    budgetValue.innerHTML = `<span class="text-profit">${number}</span>${unit} GP`;
                 } else {
-                    budgetValue.textContent = `${displayText} GP`;
+                    budgetValue.textContent = `${number}${unit} GP`;
                 }
             }
             filterItemsByBudget();
