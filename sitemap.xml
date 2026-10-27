@@ -57,6 +57,12 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://osrs.lol/calculators/barrows-repair</loc>
+        <lastmod>2026-10-27</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://osrs.lol/calculators/herblore</loc>
         <lastmod>2026-10-27</lastmod>
         <changefreq>daily</changefreq>
