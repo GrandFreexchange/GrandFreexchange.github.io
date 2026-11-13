@@ -31,8 +31,38 @@
     <link rel="stylesheet" href="/assets/site.css?v=3">
     <script src="/assets/theme.js"></script>
     <style>
-        :root { --crimson: #dc143c; }
+        /* Crimson theme for the Hardcore section. The shared header and footer keep the site gold;
+           --table-gold keeps the price table's original gold Margin column. */
+        :root {
+            --crimson: #dc143c;
+            --table-gold: var(--accent-gold);
+        }
         html[data-theme="light"] { --crimson: #b0102f; }
+        .hc-theme {
+            --accent-gold: #f0405f;          /* crimson, lightened so text stays readable on dark cards */
+            --accent-gold-hover: #ff6680;
+            --focus-ring: #f0405f;
+            --hc-glow: 220, 20, 60;
+        }
+        html[data-theme="light"] .hc-theme {
+            --accent-gold: #b0102f;
+            --accent-gold-hover: #8c0b24;
+            --focus-ring: #b0102f;
+            --hc-glow: 176, 16, 47;
+        }
+        .hc-theme .page-title {
+            color: var(--accent-gold);
+            text-shadow: 0 0 18px rgba(var(--hc-glow), 0.45);
+        }
+        html[data-theme="light"] .hc-theme .page-title { text-shadow: none; }
+        main.hc-theme {
+            border-color: rgba(var(--hc-glow), 0.55);
+            border-top: 4px solid var(--crimson);
+        }
+        .hc-theme.prose-site h2 { color: var(--accent-gold); }
+        .hc-theme .facts { border-color: rgba(var(--hc-glow), 0.45); }
+        .hc-theme .market-table thead { border-bottom: 2px solid var(--crimson); }
+        .hc-theme .table-wrap { border-color: rgba(var(--hc-glow), 0.45); }
 
         .prose-site h3 {
             margin-top: 1.5rem;
@@ -77,9 +107,8 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-primary);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
+            box-shadow: 0 0 0 2px rgba(var(--hc-glow), 0.35);
         }
-        html[data-theme="light"] .hc-controls .field { box-shadow: 0 0 0 2px rgba(138, 93, 0, 0.35); }
         html .hc-controls .field:hover,
         html .hc-controls .field:focus { border-color: var(--accent-gold); }
         html .hc-controls select.field { flex: 0 0 auto; width: auto; max-width: 100%; cursor: pointer; }
@@ -127,7 +156,7 @@
         .market-table .col-loss { color: var(--chart-red); }
         .market-table .col-high,
         .market-table .col-profit { color: var(--accent-green); }
-        .market-table .col-margin { color: var(--accent-gold); }
+        .market-table .col-margin { color: var(--table-gold); }
         .market-table .col-volume { color: var(--chart-blue); }
         .market-table .col-main { color: var(--text-secondary); }
         .market-table .empty-row td { text-align: center; color: var(--text-muted); }
@@ -140,12 +169,12 @@
             background-color: var(--bg-main);
             color: var(--text-secondary);
             font-weight: 500;
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 0 2px rgba(var(--hc-glow), 0.2);
         }
         html #hc-more-btn:hover {
             border-color: var(--accent-gold);
             color: var(--accent-gold);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 0 2px rgba(var(--hc-glow), 0.4);
         }
 
         /* World list */
@@ -181,7 +210,7 @@
             </button>
         </header>
 
-        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5">
+        <nav aria-label="Breadcrumb" class="hc-theme text-sm text-secondary mt-5">
             <ol class="flex flex-wrap items-center gap-2">
                 <li><a href="/" class="text-accent hover:underline">Home</a></li>
                 <li aria-hidden="true">›</li>
@@ -189,12 +218,12 @@
             </ol>
         </nav>
 
-        <div class="mt-5 mb-6">
+        <div class="hc-theme mt-5 mb-6">
             <h1 class="page-title">OSRS Hardcore Worlds prices</h1>
             <p class="page-lead">Hardcore Worlds have their own economy, so the Grand Exchange there has its own prices. Here they are live, next to the main game, with the rules and world list below.</p>
         </div>
 
-        <main class="card p-6 md:p-10 prose-site">
+        <main class="hc-theme card p-6 md:p-10 prose-site">
 
             <h2 id="prices">Live Hardcore World GE prices</h2>
             <p>Instant buy and sell prices from the Hardcore Worlds Grand Exchange, with the main game's price beside them. Margin is after the 2% GE tax.</p>
