@@ -679,6 +679,8 @@ function generateAllItemsPage(items) {
 
     // Same fonts, stylesheet, theme script, header and footer as the dashboard, so the directory
     // looks like the rest of the site and keeps the visitor's light/dark choice
+    // Prebuilt Tailwind stylesheet (see tailwind.config.js). It goes last in <head>, after the page's own styles
+    const tailwindLink = sharedTemplatePart(/<link rel="stylesheet" href="\/assets\/tailwind\.css\?v=\d+">/, 'tailwind.css link');
     const siteHead = sharedTemplatePart(/<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">[\s\S]*?<script src="\/assets\/theme\.js"><\/script>/, 'shared <head> assets');
     const siteHeader = sharedTemplatePart(/<header class="site-header">[\s\S]*?<\/header>/, 'site header')
         .replace('<h1 class="site-title">Quick and FREE OSRS GE Flipping Tool</h1>', '<p class="site-title">Quick and FREE OSRS GE Flipping Tool</p>');
@@ -693,7 +695,6 @@ function generateAllItemsPage(items) {
     <meta name="description" content="A comprehensive list of all Old School RuneScape Grand Exchange items with links to their live price analysis.">
     <link rel="canonical" href="https://osrs.lol/items/">
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
-    <script src="https://cdn.tailwindcss.com"></script>
     ${siteHead}
     <style>
         .item-directory a {
@@ -753,6 +754,7 @@ function generateAllItemsPage(items) {
             font-variant-numeric: tabular-nums;
         }
     </style>
+    ${tailwindLink}
 </head>
 <body>
     <div class="container mx-auto max-w-6xl p-4 md:p-8">

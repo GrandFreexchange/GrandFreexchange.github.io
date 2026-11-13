@@ -4,7 +4,8 @@
   "description": "OSRS Grand Exchange flipping tool with SSG",
   "main": "index.html",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "build:css": "tailwindcss -c tailwind.config.js -o assets/tailwind.css --minify"
   },
   "keywords": [
     "osrs",
@@ -17,6 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "html-minifier": "^4.0.0",
-    "javascript-obfuscator": "^5.4.1"
+    "javascript-obfuscator": "^5.4.1",
+    "tailwindcss": "3.4.17"
   }
 }

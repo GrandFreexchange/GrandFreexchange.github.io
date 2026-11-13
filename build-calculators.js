@@ -218,7 +218,7 @@ const itemById = new Map();
 for (const file of fs.readdirSync(path.join(__dirname, 'items'))) {
     if (!file.endsWith('.html') || file === 'index.html') continue;
     const html = fs.readFileSync(path.join(__dirname, 'items', file), 'utf8');
-    const id = html.match(/images\/osrs\/items\/(\d+)\.png/);
+    const id = html.match(/cache\/item\/icon\/(\d+)\.png/);
     const name = html.match(/"position":3,"name":"([^"]*)"/);
     if (id && name && !itemById.has(Number(id[1]))) {
         itemById.set(Number(id[1]), { slug: file.replace(/\.html$/, ''), name: JSON.parse(`"${name[1]}"`) });
@@ -240,6 +240,8 @@ function templatePart(pattern, label) {
 }
 
 const siteHead = templatePart(/<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">[\s\S]*?<script src="\/assets\/theme\.js"><\/script>/, 'shared <head> assets');
+// Prebuilt Tailwind stylesheet (see tailwind.config.js). It goes last of the stylesheets in <head>
+const tailwindLink = templatePart(/<link rel="stylesheet" href="\/assets\/tailwind\.css\?v=\d+">/, 'tailwind.css link');
 const siteHeader = templatePart(/<header class="site-header">[\s\S]*?<\/header>/, 'site header')
     .replace(/<h1 class="site-title">(.*?)<\/h1>/, '<p class="site-title">$1</p>');
 const siteFooter = templatePart(/<footer class="site-footer">[\s\S]*?<\/footer>/, 'site footer');
@@ -279,9 +281,9 @@ function page({ title, description, canonical, breadcrumb, body, data, script = 
     <meta property="og:url" content="${canonical}">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
-    <script src="https://cdn.tailwindcss.com"></script>
     ${siteHead}
     <link rel="stylesheet" href="/assets/calc.css?v=${CALC_ASSET_VERSION}">
+    ${tailwindLink}
     <script type="application/ld+json">${inlineJSON(breadcrumbSchema)}</script>
 </head>
 
