@@ -602,6 +602,12 @@ function generateSitemap(items) {
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>${baseUrl}/hardcore/</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>${baseUrl}/guides/</loc>
         <lastmod>${today}</lastmod>
         <changefreq>weekly</changefreq>

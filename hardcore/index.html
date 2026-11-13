@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JK70X6NNKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JK70X6NNKM');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRS Hardcore Worlds: Live GE Prices, Rules &amp; World List | osrs.lol</title>
+    <meta name="description"
+        content="Live Grand Exchange prices for OSRS Hardcore Worlds, compared with the main game, plus the death rules, Reset vs Transfer, and the full Hardcore world list.">
+    <link rel="canonical" href="https://osrs.lol/hardcore/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OSRS Hardcore Worlds: Live GE Prices, Rules & World List">
+    <meta property="og:description" content="Live Hardcore World Grand Exchange prices next to main game prices, plus the death rules and world list.">
+    <meta property="og:url" content="https://osrs.lol/hardcore/">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://oldschool.runescape.wiki/images/Coins_10000.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/site.css?v=3">
+    <script src="/assets/theme.js"></script>
+    <style>
+        :root { --crimson: #dc143c; }
+        html[data-theme="light"] { --crimson: #b0102f; }
+
+        .prose-site h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        .hc-tag {
+            color: var(--crimson);
+        }
+
+        /* Quick facts, like the guide pages */
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 1.5rem;
+            padding: 16px;
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        @media (min-width: 768px) {
+            .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+        .facts dt { font-size: 0.8125rem; color: var(--text-secondary); }
+        .facts dd { font-weight: 700; line-height: 1.4; }
+
+        /* Price controls: the homepage's search box look */
+        .hc-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        html .hc-controls .field {
+            flex: 1 1 220px;
+            min-height: 42px;
+            padding: 8px 12px;
+            background-color: var(--bg-contrast);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
+        }
+        html[data-theme="light"] .hc-controls .field { box-shadow: 0 0 0 2px rgba(138, 93, 0, 0.35); }
+        html .hc-controls .field:hover,
+        html .hc-controls .field:focus { border-color: var(--accent-gold); }
+        html .hc-controls select.field { flex: 0 0 auto; width: auto; max-width: 100%; cursor: pointer; }
+
+        /* Price table: the dashboard's original market table colours */
+        .table-wrap {
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .market-table {
+            width: 100%;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            border-collapse: collapse;
+        }
+        .market-table thead { background-color: var(--bg-dark); }
+        .market-table th,
+        .market-table td {
+            padding: 9px 10px;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .market-table thead th { color: var(--text-secondary); font-weight: 500; }
+        .market-table th:first-child { text-align: left; }
+        .market-table tbody tr {
+            background-color: var(--bg-contrast);
+            border-top: 1px solid var(--border-color);
+        }
+        .market-table tbody th { font-weight: 500; white-space: normal; min-width: 150px; }
+        .market-table tbody th span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .market-table tbody th img {
+            width: 24px;
+            height: 22px;
+            object-fit: contain;
+            flex: none;
+        }
+        .market-table td { font-variant-numeric: tabular-nums; }
+        .market-table .col-low,
+        .market-table .col-loss { color: var(--chart-red); }
+        .market-table .col-high,
+        .market-table .col-profit { color: var(--accent-green); }
+        .market-table .col-margin { color: var(--accent-gold); }
+        .market-table .col-volume { color: var(--chart-blue); }
+        .market-table .col-main { color: var(--text-secondary); }
+        .market-table .empty-row td { text-align: center; color: var(--text-muted); }
+        .table-note { font-size: 0.875rem; color: var(--text-muted); }
+        .hc-status { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 8px; }
+        .hc-status.is-error { color: var(--accent-red); }
+        html #hc-more-btn {
+            min-height: 0;
+            padding: 8px 24px;
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            font-weight: 500;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+        }
+        html #hc-more-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4);
+        }
+
+        /* World list */
+        .world-table th,
+        .world-table td { text-align: left; }
+        .world-table td:last-child { white-space: normal; }
+    </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://osrs.lol/"},{"@type":"ListItem","position":2,"name":"Hardcore Worlds","item":"https://osrs.lol/hardcore/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do Hardcore Worlds have their own Grand Exchange prices?","acceptedAnswer":{"@type":"Answer","text":"Yes. Hardcore Worlds have a separate economy from the main game, so items trade at different prices. The OSRS Wiki tracks them separately, and osrs.lol shows them live next to main game prices."}},{"@type":"Question","name":"What happens when you die on a Hardcore World?","acceptedAnswer":{"@type":"Answer","text":"After a normal death (you keep 3 items, or 4 with Protect Item) you choose Reset or Transfer. Reset wipes all progress and can be done any number of times. Transfer permanently removes the character from Hardcore Worlds but keeps your protected items and bank."}},{"@type":"Question","name":"Can you trade on Hardcore Worlds?","acceptedAnswer":{"@type":"Answer","text":"Yes. Hardcore World characters are main accounts, not ironmen, so they can trade, use the Grand Exchange and do group PvM with other Hardcore World players."}},{"@type":"Question","name":"When were Hardcore Worlds released?","acceptedAnswer":{"@type":"Answer","text":"Hardcore Worlds came out on 4 November 2026. They are members-only and run on worlds 634 to 674."}}]}</script>
+</head>
+
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+
+        <header class="site-header">
+            <div class="site-banner">
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin">
+                <div class="site-banner-text">
+                    <a href="/" class="main-title"><p class="site-title">Quick and FREE OSRS GE Flipping Tool</p></a>
+                    <p class="site-tagline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
+                        <span>Grand Exchange Live Item Prices &amp; Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                        <span>(osrs.lol)</span>
+                    </p>
+                </div>
+                <img src="https://oldschool.runescape.wiki/images/Coins_10000.png" alt="" width="48" height="48" class="site-coin site-coin-flip">
+            </div>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+        </header>
+
+        <nav aria-label="Breadcrumb" class="text-sm text-secondary mt-5">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="text-accent hover:underline">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">Hardcore Worlds</li>
+            </ol>
+        </nav>
+
+        <div class="mt-5 mb-6">
+            <h1 class="page-title">OSRS Hardcore Worlds prices</h1>
+            <p class="page-lead">Hardcore Worlds have their own economy, so the Grand Exchange there has its own prices. Here they are live, next to the main game, with the rules and world list below.</p>
+        </div>
+
+        <main class="card p-6 md:p-10 prose-site">
+
+            <h2 id="prices">Live Hardcore World GE prices</h2>
+            <p>Instant buy and sell prices from the Hardcore Worlds Grand Exchange, with the main game's price beside them. Margin is after the 2% GE tax.</p>
+
+            <div class="hc-controls">
+                <label for="hc-search" class="sr-only">Search Hardcore items</label>
+                <input id="hc-search" type="search" class="field" placeholder="Search an item…" autocomplete="off">
+                <label for="hc-sort" class="sr-only">Sort by</label>
+                <select id="hc-sort" class="field">
+                    <option value="volume">Most traded (last hour)</option>
+                    <option value="margin">Biggest margin</option>
+                    <option value="above">Dearer than main game</option>
+                    <option value="below">Cheaper than main game</option>
+                    <option value="price">Highest price</option>
+                </select>
+            </div>
+
+            <p id="hc-status" class="hc-status" role="status">Loading Hardcore World prices…</p>
+
+            <div class="table-wrap">
+                <table class="market-table" id="hc-prices">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Low</th>
+                            <th scope="col">High</th>
+                            <th scope="col">Margin</th>
+                            <th scope="col">Volume (1h)</th>
+                            <th scope="col">vs main game</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="empty-row"><td colspan="6">Loading…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-center my-4">
+                <button id="hc-more-btn" type="button" class="btn hidden">Show more</button>
+            </div>
+            <p class="table-note">Low is the latest instant-sell price and High the latest instant-buy price on Hardcore Worlds. "vs main game" compares the Hardcore High with the main game's latest High (hover it to see the main game price). Prices refresh every minute.</p>
+
+            <h2 id="what-are-hardcore-worlds">What are Hardcore Worlds?</h2>
+            <p>Hardcore Worlds are a members-only game mode where each character gets <strong class="hc-tag">one life</strong>. They run on their own servers, with no XP or drop rate boosts and a separate economy from the main game. They have their own Hiscores under Game Modes.</p>
+            <p>Unlike ironmen, Hardcore World characters are normal main accounts, so they can trade, use the Grand Exchange and do group PvM with each other. Their GE is separate from the main game's, which is why prices differ.</p>
+
+            <dl class="facts">
+                <div><dt>Released</dt><dd>4 November 2026</dd></div>
+                <div><dt>Membership</dt><dd>Members only</dd></div>
+                <div><dt>Worlds</dt><dd>32 (634 to 674)</dd></div>
+                <div><dt>Escape crystal</dt><dd>1 free, then 10,000 GP</dd></div>
+            </dl>
+
+            <h2 id="getting-started">How to start on a Hardcore World</h2>
+            <ul>
+                <li>Start on Tutorial Island and speak to <strong>Death's Delegate</strong> near the Magic Instructor's house.</li>
+                <li>That unlocks Death's Domain, where you speak to <strong>Death</strong> to accept his challenge.</li>
+                <li>Every player starts with one free <strong>escape crystal</strong>. More cost 10,000 GP each from Death, Rick at the Wizards' Tower, or the Mysterious Stranger in Ver Sinhaza.</li>
+            </ul>
+
+            <h2 id="death-rules">What happens when you die</h2>
+            <p>A death is handled in two steps. First it works like a normal death: you keep 3 items, or 4 with Protect Item, and PvP deaths follow the usual Wilderness rules. Then you choose <strong>Reset</strong> or <strong>Transfer</strong>.</p>
+            <h3>Reset</h3>
+            <ul>
+                <li>Wipes all progress: quests, skills, items, and the items you protected.</li>
+                <li>You can reset as many times as you like.</li>
+                <li>After each reset there's a 3-day cooldown on getting GP from the Stronghold of Security.</li>
+            </ul>
+            <h3>Transfer</h3>
+            <ul>
+                <li>Permanently removes the character from Hardcore Worlds.</li>
+                <li>You keep your protected items and everything in your bank and storage.</li>
+            </ul>
+            <p>Either way, items that would have gone to your gravestone are deleted.</p>
+
+            <h3>Activities that count as a real death</h3>
+            <p>Hardcore Worlds use the same rules as Hardcore Group Ironman. These are <strong class="hc-tag">unsafe</strong>: Barbarian Assault, the Camelot training room, Chambers of Xeric, the Dream World in Lunar Diplomacy, Fishing Trawler, the Inferno, Magic Training Arena, Nightmare Zone, Pest Control, dying in a player-owned house, the PvM Arena, the TzHaar Fight Cave (except with the elite diary resurrection), random events and the Rogues' Den maze.</p>
+            <h3>Safe activities</h3>
+            <p>Capsizing a boat (other boat deaths are unsafe), Castle Wars, Clan Wars, Emir's Arena, the fourth phase of the Fremennik Trials fight with Koschei, Last Man Standing (disabled at launch), Pete Kayer's Challenges, the Galvek and Glough boss replays, Soul Wars, the TzHaar Fight Pit, and Zulrah only with the Elite Western Provinces Diary resurrection.</p>
+
+            <h2 id="world-list">Hardcore world list</h2>
+            <div class="table-wrap">
+                <table class="market-table world-table">
+                    <thead>
+                        <tr><th scope="col">Location</th><th scope="col">Worlds</th><th scope="col">Activities</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">United States (east)</th><td>634 to 648</td><td>Hardcore: 634, 639–644, 648. Guardians of the Rift 635, Wintertodt 636, Barbarian Assault 637, Group PvM 638 and 647, Forestry 645, Pest Control 646</td></tr>
+                        <tr><th scope="row">United States</th><td>649</td><td>Hardcore</td></tr>
+                        <tr><th scope="row">United States (west)</th><td>650 to 659</td><td>Hardcore: 650–652, 656–657. Blast Furnace 653, Barbarian Assault 654, Group PvM 655 and 659, Tempoross 658</td></tr>
+                        <tr><th scope="row">United Kingdom</th><td>669, 670</td><td>Wintertodt 669, Hardcore 670</td></tr>
+                        <tr><th scope="row">Australia</th><td>671, 672</td><td>Hardcore 671, Group PvM 672</td></tr>
+                        <tr><th scope="row">Brazil</th><td>673</td><td>Hardcore</td></tr>
+                        <tr><th scope="row">Singapore</th><td>674</td><td>Hardcore</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="world-firsts">Broadcasts and World Firsts</h2>
+            <p>Big moments are broadcast to every Hardcore World player, such as deaths of players past certain milestones and World First achievements. World Firsts cover quests, bosses and skill milestones, and more are being revealed after launch.</p>
+
+            <h2 id="faq">Hardcore Worlds FAQ</h2>
+            <h3>Do Hardcore Worlds have their own GE prices?</h3>
+            <p>Yes. The economy is separate from the main game, so the same item can be much dearer or cheaper. The OSRS Wiki tracks Hardcore World trades separately, and the table above shows them live.</p>
+            <h3>Can you trade on Hardcore Worlds?</h3>
+            <p>Yes. Hardcore World characters are main accounts, not ironmen, so they can trade other Hardcore World players and use the Grand Exchange.</p>
+            <h3>Can you flip on Hardcore Worlds?</h3>
+            <p>The same GE tax applies, so a flip needs a margin bigger than the 2% tax. Sort the table by "Biggest margin" to find them, and remember fewer players means lower volume than the main game. Our <a href="/merchanting">merchanting guide</a> covers the basics.</p>
+
+            <p class="table-note">Game information from the <a href="https://oldschool.runescape.wiki/w/Hardcore_Worlds">OSRS Wiki's Hardcore Worlds page</a>. The mode is new, so details may change.</p>
+        </main>
+
+        <footer class="site-footer">
+            <nav aria-label="Footer">
+                <a href="/">Prices</a>
+                <a href="/items/">All items</a>
+                <a href="/hardcore/">Hardcore Worlds</a>
+                <a href="/guides/">Guides</a>
+                <a href="/merchanting">Merchanting guide</a>
+                <a href="/calculators/">Skill calculators</a>
+                <a href="/acknowledgements">Acknowledgements</a>
+            </nav>
+            <p>Price data from the <a href="https://prices.runescape.wiki/" class="link">OSRS Wiki</a>.</p>
+            <p>© osrs.lol. A fan site, not affiliated with Jagex Ltd. RuneScape and OSRS are registered trademarks of Jagex Ltd.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        (function () {
+            // Browser Wiki requests are plain GETs with no custom headers (custom headers break CORS in Firefox)
+            const HC_API = 'https://prices.runescape.wiki/api/v2/osrs-hc';
+            const MAIN_API = 'https://prices.runescape.wiki/api/v1/osrs';
+            const PAGE_SIZE = 50;
+            const REFRESH_MS = 60 * 1000;
+
+            const GE_TAX_RATE = 0.02;
+            const GE_TAX_CAP_PER_ITEM = 5000000;
+            const taxExemptIds = new Set([13190, 1755, 5325, 1785, 2347, 1733, 233, 5341, 8794, 5329, 5343, 1735, 952, 5331]);
+            function geTaxPerItem(id, sellPrice) {
+                if (!sellPrice || taxExemptIds.has(id)) return 0;
+                return Math.min(Math.floor(sellPrice * GE_TAX_RATE), GE_TAX_CAP_PER_ITEM);
+            }
+
+            const searchInput = document.getElementById('hc-search');
+            const sortSelect = document.getElementById('hc-sort');
+            const statusEl = document.getElementById('hc-status');
+            const tbody = document.querySelector('#hc-prices tbody');
+            const moreBtn = document.getElementById('hc-more-btn');
+
+            let mapping = null; // id -> item
+            let rows = [];
+            let shown = PAGE_SIZE;
+            let lastLoaded = 0;
+            let refreshTimer = null;
+
+            async function getJson(url) {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`${response.status} ${url}`);
+                return response.json();
+            }
+            // The API wraps results in "data"; accept either shape in case v2 changes it
+            const unwrap = json => (json && json.data) ? json.data : json;
+
+            async function loadMapping() {
+                if (mapping) return mapping;
+                let list;
+                try {
+                    list = await getJson(`${HC_API}/mapping`);
+                } catch (e) {
+                    list = await getJson(`${MAIN_API}/mapping`);
+                }
+                list = Array.isArray(list) ? list : unwrap(list);
+                mapping = new Map();
+                for (const item of list) mapping.set(Number(item.id), item);
+                return mapping;
+            }
+
+            const fmt = n => (n === null || n === undefined || !isFinite(n)) ? '–' : Math.round(n).toLocaleString('en-US');
+
+            async function load() {
+                try {
+                    const [map, hcLatest, hcHour, mainLatest] = await Promise.all([
+                        loadMapping(),
+                        getJson(`${HC_API}/latest`).then(unwrap),
+                        getJson(`${HC_API}/1h`).then(unwrap).catch(() => ({})),
+                        getJson(`${MAIN_API}/latest`).then(unwrap).catch(() => ({}))
+                    ]);
+                    const next = [];
+                    for (const [idText, p] of Object.entries(hcLatest || {})) {
+                        const id = Number(idText);
+                        const item = map.get(id);
+                        if (!item || (!p.high && !p.low)) continue;
+                        const hour = hcHour[idText] || {};
+                        const volume = (hour.highPriceVolume || 0) + (hour.lowPriceVolume || 0);
+                        const main = mainLatest[idText] || {};
+                        const margin = (p.high && p.low) ? p.high - geTaxPerItem(id, p.high) - p.low : null;
+                        const vsMain = (p.high && main.high) ? (p.high - main.high) / main.high * 100 : null;
+                        next.push({ id, name: item.name, icon: item.icon, low: p.low, high: p.high, margin, volume, mainHigh: main.high || null, vsMain });
+                    }
+                    rows = next;
+                    lastLoaded = Date.now();
+                    const time = new Date(lastLoaded).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    statusEl.textContent = `${rows.length.toLocaleString('en-US')} items traded on Hardcore Worlds. Updated ${time}.`;
+                    statusEl.classList.remove('is-error');
+                    render();
+                } catch (error) {
+                    console.error('Hardcore prices failed', error);
+                    statusEl.textContent = 'Hardcore World prices are unavailable right now. Retrying in a minute…';
+                    statusEl.classList.add('is-error');
+                    if (!rows.length) tbody.innerHTML = '<tr class="empty-row"><td colspan="6">No prices yet.</td></tr>';
+                }
+            }
+
+            const sorters = {
+                volume: (a, b) => b.volume - a.volume || (b.high || 0) - (a.high || 0),
+                margin: (a, b) => (b.margin ?? -Infinity) - (a.margin ?? -Infinity),
+                above: (a, b) => (b.vsMain ?? -Infinity) - (a.vsMain ?? -Infinity),
+                below: (a, b) => (a.vsMain ?? Infinity) - (b.vsMain ?? Infinity),
+                price: (a, b) => (b.high || b.low || 0) - (a.high || a.low || 0)
+            };
+
+            function cell(text, className) {
+                const td = document.createElement('td');
+                td.textContent = text;
+                if (className) td.className = className;
+                return td;
+            }
+
+            function render() {
+                const query = searchInput.value.trim().toLowerCase();
+                let list = query ? rows.filter(r => r.name.toLowerCase().includes(query)) : rows.slice();
+                const sortKey = sortSelect.value;
+                // Comparisons with the main game only make sense for items that actually trade on Hardcore Worlds
+                if (sortKey === 'above' || sortKey === 'below' || sortKey === 'margin') list = list.filter(r => r.volume > 0);
+                list.sort(sorters[sortKey]);
+                const visible = list.slice(0, shown);
+
+                tbody.textContent = '';
+                if (!visible.length) {
+                    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">No matching items.</td></tr>';
+                }
+                for (const r of visible) {
+                    const tr = document.createElement('tr');
+                    const th = document.createElement('th');
+                    th.scope = 'row';
+                    const span = document.createElement('span');
+                    const img = document.createElement('img');
+                    img.src = `https://static.runelite.net/cache/item/icon/${r.id}.png`;
+                    img.alt = '';
+                    img.loading = 'lazy';
+                    img.width = 24;
+                    img.height = 22;
+                    span.append(img, document.createTextNode(r.name));
+                    th.append(span);
+                    tr.append(th,
+                        cell(fmt(r.low), 'col-low'),
+                        cell(fmt(r.high), 'col-high'),
+                        cell(fmt(r.margin), r.margin !== null && r.margin < 0 ? 'col-loss' : 'col-margin'),
+                        cell(fmt(r.volume), 'col-volume'),
+                        cell(r.vsMain === null ? '–' : `${r.vsMain > 0 ? '+' : ''}${r.vsMain.toFixed(1)}%`, r.vsMain === null ? '' : (r.vsMain >= 0 ? 'col-profit' : 'col-loss')));
+                    if (r.mainHigh) tr.lastChild.title = `Main game High: ${fmt(r.mainHigh)}`;
+                    tbody.append(tr);
+                }
+                moreBtn.classList.toggle('hidden', list.length <= shown);
+            }
+
+            searchInput.addEventListener('input', () => { shown = PAGE_SIZE; render(); });
+            sortSelect.addEventListener('change', () => { shown = PAGE_SIZE; render(); });
+            moreBtn.addEventListener('click', () => { shown += PAGE_SIZE; render(); });
+
+            // Refresh every minute while the tab is visible
+            function schedule() {
+                clearInterval(refreshTimer);
+                refreshTimer = setInterval(() => { if (!document.hidden) load(); }, REFRESH_MS);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && Date.now() - lastLoaded > REFRESH_MS) load();
+            });
+
+            load();
+            schedule();
+        })();
+    </script>
+</body>
+
+</html>
