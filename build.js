@@ -642,6 +642,21 @@ ${GUIDES.map(guide => `    <url>
 `;
     }
 
+    // Tile markers (built by build-tile-markers.js): the list first, then one page per pack
+    const tileDir = path.join(__dirname, 'tile-markers');
+    const tilePages = fs.existsSync(tileDir)
+        ? fs.readdirSync(tileDir).filter(f => f.endsWith('.html')).sort((a, b) => (a === 'index.html' ? -1 : b === 'index.html' ? 1 : a.localeCompare(b)))
+        : [];
+    for (const file of tilePages) {
+        sitemap += `    <url>
+        <loc>${baseUrl}/tile-markers/${file === 'index.html' ? '' : file.replace(/\.html$/, '')}</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>${file === 'index.html' ? '0.9' : '0.7'}</priority>
+    </url>
+`;
+    }
+
     for (const item of items) {
         const slug = nameToSlug(item.name);
         const iconUrl = `https://static.runelite.net/cache/item/icon/${item.id}.png`;

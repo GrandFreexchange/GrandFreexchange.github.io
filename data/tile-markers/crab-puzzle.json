@@ -1,0 +1,170 @@
+{
+  "name": "Crab Puzzle",
+  "thumbnail": "https://oldschool.runescape.wiki/images/thumb/Jewelled_Crab.png/120px-Jewelled_Crab.png",
+  "wiki": "https://oldschool.runescape.wiki/w/Jewelled_Crab",
+  "tags": ["cox", "chambers of xeric", "raids"],
+  "source": {
+    "name": "WeDoRaids Discord & @caerulescens on GitHub",
+    "link": "https://discord.gg/wdr",
+    "modified": "Missing tiles added by @caerulescens"
+  },
+  "tiles": [
+    {
+      "regionId": 13395,
+      "regionX": 7,
+      "regionY": 46,
+      "z": 2,
+      "color": "#FF000000",
+      "label":"Anchor"
+    },
+    {
+      "regionId":13395,
+      "regionX":8,
+      "regionY":48,
+      "z":2,
+      "color":"#FF000000",
+      "label":"Anchor"
+    },
+    {
+      "regionId":13395,
+      "regionX":14,
+      "regionY":47,
+      "z":2,
+      "color":"#FFFFFFFF"
+    },
+    {
+      "regionId":13395,
+      "regionX":11,
+      "regionY":56,
+      "z":2,
+      "color":"#FFFF0000"
+    },
+    {
+      "regionId":13395,
+      "regionX":11,
+      "regionY":46,
+      "z":2,
+      "color":"#FF1FA347"
+    },
+    {
+      "regionId":13395,
+      "regionX":10,
+      "regionY":46,
+      "z":2,
+      "color":"#FFFF0000"
+    },
+    {
+      "regionId":13395,
+      "regionX":10,
+      "regionY":47,
+      "z":2,
+      "color":"#FF001DFF"
+    },
+    {
+      "regionId":13139,
+      "regionX":14,
+      "regionY":40,
+      "z":2,
+      "color":"#FF001DFF"
+    },
+    {
+      "regionId":13139,
+      "regionX":17,
+      "regionY":40,
+      "z":2,
+      "color":"#FF1FA347"
+    },
+    {
+      "regionId":13139,
+      "regionX":18,
+      "regionY":40,
+      "z":2,
+      "color":"#FFFFFFFF"
+    },
+    {
+      "regionId":13139,
+      "regionX":22,
+      "regionY":40,
+      "z":2,
+      "color":"#FFFF0000"
+    },
+    {
+      "regionId":13139,
+      "regionX":25,
+      "regionY":41,
+      "z":2,
+      "color":"#FF000000",
+      "label":"Anchor"
+    },
+    {
+      "regionId":13139,
+      "regionX":24,
+      "regionY":39,
+      "z":2,
+      "color":"#FF000000",
+      "label":"Anchor"
+    },
+    {
+      "regionId":13139,
+      "regionX":54,
+      "regionY":42,
+      "z":2,
+      "color":"#FFFF0000"
+    },
+    {
+      "regionId":13139,
+      "regionX":40,
+      "regionY":43,
+      "z":2,
+      "color":"#FFFF0000"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":54,
+      "regionY":43,
+      "z":2,
+      "color":"#FFFFFFFF"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":51,
+      "regionY":47,
+      "z":2,
+      "color":"#FF0000FF"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":52,
+      "regionY":49,
+      "z":2,
+      "color":"#FF0000FF"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":54,
+      "regionY":46,
+      "z":2,
+      "color":"#FF0000FF"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":54,
+      "regionY":47,
+      "z":2,
+      "color":"#FF00FF00"
+    },
+    {
+
+      "regionId":13139,
+      "regionX":41,
+      "regionY":48,
+      "z":2,
+      "color":"#FF00FF00"
+    }
+  ]
+}

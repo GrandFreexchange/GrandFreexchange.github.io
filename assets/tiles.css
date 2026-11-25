@@ -1,0 +1,270 @@
+/* Tile markers section (tile-markers/*.html, built by build-tile-markers.js). Colours come from
+   site.css so both themes work; the map keeps a dark game-like floor in both. */
+
+.tile-h2 {
+    margin-bottom: 16px;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.tile-h3 {
+    margin: 20px 0 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.tile-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+.tile-facts strong { color: var(--text-primary); }
+
+.tile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+    margin-bottom: 20px;
+}
+
+.tile-actions.mt-3 { margin-bottom: 0; }
+
+.tile-recolor,
+.tile-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.tile-recolor input[type="color"] {
+    width: 40px;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background-color: var(--bg-contrast);
+    cursor: pointer;
+}
+
+.tile-recolor input[type="color"]:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Area / floor picker and category filter use the timeframe picker look from site.css */
+.segmented.tile-areas,
+.segmented.tile-categories {
+    flex-wrap: wrap;
+}
+
+.segmented.tile-areas { margin-bottom: 12px; }
+.segmented[hidden] { display: none; }
+
+.tile-count {
+    margin-left: 4px;
+    opacity: 0.75;
+    font-variant-numeric: tabular-nums;
+}
+
+/* The map: a dark floor like the game in both themes, so tile colours look as they do in game */
+.tile-map {
+    max-height: 600px;
+    overflow: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #1a1816;
+}
+
+.tile-map svg {
+    display: block;
+    margin: 0 auto;
+}
+
+.tile-bg { fill: #1a1816; }
+.tile-grid { fill: none; stroke: rgba(229, 224, 219, 0.08); stroke-width: 1; }
+.tile-grid-strong { fill: none; stroke: rgba(229, 224, 219, 0.2); stroke-width: 1; }
+
+.tile-label {
+    fill: #ffffff;
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: #000000;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+}
+
+.tile-north path { fill: #e3b415; }
+.tile-north text { fill: #e5e0db; font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 700; }
+
+.tile-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 6px 16px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.tile-legend li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.tile-swatch {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 3px;
+    border: 2px solid;
+    border-radius: 2px;
+}
+
+.tile-steps {
+    padding-left: 1.4rem;
+    list-style: decimal;
+    color: var(--text-primary);
+}
+
+.tile-steps li { margin-bottom: 6px; }
+.tile-steps li::marker { color: var(--accent-gold); font-weight: 700; }
+
+.tile-json summary {
+    color: var(--accent-gold);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tile-json summary:hover { color: var(--accent-gold-hover); }
+
+.tile-json pre {
+    max-height: 360px;
+    overflow: auto;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-contrast);
+    color: var(--text-primary);
+    font-size: 0.8125rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.tile-credits {
+    padding-left: 1.2rem;
+    list-style: disc;
+    color: var(--text-secondary);
+}
+
+.tile-credits li { margin-bottom: 4px; }
+
+.tile-related {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 16px;
+}
+
+@media (max-width: 639px) {
+    .tile-related { grid-template-columns: 1fr; }
+}
+
+/* Pack list */
+.tile-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.tile-filters .field { max-width: 420px; }
+
+.tile-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+@media (max-width: 767px) {
+    .tile-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 459px) {
+    .tile-cards { grid-template-columns: 1fr; }
+}
+
+.tile-cards li[hidden] { display: none; }
+
+.tile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-contrast);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.tile-card:hover {
+    border-color: var(--accent-gold);
+    background-color: var(--bg-dark);
+}
+
+.tile-thumb {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: #1a1816;
+}
+
+.tile-thumb svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.tile-thumb .tile-north { display: none; }
+
+.tile-card-text { min-width: 0; }
+
+.tile-card strong {
+    display: block;
+    color: var(--accent-gold);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.tile-card-text > span {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+}
+
+.tile-textarea {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+    resize: vertical;
+}
+
+.tile-message {
+    min-height: 1.5em;
+    margin: 12px 0;
+    font-size: 0.9375rem;
+}
